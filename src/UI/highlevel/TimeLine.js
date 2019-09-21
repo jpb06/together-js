@@ -1,18 +1,18 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core";
-import ContentBox from "../bricks/ContentBox";
+import ContentBox from "../bricks/generic/ContentBox";
 
 const useStyles = makeStyles(theme => ({}));
 
-const Daily = () => {
+const TimeLine = (props) => {
     const classes = useStyles();
 
     return (
         <div>
-            <h1>Daily</h1>
-            <ContentBox content={<p>Daily</p>}/>
+            <h1>Timeline</h1>
+            <ContentBox content={<p>Timeline</p>}/>
         </div>
     );
 };
 
-export default Daily;
+export default TimeLine;

@@ -5,7 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import React from "react";
 
 const SideMenuItem = ({to, menuText, fullText, IconComponent}) => {
-    return(
+    return (
         <ListItem
             button
             key={menuText}
@@ -14,7 +14,7 @@ const SideMenuItem = ({to, menuText, fullText, IconComponent}) => {
             activeClassName={"Mui-selected"}
         >
             <ListItemIcon><IconComponent/></ListItemIcon>
-            <ListItemText primary={fullText} />
+            <ListItemText primary={fullText}/>
         </ListItem>
     );
 };

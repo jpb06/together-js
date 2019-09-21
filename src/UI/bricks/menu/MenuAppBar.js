@@ -14,11 +14,12 @@ const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1
     },
-    appBar:{
-        backgroundColor:theme.palette.secondary.main
+    appBar: {
+        backgroundColor: theme.palette.secondary.main
     },
     menuButton: {
         marginRight: theme.spacing(2),
+        color: theme.palette.primary.main
     }
 }));
 
@@ -39,12 +40,15 @@ const MenuAppBar = ({history}) => {
         <div className={classes.root}>
             <AppBar position="static" className={classes.appBar}>
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
-                                onClick={toggleDrawer(true)}>
+                    <IconButton
+                        edge="start"
+                        className={classes.menuButton}
+                        aria-label="menu"
+                        onClick={toggleDrawer(true)}>
                         <MenuIcon/>
                     </IconButton>
 
-                    <Logo shouldBeCentered={false} color="primary" />
+                    <Logo shouldBeCentered={false} color="primary"/>
 
                     <ImageAvatar/>
                 </Toolbar>

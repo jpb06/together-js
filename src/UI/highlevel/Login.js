@@ -10,16 +10,16 @@ import Grid from "@material-ui/core/Grid";
 import Fab from "@material-ui/core/Fab";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import ErrorIcon from "@material-ui/icons/Error";
-import Logo from "../menu/Logo";
+import Logo from "../bricks/menu/Logo";
 import LinearIndeterminate from "../demo/LinearUndeterminate";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {setInLocalStorage} from "../../logic/local.store";
 
 const useStyles = makeStyles(theme => ({
-    root:{
+    root: {
         minHeight: '100vh',
-        backgroundImage:'url("/static/images/background/background14.jpg")',
-        backgroundSize:'cover'
+        backgroundImage: 'url("/static/images/background/background14.jpg")',
+        backgroundSize: 'cover'
     },
     card: {
         width: 350,
@@ -34,24 +34,24 @@ const useStyles = makeStyles(theme => ({
     fabButton: {
         minWidth: '95% !important',
         justifyContent: 'left',
-        textTransform:'none'
+        textTransform: 'none'
     },
     actions: {
         paddingTop: 0,
         justifyContent: 'center'
     },
-    buttonIcon:{
-        justifyContent:'left',
+    buttonIcon: {
+        justifyContent: 'left',
         paddingTop: '7px',
-        marginLeft:'-7px'
+        marginLeft: '-7px'
     },
-    buttonText:{
-        justifyContent:'center',
+    buttonText: {
+        justifyContent: 'center',
         width: '100%'
     }
 }));
 
-const Login = ({ history }) => {
+const Login = ({history}) => {
     const classes = useStyles();
 
     const [loginState, setLoginState] = React.useState({
@@ -74,44 +74,44 @@ const Login = ({ history }) => {
         event.preventDefault();
         setLoginState(prevState => ({
             ...prevState,
-            feedback:'Login',
+            feedback: 'Login',
             isSubmitted: true,
             isErrored: false
         }));
 
-        if(loginState.email === '' || loginState.password === '') return;
+        if (loginState.email === '' || loginState.password === '') return;
 
         setLoginState(prevState => ({
             ...prevState,
-            feedback:'Logging in ...',
+            feedback: 'Logging in ...',
             isLoading: true
         }));
 
         setTimeout(() => {
             const isEmailValid = loginState.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-            if(!isEmailValid) {
+            if (!isEmailValid) {
                 setLoginState(prevState => ({
                     ...prevState,
-                    feedback:'Not a valid email',
+                    feedback: 'Not a valid email',
                     isLoading: false,
                     isErrored: true
                 }));
             } else {
 
-                if(true) {
+                if (true) {
                     const user = {
-                        team:'whoog'
+                        team: 'whoog'
                     };
 
                     setInLocalStorage('user', user);
 
                     history.push({
-                        pathname: '/main'
+                        pathname: '/highlevel'
                     });
                 } else {
                     setLoginState(prevState => ({
                         ...prevState,
-                        feedback:'Failure && Try again ?',
+                        feedback: 'Failure && Try again ?',
                         isLoading: false,
                         isErrored: true
                     }));
@@ -137,7 +137,7 @@ const Login = ({ history }) => {
                         title="Agile"
                     />
                     <CardContent>
-                        { loginState.isLoading && <LinearIndeterminate  /> }
+                        {loginState.isLoading && <LinearIndeterminate/>}
                         <Logo color="primary"
                               shouldBeCentered
                               shouldBeLargeFont
@@ -151,7 +151,6 @@ const Login = ({ history }) => {
                             required
                             id="email"
                             label="Email"
-                            className={classes.textField}
                             type="email"
                             name="email"
                             autoComplete="email"
@@ -168,7 +167,6 @@ const Login = ({ history }) => {
                             id="password"
                             label="Password"
                             name="password"
-                            className={classes.textField}
                             type="password"
                             autoComplete="current-password"
                             margin="normal"
@@ -188,10 +186,10 @@ const Login = ({ history }) => {
                         >
                             <div className={classes.buttonIcon}>
                                 {(loginState.isLoading)
-                                    ? <CircularProgress size={25} />
+                                    ? <CircularProgress size={25}/>
                                     : (loginState.isErrored)
-                                        ? <ErrorIcon className={classes.extendedIcon} />
-                                        : <PlayCircleFilledIcon className={classes.extendedIcon} />
+                                        ? <ErrorIcon className={classes.extendedIcon}/>
+                                        : <PlayCircleFilledIcon className={classes.extendedIcon}/>
                                 }
                             </div>
                             <div className={classes.buttonText}>

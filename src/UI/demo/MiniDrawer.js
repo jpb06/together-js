@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,7 +22,7 @@ import EventIcon from '@material-ui/icons/Event';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import TimelineIcon from '@material-ui/icons/Timeline';
 
-import ImageAvatar from '../user/ImageAvatar';
+import ImageAvatar from '../bricks/user/ImageAvatar';
 
 const drawerWidth = 150;
 

@@ -3,42 +3,42 @@ import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import React from "react";
 import {makeStyles, Typography} from "@material-ui/core";
 import clsx from "clsx";
-import ForwardNavLink from "../bricks/ForwardNavLink";
+import ForwardNavLink from "../generic/ForwardNavLink";
 
 const useStyles = makeStyles(theme => ({
-    container:{
+    container: {
         flexGrow: 1,
     },
-    logo:{
-        fontWeight:'bold',
-        textDecoration:'none'
+    logo: {
+        fontWeight: 'bold',
+        textDecoration: 'none'
     },
-    logoColorPrimary:{
-        color:theme.palette.primary.main
+    logoColorPrimary: {
+        color: theme.palette.primary.main
     },
-    logoColorSecondary:{
-        color:theme.palette.secondary.main
+    logoColorSecondary: {
+        color: theme.palette.secondary.main
     },
-    logoColorWhite:{
-        color:'white'
+    logoColorWhite: {
+        color: 'white'
     },
-    largeFont:{
-        fontSize:'xx-large'
+    largeFont: {
+        fontSize: 'xx-large'
     }
 }));
 
-const Logo = ({ color, shouldBeCentered, shouldBeLargeFont, showDescriptionText }) => {
+const Logo = ({color, shouldBeCentered, shouldBeLargeFont, showDescriptionText}) => {
     const classes = useStyles();
     return (
         <h2 className={classes.container}>
             <Grid container
-                  justify={ shouldBeCentered ? 'center' : 'flex-start' }
+                  justify={shouldBeCentered ? 'center' : 'flex-start'}
                   direction="row"
-                  className={ clsx( classes.logo, {
+                  className={clsx(classes.logo, {
                       [classes.logoColorPrimary]: color === 'primary',
                       [classes.logoColorSecondary]: color === 'secondary',
                       [classes.logoColorWhite]: color === 'white'
-                  }) }
+                  })}
                   component={ForwardNavLink}
                   to="/main"
             >
@@ -48,12 +48,13 @@ const Logo = ({ color, shouldBeCentered, shouldBeLargeFont, showDescriptionText 
                     Together
                 </Grid>
                 <Grid item>
-                    <SupervisedUserCircleIcon />
+                    <SupervisedUserCircleIcon/>
                 </Grid>
             </Grid>
             {
                 showDescriptionText &&
-                <Typography style={{fontSize:'x-small', textAlign:'center'}}> Un outil pour les équipes SCRUM</Typography>
+                <Typography style={{fontSize: 'x-small', textAlign: 'center'}}> Un outil pour les équipes
+                    SCRUM</Typography>
             }
         </h2>
     );

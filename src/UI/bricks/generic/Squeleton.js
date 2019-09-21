@@ -1,14 +1,14 @@
 import MenuAppBar from "../menu/MenuAppBar";
 import React, {useEffect} from "react";
 import {makeStyles} from "@material-ui/core";
-import {getFromLocalStorage} from "../../logic/local.store";
+import {getFromLocalStorage} from "../../../logic/local.store";
 
 const useStyles = makeStyles(theme => ({
-    root:{
-        margin:theme.spacing(2)
+    root: {
+        margin: theme.spacing(2)
     },
-    media:{
-        height:'15px'
+    media: {
+        height: '15px'
     }
 }));
 
@@ -28,9 +28,9 @@ const Squeleton = ({Component, ...rest}) => {
         // after the initial render thus replicating `componentDidMount` lifecycle behaviour
     }, []);
 
-    return(
+    return (
         <div>
-            <MenuAppBar />
+            <MenuAppBar/>
             <section className={classes.root}>
                 <Component {...rest} />
             </section>

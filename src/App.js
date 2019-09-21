@@ -2,11 +2,11 @@ import React from "react";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Login from "./UI/user/Login";
+import Login from "./UI/highlevel/Login";
 import {BrowserRouter, Route} from "react-router-dom";
-import TimeLine from "./UI/main/TimeLine";
-import Daily from "./UI/main/Daily";
-import Squeleton from "./UI/main/Squeleton";
+import TimeLine from "./UI/highlevel/TimeLine";
+import Daily from "./UI/highlevel/Daily";
+import Squeleton from "./UI/bricks/generic/Squeleton";
 
 const theme = createMuiTheme({
     palette: {
