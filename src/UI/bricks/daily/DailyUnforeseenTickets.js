@@ -1,57 +1,48 @@
-import React from "react";
+import React, {useEffect} from "react";
 import NewTicket from "../generic/NewTicket";
-import Avatar from "@material-ui/core/Avatar";
-import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
-import {makeStyles} from "@material-ui/core";
+import AssignmentLateRoundedIcon from '@material-ui/icons/AssignmentLateRounded';
+import TicketChipsList from "../generic/TicketChipsList";
 
-const useStyles = makeStyles(theme => ({
-    spacing: {
-        marginRight: '4px',
-        marginBottom: '4px'
-    },
-}));
+const DailyUnforeseenTickets = ({reportValidation}) => {
 
-const DailyUnforeseenTickets = ({reportValidation, ...rest}) => {
-    const classes = useStyles();
+    const [unforeseenTickets, setUnforeseenTickets] = React.useState([]);
 
-    const handleDelete = () => {
-        alert('You clicked the delete icon.');
+    const reportSubmit = (ticket) => {
+        setUnforeseenTickets(state => state.concat({
+            name: `${ticket.key}-${ticket.number}`,
+            user: {
+                id: state.length,
+                firstName: 'Sarah',
+                avatarPath: '/static/images/avatars/6SLWt.gif'
+            }
+        }));
+        reportValidation(true);
     };
+    const reportTicketRemoval = (key) => {
+        setUnforeseenTickets(state => state.filter(el => `${el.user.id}${el.name}` !== key));
+    };
+
+    useEffect(() => {
+        if (unforeseenTickets.length === 0) {
+            reportValidation(false);
+        }
+    });
 
     return (
         <div>
-            <Grid container>
-                <Grid item>
-                    <Chip
-                        className={classes.spacing}
-                        avatar={<Avatar alt="Natacha" src="/static/images/avatars/image.jpg"/>}
-                        label="WEB-1048"
-                        onDelete={handleDelete}
-                        color="primary"
-                    />
-                </Grid>
-                <Grid item>
-                    <Chip
-                        className={classes.spacing}
-                        avatar={<Avatar alt="Natacha" src="/static/images/avatars/6SLWt.gif"/>}
-                        label="WEB-768"
-                        onDelete={handleDelete}
-                        color="primary"
-                    />
-                </Grid>
-                <Grid item>
-                    <Chip
-                        className={classes.spacing}
-                        avatar={<Avatar alt="Natacha" src="/static/images/avatars/afrogeisha.jpg"/>}
-                        label="WEB-5489"
-                        onDelete={handleDelete}
-                        color="primary"
-                    />
-                </Grid>
+            <Grid container justify="center">
+                <TicketChipsList
+                    ticketsList={unforeseenTickets}
+                    reportTicketRemoval={reportTicketRemoval}
+                    NoDataIconComponent={AssignmentLateRoundedIcon}
+                />
             </Grid>
-            <hr/>
-            <NewTicket reportValidation={reportValidation} {...rest} />
+
+            <NewTicket
+                reportSubmit={reportSubmit}
+                hasUsers={false}
+            />
         </div>
     );
 };

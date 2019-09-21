@@ -10,7 +10,8 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(2)
     },
     header: {
-        marginTop: '0'
+        marginTop: '0',
+        marginBottom: theme.spacing(1)
     },
     media: {
         height: '10px',

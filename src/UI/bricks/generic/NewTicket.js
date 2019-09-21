@@ -27,11 +27,11 @@ const keys = [
 ];
 const users = [
     {
-        value: 'sr',
+        value: '1',
         label: 'Sarah Tedjani',
     },
     {
-        value: 'jp',
+        value: '2',
         label: 'Jean-Philippe Bois',
     },
 ];
@@ -41,12 +41,13 @@ const useStyles = makeStyles(theme => ({
         minWidth: '100% !important',
         justifyContent: 'left',
         textTransform: 'none',
-        marginTop: theme.spacing(1)
+        marginTop: theme.spacing(1),
+        height: '30px !important'
     },
     buttonIcon: {
         justifyContent: 'left',
-        paddingTop: '7px',
-        marginLeft: '-7px'
+        paddingTop: '3px',
+        marginLeft: '-13px'
     },
     buttonText: {
         justifyContent: 'center',
@@ -54,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const NewTicket = ({reportValidation, ...rest}) => {
+const NewTicket = ({reportSubmit, hasUsers}) => {
     const classes = useStyles();
 
     const [ticket, setTicket] = React.useState({
@@ -68,13 +69,24 @@ const NewTicket = ({reportValidation, ...rest}) => {
             ...ticket,
             [e.target.name]: e.target.value
         });
-        reportValidation(true);
+    };
+
+    const handleSubmit = () => {
+        if (ticket.number !== ''
+            && ((hasUsers && ticket.user !== '') || !hasUsers)) {
+            reportSubmit(ticket);
+            setTicket(state => ({
+                key: 'WEB',
+                number: '',
+                user: ''
+            }));
+        }
     };
 
     return (
         <div>
             <Grid container spacing={0}>
-                <Grid item xs={5} sm={4}>
+                <Grid item xs={5} sm={(hasUsers) ? 4 : 5}>
                     <TextField
                         fullWidth
                         select
@@ -93,7 +105,7 @@ const NewTicket = ({reportValidation, ...rest}) => {
                         ))}
                     </TextField>
                 </Grid>
-                <Grid item xs={7} sm={3}>
+                <Grid item xs={7} sm={(hasUsers) ? 3 : 7}>
                     <TextField
                         fullWidth
                         variant="outlined"
@@ -104,24 +116,26 @@ const NewTicket = ({reportValidation, ...rest}) => {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item xs={12} sm={5}>
-                    <TextField
-                        fullWidth
-                        select
-                        variant="outlined"
-                        label="User"
-                        name="user"
-                        margin="dense"
-                        value={ticket.user}
-                        onChange={handleChange}
-                    >
-                        {users.map(option => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </Grid>
+                {
+                    hasUsers && (<Grid item xs={12} sm={5}>
+                        <TextField
+                            fullWidth
+                            select
+                            variant="outlined"
+                            label="User"
+                            name="user"
+                            margin="dense"
+                            value={ticket.user}
+                            onChange={handleChange}
+                        >
+                            {users.map(option => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Grid>)
+                }
                 <Grid item xs={12} sm={12}>
                     <Fab
                         variant="extended"
@@ -129,7 +143,7 @@ const NewTicket = ({reportValidation, ...rest}) => {
                         color="primary"
                         aria-label="add"
                         className={classes.fabButton}
-                        //onClick={handleSubmit}
+                        onClick={handleSubmit}
                     >
                         <div className={classes.buttonIcon}>
                             <AddCircleIcon className={classes.extendedIcon}/>
