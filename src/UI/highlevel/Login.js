@@ -106,7 +106,7 @@ const Login = ({history}) => {
                     setInLocalStorage('user', user);
 
                     history.push({
-                        pathname: '/highlevel'
+                        pathname: '/main'
                     });
                 } else {
                     setLoginState(prevState => ({
