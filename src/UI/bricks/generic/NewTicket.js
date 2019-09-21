@@ -67,10 +67,9 @@ const NewTicket = ({reportSubmit, hasUsers}) => {
     const handleChange = (e) => {
         setTicket({
             ...ticket,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.name === 'number' ? e.target.value.replace(/\D/, '') : e.target.value
         });
     };
-
     const handleSubmit = () => {
         if (ticket.number !== ''
             && ((hasUsers && ticket.user !== '') || !hasUsers)) {
@@ -112,6 +111,7 @@ const NewTicket = ({reportSubmit, hasUsers}) => {
                         label="Number"
                         name="number"
                         margin="dense"
+                        // type="number"
                         value={ticket.number}
                         onChange={handleChange}
                     />
@@ -154,7 +154,6 @@ const NewTicket = ({reportSubmit, hasUsers}) => {
                     </Fab>
                 </Grid>
             </Grid>
-
         </div>
     );
 };

@@ -10,17 +10,12 @@ const DailyUnforeseenTickets = ({reportValidation}) => {
 
     const reportSubmit = (ticket) => {
         setUnforeseenTickets(state => state.concat({
-            name: `${ticket.key}-${ticket.number}`,
-            user: {
-                id: state.length,
-                firstName: 'Sarah',
-                avatarPath: '/static/images/avatars/6SLWt.gif'
-            }
+            name: `${ticket.key}-${ticket.number}`
         }));
         reportValidation(true);
     };
     const reportTicketRemoval = (key) => {
-        setUnforeseenTickets(state => state.filter(el => `${el.user.id}${el.name}` !== key));
+        setUnforeseenTickets(state => state.filter(el => `${el.name}` !== key));
     };
 
     useEffect(() => {
