@@ -9,15 +9,20 @@ const DailyDoneTickets = ({reportValidation}) => {
     const [doneTickets, setDoneTickets] = React.useState([]);
 
     const reportSubmit = (ticket) => {
-        setDoneTickets(state => state.concat({
-            name: `${ticket.key}-${ticket.number}`,
-            user: {
-                id: state.length,
-                firstName: 'Sarah',
-                avatarPath: '/static/images/avatars/6SLWt.gif'
-            }
-        }));
-        reportValidation(true);
+        const name = `${ticket.key}-${ticket.number}`;
+
+        if (!doneTickets.find(el => el.name === name)) {
+
+            setDoneTickets(state => state.concat({
+                name: name,
+                user: {
+                    id: state.length,
+                    firstName: 'Sarah',
+                    avatarPath: '/static/images/avatars/6SLWt.gif'
+                }
+            }));
+            reportValidation(true);
+        }
     };
     const reportTicketRemoval = (key) => {
         setDoneTickets(state => state.filter(el => `${el.user.id}${el.name}` !== key));

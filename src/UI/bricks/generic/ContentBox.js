@@ -52,8 +52,6 @@ const ContentBox = ({title, content, ContentComponent, ...rest}) => {
             />
             <CardHeader title={title}/>
             <CardContent className={classes.content}>
-
-
                 {
                     (ContentComponent) && <ContentComponent reportValidation={reportValidation} {...rest} />
                 }

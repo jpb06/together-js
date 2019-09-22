@@ -9,10 +9,14 @@ const DailyUnforeseenTickets = ({reportValidation}) => {
     const [unforeseenTickets, setUnforeseenTickets] = React.useState([]);
 
     const reportSubmit = (ticket) => {
-        setUnforeseenTickets(state => state.concat({
-            name: `${ticket.key}-${ticket.number}`
-        }));
-        reportValidation(true);
+        const name = `${ticket.key}-${ticket.number}`;
+
+        if (!unforeseenTickets.find(el => el.name === name)) {
+            setUnforeseenTickets(state => state.concat({
+                name: name
+            }));
+            reportValidation(true);
+        }
     };
     const reportTicketRemoval = (key) => {
         setUnforeseenTickets(state => state.filter(el => `${el.name}` !== key));
