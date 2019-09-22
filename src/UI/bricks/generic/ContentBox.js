@@ -4,10 +4,14 @@ import Card from "@material-ui/core/Card";
 import React from "react";
 import {makeStyles} from "@material-ui/core";
 import clsx from "clsx";
+import CardHeader from "@material-ui/core/CardHeader";
 
 const useStyles = makeStyles(theme => ({
     root: {
-        marginBottom: theme.spacing(2)
+        marginBottom: theme.spacing(1),
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column'
     },
     header: {
         marginTop: '0',
@@ -17,7 +21,8 @@ const useStyles = makeStyles(theme => ({
         height: '10px',
     },
     content: {
-        paddingTop: theme.spacing(1)
+        paddingTop: theme.spacing(1),
+        marginTop: 'auto'
     },
     validationUnset: {
         backgroundColor: theme.palette.primary.main
@@ -45,8 +50,9 @@ const ContentBox = ({title, content, ContentComponent, ...rest}) => {
                 title="Agile"
                 src="/"
             />
+            <CardHeader title={title}/>
             <CardContent className={classes.content}>
-                <h4 className={classes.header}>{title}</h4>
+
 
                 {
                     (ContentComponent) && <ContentComponent reportValidation={reportValidation} {...rest} />

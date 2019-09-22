@@ -112,6 +112,7 @@ const NewTicket = ({reportSubmit, hasUsers}) => {
                         name="number"
                         margin="dense"
                         // type="number"
+                        pattern="[0-9]*" data-numeric-input
                         value={ticket.number}
                         onChange={handleChange}
                     />
