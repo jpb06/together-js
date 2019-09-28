@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const DailyDuration = ({reportValidation, ...rest}) => {
+const DailyDuration = ({reportValidation}) => {
     const classes = useStyles();
 
     const [duration, setDuration] = React.useState('');

@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const MenuAppBar = ({history}) => {
+const MenuAppBar = () => {
     const classes = useStyles();
 
     const [isSiderOpen, setIsSiderOpen] = React.useState(false);

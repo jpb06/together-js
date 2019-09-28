@@ -3,23 +3,40 @@ import NewTicket from "../generic/NewTicket";
 import Grid from "@material-ui/core/Grid";
 import AssignmentLateRoundedIcon from '@material-ui/icons/AssignmentLateRounded';
 import TicketChipsList from "../generic/TicketChipsList";
+import {addUnforeseenTicket, removeUnforeseenTicket} from "../../../logic/api/daily.api";
+import {getFromLocalStorage} from "../../../logic/local.store";
 
-const DailyUnforeseenTickets = ({reportValidation}) => {
+const DailyUnforeseenTickets = ({reportValidation, data}) => {
 
-    const [unforeseenTickets, setUnforeseenTickets] = React.useState([]);
+    const [unforeseenTickets, setUnforeseenTickets] = React.useState(data);
 
-    const reportSubmit = (ticket) => {
+    const reportSubmit = async (ticket) => {
         const name = `${ticket.key}-${ticket.number}`;
 
         if (!unforeseenTickets.find(el => el.name === name)) {
-            setUnforeseenTickets(state => state.concat({
-                name: name
-            }));
-            reportValidation(true);
+            const user = getFromLocalStorage('user');
+            const result = await addUnforeseenTicket(user.teams[0]._id, new Date().toUTCString(), name);
+
+            if (result.status === 201) {
+                setUnforeseenTickets(state => state.concat({
+                    name: name
+                }));
+                reportValidation(true);
+            } else {
+                console.log(result);
+            }
         }
     };
-    const reportTicketRemoval = (key) => {
-        setUnforeseenTickets(state => state.filter(el => `${el.name}` !== key));
+
+    const reportTicketRemoval = async (key) => {
+        const user = getFromLocalStorage('user');
+        const result = await removeUnforeseenTicket(user.teams[0]._id, new Date().toUTCString(), key);
+
+        if (result.status === 200) {
+            setUnforeseenTickets(state => state.filter(el => `${el.name}` !== key));
+        } else {
+            console.log(result);
+        }
     };
 
     useEffect(() => {

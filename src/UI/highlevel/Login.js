@@ -14,6 +14,8 @@ import Logo from "../bricks/menu/Logo";
 import LinearIndeterminate from "../demo/LinearUndeterminate";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {setInLocalStorage} from "../../logic/local.store";
+import {login} from "../../logic/api/security.api";
+import {useHistory} from "react-router";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -51,7 +53,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Login = ({history}) => {
+const Login = () => {
+    let history = useHistory();
     const classes = useStyles();
 
     const [loginState, setLoginState] = React.useState({
@@ -63,14 +66,12 @@ const Login = ({history}) => {
         password: ''
     });
 
-    const updateField = e => {
-        setLoginState({
-            ...loginState,
-            [e.target.name]: e.target.value
-        });
-    };
+    const updateField = e => setLoginState({
+        ...loginState,
+        [e.target.name]: e.target.value
+    });
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         setLoginState(prevState => ({
             ...prevState,
@@ -87,37 +88,34 @@ const Login = ({history}) => {
             isLoading: true
         }));
 
-        setTimeout(() => {
-            const isEmailValid = loginState.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-            if (!isEmailValid) {
+        const isEmailValid = loginState.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        if (!isEmailValid) {
+            setLoginState(prevState => ({
+                ...prevState,
+                feedback: 'Not a valid email',
+                isLoading: false,
+                isErrored: true
+            }));
+        } else {
+
+            const authResult = await login(loginState.email, loginState.password);
+            if (authResult) {
+                setInLocalStorage('token', authResult.token);
+                setInLocalStorage('expiration', authResult.expirationDate);
+                setInLocalStorage('user', authResult.user);
+
+                history.push({
+                    pathname: '/main'
+                });
+            } else {
                 setLoginState(prevState => ({
                     ...prevState,
-                    feedback: 'Not a valid email',
+                    feedback: 'Failure && Try again ?',
                     isLoading: false,
                     isErrored: true
                 }));
-            } else {
-
-                if (true) {
-                    const user = {
-                        team: 'whoog'
-                    };
-
-                    setInLocalStorage('user', user);
-
-                    history.push({
-                        pathname: '/main'
-                    });
-                } else {
-                    setLoginState(prevState => ({
-                        ...prevState,
-                        feedback: 'Failure && Try again ?',
-                        isLoading: false,
-                        isErrored: true
-                    }));
-                }
             }
-        }, 3000);
+        }
     };
 
     return (

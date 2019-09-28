@@ -21,17 +21,16 @@ const theme = createMuiTheme({
 });
 
 const App = () => {
-
-  return (
-      <MuiThemeProvider theme={theme}>
-          <CssBaseline />
-          <BrowserRouter>
-              <Route exact path="/" component={Login} />
-              <Route path="/main" render={(props) => <Squeleton {...props} Component={TimeLine} />}  />
-              <Route path="/daily" render={(props) => <Squeleton {...props} Component={Daily} />} />
-          </BrowserRouter>
-      </MuiThemeProvider>
-  );
+    return (
+        <MuiThemeProvider theme={theme}>
+            <CssBaseline/>
+            <BrowserRouter>
+                <Route exact path="/" component={Login}/>
+                <Route path="/main" render={(props) => <Squeleton {...props} Component={TimeLine}/>}/>
+                <Route path="/daily" render={(props) => <Squeleton {...props} Component={Daily}/>}/>
+            </BrowserRouter>
+        </MuiThemeProvider>
+    );
 };
 
 export default App;

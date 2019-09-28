@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const ContentBox = ({title, content, ContentComponent, ...rest}) => {
+const ContentBox = ({title, content, ContentComponent, data, ...rest}) => {
     const classes = useStyles();
 
     const [isValidated, setIsValidated] = React.useState(false);
@@ -53,7 +53,7 @@ const ContentBox = ({title, content, ContentComponent, ...rest}) => {
             <CardHeader title={title}/>
             <CardContent className={classes.content}>
                 {
-                    (ContentComponent) && <ContentComponent reportValidation={reportValidation} {...rest} />
+                    (ContentComponent) && <ContentComponent reportValidation={reportValidation} data={data} {...rest} />
                 }
                 {content}
 
