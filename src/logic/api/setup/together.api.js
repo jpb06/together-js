@@ -5,7 +5,6 @@ const apiUrl = 'http://192.168.0.20:3001/api';
 
 class TogetherApi {
 }
-
 TogetherApi.Instance = axios.create({
     baseURL: apiUrl,
     timeout: 10000,
@@ -22,5 +21,11 @@ TogetherApi.setup = (history) => {
     }
 };
 
-export {apiUrl};
+const ensureStatus = (result) => {
+    if (!result) result = {status: -1, data: undefined};
+
+    return result;
+};
+
+export {apiUrl, ensureStatus};
 export default TogetherApi;
