@@ -42,6 +42,8 @@ const DailyUnforeseenTickets = ({reportValidation, data}) => {
     useEffect(() => {
         if (unforeseenTickets.length === 0) {
             reportValidation(false);
+        } else {
+            reportValidation(true);
         }
     });
 
