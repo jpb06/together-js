@@ -11,7 +11,8 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(1),
         height: '100%',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        opacity: 0.87
     },
     header: {
         marginTop: '0',
@@ -33,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const ContentBox = ({title, content, ContentComponent, data, ...rest}) => {
+const ContentBox = ({title, content, ContentComponent, data, reportError, ...rest}) => {
     const classes = useStyles();
 
     const [isValidated, setIsValidated] = React.useState(false);
@@ -53,7 +54,8 @@ const ContentBox = ({title, content, ContentComponent, data, ...rest}) => {
             <CardHeader title={title}/>
             <CardContent className={classes.content}>
                 {
-                    (ContentComponent) && <ContentComponent reportValidation={reportValidation} data={data} {...rest} />
+                    (ContentComponent) && <ContentComponent reportValidation={reportValidation} data={data}
+                                                            reportError={reportError} {...rest} />
                 }
                 {content}
 

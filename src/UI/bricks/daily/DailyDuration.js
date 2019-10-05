@@ -2,40 +2,38 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
 import {makeStyles} from "@material-ui/core";
+import {durationRanges} from './../../../logic/static.data';
+import {reportDuration} from "../../../logic/api/daily.api";
+import {getFromLocalStorage} from "../../../logic/local.store";
 
-const ranges = [
-    {
-        value: '0-15',
-        label: 'Less than 15 minutes',
-    },
-    {
-        value: '15-20',
-        label: 'Just a bit more than 15 minutes',
-    },
-    {
-        value: '20-30',
-        label: 'Less than 30 minutes I swear !',
-    },
-    {
-        value: '20+',
-        label: 'Absolute anarchy',
-    },
-];
 const useStyles = makeStyles(theme => ({
-    root: {},
     textField: {
         flexBasis: 200,
     },
 }));
 
-const DailyDuration = ({reportValidation}) => {
+const DailyDuration = ({reportValidation, data, reportError}) => {
     const classes = useStyles();
 
-    const [duration, setDuration] = React.useState('');
-
-    const handleChange = () => event => {
-        setDuration(event.target.value);
+    if (data === '') {
+        data = durationRanges[0].value;
+    } else {
         reportValidation(true);
+    }
+
+    const [duration, setDuration] = React.useState(data);
+
+    const handleChange = () => async (event) => {
+        setDuration(event.target.value);
+
+        const user = getFromLocalStorage('user');
+        const result = await reportDuration(user.teams[0]._id, new Date().toUTCString(), event.target.value);
+        if (result.status === 200) {
+            reportValidation(true);
+        } else {
+            console.log(result);
+            reportError('error', 'Unable to save the daily duration');
+        }
     };
 
     return (
@@ -49,7 +47,7 @@ const DailyDuration = ({reportValidation}) => {
                 onChange={handleChange()}
                 fullWidth
             >
-                {ranges.map(option => (
+                {durationRanges.map(option => (
                     <MenuItem key={option.value} value={option.value}>
                         {option.label}
                     </MenuItem>
