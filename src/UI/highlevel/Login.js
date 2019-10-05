@@ -16,6 +16,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import {setInLocalStorage} from "../../logic/local.store";
 import {login} from "../../logic/api/security.api";
 import {useHistory} from "react-router";
+import {fade} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -25,7 +26,8 @@ const useStyles = makeStyles(theme => ({
     },
     card: {
         width: 350,
-        paddingBottom: theme.spacing(2)
+        paddingBottom: theme.spacing(2),
+        backgroundColor: fade(theme.palette.background.default, 0.83)
     },
     media: {
         height: 160,
