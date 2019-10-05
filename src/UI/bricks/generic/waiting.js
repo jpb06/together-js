@@ -8,7 +8,7 @@ const styles = theme => ({
     root: {
         paddingTop: theme.spacing(8),
         textAlign: 'center',
-        color: fade('#fff', 0.07),
+        color: fade('#fff', 0.25),
     },
     progressIcon: {
         height: '70px',
