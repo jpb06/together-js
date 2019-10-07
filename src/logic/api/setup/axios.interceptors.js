@@ -11,6 +11,7 @@ const setInterceptors = (instance, history) => {
             history.push({
                 pathname: '/'
             });
+            return Promise.reject('not logged');
         } else {
             config.headers.authorization = `Bearer ${token}`;
         }
