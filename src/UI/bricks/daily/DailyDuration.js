@@ -4,7 +4,6 @@ import React from "react";
 import {makeStyles} from "@material-ui/core";
 import {durationRanges} from './../../../logic/static.data';
 import {reportDuration} from "../../../logic/api/daily.api";
-import {getFromLocalStorage} from "../../../logic/local.store";
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -12,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const DailyDuration = ({reportValidation, data, reportError}) => {
+const DailyDuration = ({reportValidation, data, sendFeedback, currentTeam}) => {
     const classes = useStyles();
 
     if (data === '') {
@@ -26,13 +25,12 @@ const DailyDuration = ({reportValidation, data, reportError}) => {
     const handleChange = () => async (event) => {
         setDuration(event.target.value);
 
-        const user = getFromLocalStorage('user');
-        const result = await reportDuration(user.teams[0]._id, new Date().toUTCString(), event.target.value);
+        const result = await reportDuration(currentTeam._id, new Date().toUTCString(), event.target.value);
         if (result.status === 200) {
             reportValidation(true);
         } else {
             console.log(result);
-            reportError('error', 'Unable to save the daily duration');
+            sendFeedback('error', 'Unable to save the daily duration');
         }
     };
 

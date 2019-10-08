@@ -11,6 +11,7 @@ import Waiting from "../bricks/generic/waiting";
 import DailyFeelings from "../bricks/daily/DailyFeelings";
 import DailyIssues from "../bricks/daily/DailyIssues";
 import ApiError from "../bricks/generic/ApiError";
+import {getTeamMembers} from "../../logic/api/team.api";
 
 const useStyles = makeStyles(theme => ({
     ticketsBoxes: {
@@ -22,26 +23,36 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Daily = ({reportLoading, reportError}) => {
+const Daily = ({reportLoading, sendFeedback}) => {
     const classes = useStyles();
 
-    let [daily, setDaily] = useState({});
-    let [isReady, setIsready] = useState(false);
-    let [isErrored, setIsErrored] = useState(false);
+    const [daily, setDaily] = useState({});
+    const [isReady, setIsready] = useState(false);
+    const [isErrored, setIsErrored] = useState(false);
+    const [teamMembers, setTeamMembers] = useState([]);
+    const [currentTeam, setCurrentTeam] = useState('');
 
     useEffect(() => {
 
         reportLoading(true);
 
         async function fetch() {
-            console.log('fetching daily');
-            const user = getFromLocalStorage('user');
-            let result = await getDaily(user.teams[0]._id, new Date().toUTCString());
-            if (result.status === 200) {
-                setDaily(result.data);
+            console.log('fetching daily & team members');
+            const currentTeam = getFromLocalStorage('currentTeam');
+            const dailyRequestResult = await getDaily(currentTeam._id, new Date().toUTCString());
+            if (dailyRequestResult.status === 200) {
+                setDaily(dailyRequestResult.data);
             } else {
                 setIsErrored(true);
             }
+            const teamMembersRequestResult = await getTeamMembers(currentTeam._id);
+            if (teamMembersRequestResult.status === 200) {
+                setTeamMembers(teamMembersRequestResult.data);
+            } else {
+                setIsErrored(true);
+            }
+
+            setCurrentTeam(currentTeam);
             setIsready(true);
             reportLoading(false);
         }
@@ -59,7 +70,8 @@ const Daily = ({reportLoading, reportError}) => {
                         title="Daily duration"
                         ContentComponent={DailyDuration}
                         data={daily.durationIndicator}
-                        reportError={reportError}
+                        sendFeedback={sendFeedback}
+                        currentTeam={currentTeam}
                     />
                     <h1>What happened since the last daily ?</h1>
                     <Grid
@@ -73,13 +85,18 @@ const Daily = ({reportLoading, reportError}) => {
                                 title="Unforeseen tickets"
                                 ContentComponent={DailyUnforeseenTickets}
                                 data={daily.unforeseenTickets}
+                                sendFeedback={sendFeedback}
+                                currentTeam={currentTeam}
                             />
                         </Grid>
                         <Grid item md={6} xs={12}>
                             <ContentBox
                                 title="Done tickets"
                                 ContentComponent={DailyDoneTickets}
-                                data={daily.doneTickets}
+                                teamMembers={teamMembers}
+                                data={{doneTickets: daily.doneTickets, teamMembers}}
+                                sendFeedback={sendFeedback}
+                                currentTeam={currentTeam}
                             />
                         </Grid>
 
