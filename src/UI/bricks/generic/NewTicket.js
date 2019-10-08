@@ -3,9 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import {makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import Typography from "@material-ui/core/Typography";
-import Fab from "@material-ui/core/Fab";
+import FeedbackButton from "./FeedbackButton";
 
 const keys = [
     {
@@ -25,43 +23,16 @@ const keys = [
         label: 'APP',
     },
 ];
-const users = [
-    {
-        value: '1',
-        label: 'Sarah Tedjani',
-    },
-    {
-        value: '2',
-        label: 'Jean-Philippe Bois',
-    },
-];
 
-const useStyles = makeStyles(theme => ({
-    fabButton: {
-        minWidth: '100% !important',
-        justifyContent: 'left',
-        textTransform: 'none',
-        marginTop: theme.spacing(1),
-        height: '30px !important'
-    },
-    buttonIcon: {
-        justifyContent: 'left',
-        paddingTop: '3px',
-        marginLeft: '-13px'
-    },
-    buttonText: {
-        justifyContent: 'center',
-        width: '100%'
-    }
-}));
+const useStyles = makeStyles(theme => ({}));
 
-const NewTicket = ({reportSubmit, hasUsers}) => {
+const NewTicket = ({reportSubmit, actionFeedback, users}) => {
     const classes = useStyles();
 
     const [ticket, setTicket] = React.useState({
         key: 'WEB',
         number: '',
-        user: ''
+        userId: ''
     });
 
     const handleChange = (e) => {
@@ -70,14 +41,15 @@ const NewTicket = ({reportSubmit, hasUsers}) => {
             [e.target.name]: e.target.name === 'number' ? e.target.value.replace(/\D/, '') : e.target.value
         });
     };
+
     const handleSubmit = () => {
         if (ticket.number !== ''
-            && ((hasUsers && ticket.user !== '') || !hasUsers)) {
+            && ((users && ticket.userId !== '') || !users)) {
             reportSubmit(ticket);
             setTicket(state => ({
                 key: 'WEB',
                 number: '',
-                user: ''
+                userId: ''
             }));
         }
     };
@@ -85,7 +57,7 @@ const NewTicket = ({reportSubmit, hasUsers}) => {
     return (
         <div>
             <Grid container spacing={0}>
-                <Grid item xs={5} sm={(hasUsers) ? 4 : 5}>
+                <Grid item xs={5} sm={(!users) ? 5 : 4}>
                     <TextField
                         fullWidth
                         select
@@ -104,7 +76,7 @@ const NewTicket = ({reportSubmit, hasUsers}) => {
                         ))}
                     </TextField>
                 </Grid>
-                <Grid item xs={7} sm={(hasUsers) ? 3 : 7}>
+                <Grid item xs={7} sm={(!users) ? 7 : 3}>
                     <TextField
                         fullWidth
                         variant="outlined"
@@ -118,41 +90,30 @@ const NewTicket = ({reportSubmit, hasUsers}) => {
                     />
                 </Grid>
                 {
-                    hasUsers && (<Grid item xs={12} sm={5}>
+                    users && (<Grid item xs={12} sm={5}>
                         <TextField
                             fullWidth
                             select
                             variant="outlined"
                             label="User"
-                            name="user"
+                            name="userId"
                             margin="dense"
-                            value={ticket.user}
+                            value={ticket.userId}
                             onChange={handleChange}
                         >
-                            {users.map(option => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
+                            {users.map(user => (
+                                <MenuItem key={user._id} value={user._id}>
+                                    {`${user.firstName} ${user.lastName}`}
                                 </MenuItem>
                             ))}
                         </TextField>
                     </Grid>)
                 }
                 <Grid item xs={12} sm={12}>
-                    <Fab
-                        variant="extended"
-                        size="medium"
-                        color="primary"
-                        aria-label="add"
-                        className={classes.fabButton}
-                        onClick={handleSubmit}
-                    >
-                        <div className={classes.buttonIcon}>
-                            <AddCircleIcon className={classes.extendedIcon}/>
-                        </div>
-                        <div className={classes.buttonText}>
-                            <Typography>Add</Typography>
-                        </div>
-                    </Fab>
+                    <FeedbackButton
+                        handleSubmit={handleSubmit}
+                        actionFeedback={actionFeedback}
+                    />
                 </Grid>
             </Grid>
         </div>

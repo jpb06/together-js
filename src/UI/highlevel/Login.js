@@ -4,19 +4,15 @@ import React from "react";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Grid from "@material-ui/core/Grid";
-import Fab from "@material-ui/core/Fab";
-import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
-import ErrorIcon from "@material-ui/icons/Error";
 import Logo from "../bricks/menu/Logo";
 import LinearIndeterminate from "../demo/LinearUndeterminate";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import {setInLocalStorage} from "../../logic/local.store";
 import {login} from "../../logic/api/security.api";
 import {useHistory} from "react-router";
 import {fade} from "@material-ui/core/styles";
+import FeedbackButton from "../bricks/generic/FeedbackButton";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -35,23 +31,9 @@ const useStyles = makeStyles(theme => ({
     extendedIcon: {
         marginRight: theme.spacing(1),
     },
-    fabButton: {
-        minWidth: '95% !important',
-        justifyContent: 'left',
-        textTransform: 'none'
-    },
     actions: {
         paddingTop: 0,
         justifyContent: 'center'
-    },
-    buttonIcon: {
-        justifyContent: 'left',
-        paddingTop: '7px',
-        marginLeft: '-7px'
-    },
-    buttonText: {
-        justifyContent: 'center',
-        width: '100%'
     }
 }));
 
@@ -60,10 +42,10 @@ const Login = () => {
     const classes = useStyles();
 
     const [loginState, setLoginState] = React.useState({
-        isLoading: false,
+        isPending: false,
         isErrored: false,
         isSubmitted: false,
-        feedback: 'Login',
+        text: 'Login',
         email: '',
         password: ''
     });
@@ -77,7 +59,7 @@ const Login = () => {
         event.preventDefault();
         setLoginState(prevState => ({
             ...prevState,
-            feedback: 'Login',
+            text: 'Login',
             isSubmitted: true,
             isErrored: false
         }));
@@ -86,25 +68,29 @@ const Login = () => {
 
         setLoginState(prevState => ({
             ...prevState,
-            feedback: 'Logging in ...',
-            isLoading: true
+            text: 'Logging in ...',
+            isPending: true
         }));
 
         const isEmailValid = loginState.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
         if (!isEmailValid) {
             setLoginState(prevState => ({
                 ...prevState,
-                feedback: 'Not a valid email',
-                isLoading: false,
+                text: 'Not a valid email',
+                isPending: false,
                 isErrored: true
             }));
         } else {
-
             const authResult = await login(loginState.email, loginState.password);
             if (authResult) {
                 setInLocalStorage('token', authResult.token);
                 setInLocalStorage('expiration', authResult.expirationDate);
                 setInLocalStorage('user', authResult.user);
+                if (authResult.user.teams.length > 0) {
+                    setInLocalStorage('currentTeam', authResult.user.teams[0]);
+                } else {
+                    console.log('no team!');
+                }
 
                 history.push({
                     pathname: '/main'
@@ -112,8 +98,8 @@ const Login = () => {
             } else {
                 setLoginState(prevState => ({
                     ...prevState,
-                    feedback: 'Failure && Try again ?',
-                    isLoading: false,
+                    text: 'Failure && Try again ?',
+                    isPending: false,
                     isErrored: true
                 }));
             }
@@ -137,7 +123,7 @@ const Login = () => {
                         title="Agile"
                     />
                     <CardContent>
-                        {loginState.isLoading && <LinearIndeterminate/>}
+                        {loginState.isPending && <LinearIndeterminate/>}
                         <Logo color="primary"
                               shouldBeCentered
                               shouldBeLargeFont
@@ -175,27 +161,10 @@ const Login = () => {
                         />
                     </CardContent>
                     <CardActions className={classes.actions}>
-
-                        <Fab
-                            variant="extended"
-                            size="medium"
-                            color="secondary"
-                            aria-label="add"
-                            className={classes.fabButton}
-                            onClick={handleSubmit}
-                        >
-                            <div className={classes.buttonIcon}>
-                                {(loginState.isLoading)
-                                    ? <CircularProgress size={25}/>
-                                    : (loginState.isErrored)
-                                        ? <ErrorIcon className={classes.extendedIcon}/>
-                                        : <PlayCircleFilledIcon className={classes.extendedIcon}/>
-                                }
-                            </div>
-                            <div className={classes.buttonText}>
-                                <Typography>{loginState.feedback}</Typography>
-                            </div>
-                        </Fab>
+                        <FeedbackButton
+                            handleSubmit={handleSubmit}
+                            actionFeedback={loginState}
+                        />
                     </CardActions>
                 </Card>
             </form>
