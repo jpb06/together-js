@@ -28,12 +28,17 @@ const Squeleton = ({Component, ...rest}) => {
     const [isFeedbackSnackbarOpen, setIsFeedbackSnackbarOpen] = React.useState(undefined);
 
     useEffect(() => {
+        console.log('squeleton use effect');
+        document.body.style.backgroundImage = "url('/static/images/patterns/hex.jpg')";
+        document.body.style.backgroundRepeat = 'repeat';
+
         setIsLoading(true);
         TogetherApi.setup(history);
 
         let token = getFromLocalStorage('token');
         let expirationDate = getFromLocalStorage('expiration');
         if (!token || !expirationDate || Date.parse(expirationDate) < new Date()) {
+            console.log('clearing');
             clearLocalStorage();
             history.push({
                 pathname: '/'
@@ -56,7 +61,7 @@ const Squeleton = ({Component, ...rest}) => {
         setIsLoading(isLoading);
     }, []);
 
-    const reportError = (variant, message) => {
+    const sendFeedback = (variant, message) => {
         feedbackQueue.current.push({
             variant,
             message,
@@ -80,7 +85,7 @@ const Squeleton = ({Component, ...rest}) => {
             <MenuAppBar/>
             {isLoading && <LinearProgress/>}
             <section className={classes.root}>
-                {isReady && <Component reportLoading={reportLoading} reportError={reportError} {...rest} />}
+                {isReady && <Component reportLoading={reportLoading} sendFeedback={sendFeedback} {...rest} />}
             </section>
             <FeedbackSnackbar
                 closeFeedbackSnackbar={closeFeedbackSnackbar}
