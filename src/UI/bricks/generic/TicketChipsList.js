@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const TicketChipsList = ({ticketsList, reportTicketRemoval, NoDataIconComponent}) => {
+const TicketChipsList = ({ticketsList, reportTicketRemoval, actionFeedback, NoDataIconComponent, ...rest}) => {
     const classes = useStyles();
 
     return (
@@ -24,7 +24,9 @@ const TicketChipsList = ({ticketsList, reportTicketRemoval, NoDataIconComponent}
                     <TicketChip
                         reportTicketRemoval={reportTicketRemoval}
                         ticketName={ticket.name}
-                        user={ticket.user}
+                        assignee={ticket.assignee}
+                        actionFeedback={actionFeedback}
+                        {...rest}
                     />
                 </Grid>
             ))
