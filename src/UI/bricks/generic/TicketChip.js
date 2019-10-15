@@ -5,6 +5,7 @@ import {makeStyles} from "@material-ui/core";
 import BuildIcon from '@material-ui/icons/Build';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CircularProgress from "@material-ui/core/CircularProgress";
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 const useStyles = makeStyles(theme => ({
     spacing: {
@@ -15,7 +16,6 @@ const useStyles = makeStyles(theme => ({
 
 const TicketChip = ({reportTicketRemoval, actionFeedback, ticketName, assignee}) => {
     const classes = useStyles();
-
     const getKey = () => ticketName;
     const handleRemoval = () => reportTicketRemoval(getKey());
 
@@ -30,8 +30,11 @@ const TicketChip = ({reportTicketRemoval, actionFeedback, ticketName, assignee})
                     : <Avatar><BuildIcon/></Avatar>
             }
             label={ticketName}
-            deleteIcon={actionFeedback.isPending && actionFeedback.key === ticketName ?
-                <CircularProgress color="secondary" size={25}/> : <CancelIcon/>}
+            deleteIcon={actionFeedback.isPending && actionFeedback.key === ticketName
+                ? <CircularProgress color="secondary" size={25}/>
+                : actionFeedback.isPending && actionFeedback.key !== ticketName
+                    ? <FiberManualRecordIcon/>
+                    : <CancelIcon/>}
             onDelete={handleRemoval}
             color="primary"
         />

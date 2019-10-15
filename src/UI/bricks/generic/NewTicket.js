@@ -1,7 +1,6 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
-import {makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import FeedbackButton from "./FeedbackButton";
 
@@ -24,17 +23,14 @@ const keys = [
     },
 ];
 
-const useStyles = makeStyles(theme => ({}));
-
 const NewTicket = ({reportSubmit, actionFeedback, users}) => {
-    const classes = useStyles();
-
     const [ticket, setTicket] = React.useState({
         key: 'WEB',
         number: '',
         userId: ''
     });
 
+    // Changing input...
     const handleChange = (e) => {
         setTicket({
             ...ticket,
@@ -42,6 +38,7 @@ const NewTicket = ({reportSubmit, actionFeedback, users}) => {
         });
     };
 
+    // submitting a new ticket
     const handleSubmit = () => {
         if (ticket.number !== ''
             && ((users && ticket.userId !== '') || !users)) {
@@ -61,7 +58,6 @@ const NewTicket = ({reportSubmit, actionFeedback, users}) => {
                     <TextField
                         fullWidth
                         select
-                        className={classes.textField}
                         variant="outlined"
                         label="Key"
                         name="key"

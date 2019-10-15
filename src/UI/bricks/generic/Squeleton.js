@@ -27,8 +27,8 @@ const Squeleton = ({Component, ...rest}) => {
     const [feedbackSnackbarInfo, setFeedbackSnackbarInfo] = React.useState({key: '', variant: 'error', message: ''});
     const [isFeedbackSnackbarOpen, setIsFeedbackSnackbarOpen] = React.useState(undefined);
 
+    // This will trigger everytime a navigation occurs
     useEffect(() => {
-        console.log('squeleton use effect');
         document.body.style.backgroundImage = "url('/static/images/patterns/hex.jpg')";
         document.body.style.backgroundRepeat = 'repeat';
 
@@ -38,7 +38,6 @@ const Squeleton = ({Component, ...rest}) => {
         let token = getFromLocalStorage('token');
         let expirationDate = getFromLocalStorage('expiration');
         if (!token || !expirationDate || Date.parse(expirationDate) < new Date()) {
-            console.log('clearing');
             clearLocalStorage();
             history.push({
                 pathname: '/'
@@ -49,6 +48,7 @@ const Squeleton = ({Component, ...rest}) => {
         setIsLoading(false);
     }, [history]);
 
+    // unstacking one message to display and displaying the taskbar
     const processFeedbackQueue = () => {
         if (feedbackQueue.current.length > 0) {
             setFeedbackSnackbarInfo(feedbackQueue.current.shift());
@@ -56,12 +56,13 @@ const Squeleton = ({Component, ...rest}) => {
         }
     };
 
-    // keep function reference
+    // keep function reference (otherwise the function reference would change with each render...)
     const reportLoading = useCallback((isLoading) => {
         setIsLoading(isLoading);
     }, []);
 
-    const sendFeedback = (variant, message) => {
+    // Dispatch from a child stating there is a message to display
+    const messageRequestedFromChild = (variant, message) => {
         feedbackQueue.current.push({
             variant,
             message,
@@ -85,7 +86,8 @@ const Squeleton = ({Component, ...rest}) => {
             <MenuAppBar/>
             {isLoading && <LinearProgress/>}
             <section className={classes.root}>
-                {isReady && <Component reportLoading={reportLoading} sendFeedback={sendFeedback} {...rest} />}
+                {isReady &&
+                <Component reportLoading={reportLoading} showSnackbar={messageRequestedFromChild} {...rest} />}
             </section>
             <FeedbackSnackbar
                 closeFeedbackSnackbar={closeFeedbackSnackbar}

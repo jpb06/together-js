@@ -50,11 +50,13 @@ const Login = () => {
         password: ''
     });
 
+    // Whenever form data changes...
     const updateField = e => setLoginState({
         ...loginState,
         [e.target.name]: e.target.value
     });
 
+    // Logging in...
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoginState(prevState => ({

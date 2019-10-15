@@ -1,10 +1,11 @@
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Card from "@material-ui/core/Card";
-import React from "react";
+import React, {useCallback} from "react";
 import {makeStyles} from "@material-ui/core";
 import clsx from "clsx";
 import CardHeader from "@material-ui/core/CardHeader";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -14,19 +15,18 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         opacity: 0.87
     },
-    header: {
-        marginTop: '0',
-        marginBottom: theme.spacing(1)
-    },
     media: {
-        height: '10px',
+        height: '7px',
     },
     content: {
         paddingTop: theme.spacing(1),
         marginTop: 'auto'
     },
-    validationUnset: {
+    defaultState: {
         backgroundColor: theme.palette.primary.main
+    },
+    validationUnset: {
+        backgroundColor: theme.palette.secondary.main
     },
     validationSet: {
         backgroundColor: 'green'
@@ -34,19 +34,31 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const ContentBox = ({title, content, ContentComponent, data, ...rest}) => {
+const ContentBox = ({title, content, ContentComponent, data, showSnackbar, ...rest}) => {
     const classes = useStyles();
 
-    const [isValidated, setIsValidated] = React.useState(false);
+    // Drives the look of the header bar
+    const [feedback, setFeedback] = React.useState({isValidated: false, isPending: false});
 
-    const reportValidation = (isValidated) => setIsValidated(isValidated);
+    // keep function reference (otherwise the function reference would change with each render...)
+    const informCurrent = useCallback((state) => {
+        setFeedback(state);
+    }, []);
 
     return (
         <Card className={classes.root}>
             <CardMedia
+                component={
+                    //  'div'
+                    feedback.isValidated
+                        ? 'div'
+                        : feedback.isPending
+                        ? () => <LinearProgress color="primary" className={clsx(classes.media)}/>
+                        : 'div'
+                }
                 className={clsx(classes.media, {
-                    [classes.validationUnset]: !isValidated,
-                    [classes.validationSet]: isValidated,
+                    [classes.validationUnset]: !feedback.isValidated,
+                    [classes.validationSet]: feedback.isValidated,
                 })}
                 title="Agile"
                 src="/"
@@ -54,7 +66,10 @@ const ContentBox = ({title, content, ContentComponent, data, ...rest}) => {
             <CardHeader title={title}/>
             <CardContent className={classes.content}>
                 {
-                    (ContentComponent) && <ContentComponent reportValidation={reportValidation} data={data} {...rest} />
+                    (ContentComponent) && <ContentComponent
+                        sendToParent={informCurrent}
+                        showSnackbar={showSnackbar}
+                        data={data} {...rest} />
                 }
                 {content}
 

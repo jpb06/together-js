@@ -5,7 +5,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 import WarningIcon from '@material-ui/icons/Warning';
 import {makeStyles} from "@material-ui/core";
-import {amber, green} from '@material-ui/core/colors';
+import {amber, green, grey} from '@material-ui/core/colors';
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import IconButton from "@material-ui/core/IconButton";
 import clsx from 'clsx';
@@ -25,7 +25,7 @@ const styles = makeStyles(theme => ({
         backgroundColor: theme.palette.error.dark,
     },
     info: {
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: grey[100],
     },
     warning: {
         backgroundColor: amber[700],

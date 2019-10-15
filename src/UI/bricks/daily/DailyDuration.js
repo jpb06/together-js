@@ -1,6 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
-import React from "react";
+import React, {useEffect} from "react";
 import {makeStyles} from "@material-ui/core";
 import {durationRanges} from './../../../logic/static.data';
 import {reportDuration} from "../../../logic/api/daily.api";
@@ -11,26 +11,31 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const DailyDuration = ({reportValidation, data, sendFeedback, currentTeam}) => {
+const DailyDuration = ({sendToParent, data, showSnackbar, currentTeam}) => {
     const classes = useStyles();
-
-    if (data === '') {
-        data = durationRanges[0].value;
-    } else {
-        reportValidation(true);
-    }
 
     const [duration, setDuration] = React.useState(data);
 
+    // This will trigger at component first render (once)
+    useEffect(() => {
+        if (data === '') {
+            setDuration(durationRanges[0].value);
+        } else {
+            sendToParent({isValidated: true, isPending: false});
+        }
+    }, [sendToParent, data, setDuration]);
+
+    // Changing duration
     const handleChange = () => async (event) => {
+        sendToParent({isValidated: false, isPending: true});
         setDuration(event.target.value);
 
         const result = await reportDuration(currentTeam._id, new Date().toUTCString(), event.target.value);
         if (result.status === 200) {
-            reportValidation(true);
-        } else {
-            console.log(result);
-            sendFeedback('error', 'Unable to save the daily duration');
+            sendToParent({isValidated: true, isPending: false});
+        } else if (result.status !== 401) {
+            sendToParent({isValidated: false, isPending: false});
+            showSnackbar('error', 'Unable to save the daily duration');
         }
     };
 

@@ -7,7 +7,7 @@ import DailyDoneTickets from "../bricks/daily/DailyDoneTickets";
 import Grid from "@material-ui/core/Grid";
 import {getDaily} from "../../logic/api/daily.api";
 import {getFromLocalStorage} from "../../logic/local.store";
-import Waiting from "../bricks/generic/waiting";
+import Waiting from "../bricks/generic/Waiting";
 import DailyFeelings from "../bricks/daily/DailyFeelings";
 import DailyIssues from "../bricks/daily/DailyIssues";
 import ApiError from "../bricks/generic/ApiError";
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Daily = ({reportLoading, sendFeedback}) => {
+const Daily = ({reportLoading, showSnackbar}) => {
     const classes = useStyles();
 
     const [daily, setDaily] = useState({});
@@ -32,6 +32,7 @@ const Daily = ({reportLoading, sendFeedback}) => {
     const [teamMembers, setTeamMembers] = useState([]);
     const [currentTeam, setCurrentTeam] = useState('');
 
+    // This will trigger at component first render (only once)
     useEffect(() => {
 
         reportLoading(true);
@@ -70,7 +71,7 @@ const Daily = ({reportLoading, sendFeedback}) => {
                         title="Daily duration"
                         ContentComponent={DailyDuration}
                         data={daily.durationIndicator}
-                        sendFeedback={sendFeedback}
+                        showSnackbar={showSnackbar}
                         currentTeam={currentTeam}
                     />
                     <h1>What happened since the last daily ?</h1>
@@ -85,7 +86,7 @@ const Daily = ({reportLoading, sendFeedback}) => {
                                 title="Unforeseen tickets"
                                 ContentComponent={DailyUnforeseenTickets}
                                 data={daily.unforeseenTickets}
-                                sendFeedback={sendFeedback}
+                                showSnackbar={showSnackbar}
                                 currentTeam={currentTeam}
                             />
                         </Grid>
@@ -95,7 +96,7 @@ const Daily = ({reportLoading, sendFeedback}) => {
                                 ContentComponent={DailyDoneTickets}
                                 teamMembers={teamMembers}
                                 data={{doneTickets: daily.doneTickets, teamMembers}}
-                                sendFeedback={sendFeedback}
+                                showSnackbar={showSnackbar}
                                 currentTeam={currentTeam}
                             />
                         </Grid>
@@ -109,7 +110,8 @@ const Daily = ({reportLoading, sendFeedback}) => {
                         className={classes.ticketsBoxes}
                     >
                         <Grid item md={6} xs={12}>
-                            <ContentBox title="Issues encountered" ContentComponent={DailyIssues}/>
+                            <ContentBox title="Issues encountered or subjects to not forget for next retrospective"
+                                        ContentComponent={DailyIssues}/>
                         </Grid>
                         <Grid item md={6} xs={12}>
                             <ContentBox title="Feelings" ContentComponent={DailyFeelings}/>
