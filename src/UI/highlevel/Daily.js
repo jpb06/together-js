@@ -9,7 +9,7 @@ import {getDaily} from "../../logic/api/daily.api";
 import {getFromLocalStorage} from "../../logic/local.store";
 import Waiting from "../bricks/generic/Waiting";
 import DailyFeelings from "../bricks/daily/DailyFeelings";
-import DailyIssues from "../bricks/daily/DailyIssues";
+import DailySubjects from "../bricks/daily/DailySubjects";
 import ApiError from "../bricks/generic/ApiError";
 import {getTeamMembers} from "../../logic/api/team.api";
 
@@ -110,8 +110,11 @@ const Daily = ({reportLoading, showSnackbar}) => {
                         className={classes.ticketsBoxes}
                     >
                         <Grid item md={6} xs={12}>
-                            <ContentBox title="Issues encountered or subjects to not forget for next retrospective"
-                                        ContentComponent={DailyIssues}/>
+                            <ContentBox title="Subjects to not forget for next retrospective"
+                                        ContentComponent={DailySubjects}
+                                        data={daily.doneTickets}
+                                        showSnackbar={showSnackbar}
+                            />
                         </Grid>
                         <Grid item md={6} xs={12}>
                             <ContentBox title="Feelings" ContentComponent={DailyFeelings}/>
