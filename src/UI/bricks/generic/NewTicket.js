@@ -3,25 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 import FeedbackButton from "./FeedbackButton";
-
-const keys = [
-    {
-        value: 'WEB',
-        label: 'WEB',
-    },
-    {
-        value: 'WHOOG',
-        label: 'WHOOG',
-    },
-    {
-        value: 'WRS',
-        label: 'WRS',
-    },
-    {
-        value: 'APP',
-        label: 'APP',
-    },
-];
+import {ticketKeys} from './../../../logic/static.data';
 
 const NewTicket = ({reportSubmit, actionFeedback, users}) => {
     const [ticket, setTicket] = React.useState({
@@ -65,7 +47,7 @@ const NewTicket = ({reportSubmit, actionFeedback, users}) => {
                         value={ticket.key}
                         onChange={handleChange}
                     >
-                        {keys.map(option => (
+                        {ticketKeys.map(option => (
                             <MenuItem key={option.value} value={option.value}>
                                 {option.label}
                             </MenuItem>
