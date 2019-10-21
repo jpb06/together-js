@@ -7,7 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Grid from "@material-ui/core/Grid";
 import Logo from "../bricks/menu/Logo";
-import LinearIndeterminate from "../demo/LinearUndeterminate";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import {setInLocalStorage} from "../../logic/local.store";
 import {login} from "../../logic/api/security.api";
 import {useHistory} from "react-router";
@@ -125,7 +125,7 @@ const Login = () => {
                         title="Agile"
                     />
                     <CardContent>
-                        {loginState.isPending && <LinearIndeterminate/>}
+                        {loginState.isPending && <LinearProgress/>}
                         <Logo color="primary"
                               shouldBeCentered
                               shouldBeLargeFont
