@@ -49,7 +49,6 @@ const ContentBox = ({title, content, ContentComponent, data, showSnackbar, ...re
         <Card className={classes.root}>
             <CardMedia
                 component={
-                    //  'div'
                     feedback.isValidated
                         ? 'div'
                         : feedback.isPending
