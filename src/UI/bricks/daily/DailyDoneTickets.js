@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect} from "react";
 import Grid from "@material-ui/core/Grid";
-import TicketChipsList from "../generic/TicketChipsList";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import NewTicket from "../generic/NewTicket";
 import {addDoneTicket, removeDoneTicket} from "../../../logic/api/daily.api";
+import TicketList from "../generic/TicketsList";
 
 const DailyDoneTickets = ({sendToParent, data, showSnackbar, currentTeam}) => {
 
@@ -84,8 +84,9 @@ const DailyDoneTickets = ({sendToParent, data, showSnackbar, currentTeam}) => {
     return (
         <div>
             <Grid container justify="center">
-                <TicketChipsList
+                <TicketList
                     ticketsList={doneTickets}
+                    avatarAsAssignee={true}
                     reportTicketRemoval={reportTicketRemoval}
                     actionFeedback={removeActionFeedback}
                     NoDataIconComponent={AssignmentTurnedInIcon}

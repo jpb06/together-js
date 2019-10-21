@@ -2,8 +2,9 @@ import React, {useCallback, useEffect} from "react";
 import NewTicket from "../generic/NewTicket";
 import Grid from "@material-ui/core/Grid";
 import AssignmentLateRoundedIcon from '@material-ui/icons/AssignmentLateRounded';
-import TicketChipsList from "../generic/TicketChipsList";
 import {addUnforeseenTicket, removeUnforeseenTicket} from "../../../logic/api/daily.api";
+import TicketList from "../generic/TicketsList";
+import {getFromLocalStorage} from "../../../logic/local.store";
 
 const DailyUnforeseenTickets = ({sendToParent, data, showSnackbar, currentTeam}) => {
 
@@ -35,8 +36,14 @@ const DailyUnforeseenTickets = ({sendToParent, data, showSnackbar, currentTeam})
                 const result = await addUnforeseenTicket(currentTeam._id, new Date().toUTCString(), name);
 
                 if (result.status === 201) {
+                    const user = getFromLocalStorage('user');
                     setUnforeseenTickets(state => state.concat({
-                        name: name
+                        name: name,
+                        creator: {
+                            firstName: user.firstname,
+                            lastName: user.lastname,
+                            avatarName: user.avatar
+                        }
                     }));
                     setAddActionFeedback({isPending: false, isErrored: false, text: 'Add'});
                     // no need to call actionFeedback because it will be handled by useEffect
@@ -75,8 +82,9 @@ const DailyUnforeseenTickets = ({sendToParent, data, showSnackbar, currentTeam})
     return (
         <div>
             <Grid container justify="center">
-                <TicketChipsList
+                <TicketList
                     ticketsList={unforeseenTickets}
+                    avatarAsAssignee={false}
                     reportTicketRemoval={reportTicketRemoval}
                     actionFeedback={{...removeActionFeedback}}
                     NoDataIconComponent={AssignmentLateRoundedIcon}
