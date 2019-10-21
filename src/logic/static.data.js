@@ -17,4 +17,55 @@ const durationRanges = [
     },
 ];
 
-export {durationRanges};
+const subjectTypes = [
+    {
+        value: 'drive',
+        label: 'Drive',
+        showDivider: false
+    },
+    {
+        value: 'restraint',
+        label: 'Restraint',
+        showDivider: false
+    },
+    {
+        value: 'risk',
+        label: 'Risk',
+        showDivider: true
+    },
+    {
+        value: 'team',
+        label: 'Team',
+        showDivider: false
+    },
+    {
+        value: 'goal',
+        label: 'Goal',
+        showDivider: false
+    },
+];
+
+const ticketKeys = [
+    {
+        value: 'WEB',
+        label: 'WEB',
+    },
+    {
+        value: 'WHOOG',
+        label: 'WHOOG',
+    },
+    {
+        value: 'WRS',
+        label: 'WRS',
+    },
+    {
+        value: 'APP',
+        label: 'APP',
+    },
+];
+
+export {
+    durationRanges,
+    subjectTypes,
+    ticketKeys
+};
