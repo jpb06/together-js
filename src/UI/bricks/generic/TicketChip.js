@@ -12,6 +12,16 @@ const useStyles = makeStyles(theme => ({
         marginRight: '4px',
         marginBottom: '4px'
     },
+    chipUserAvatar: {
+        width: '47px',
+        height: '47px',
+        marginLeft: '0px'
+    },
+    chipIcon: {
+        width: '32px',
+        height: '32px',
+        marginLeft: '0px'
+    }
 }));
 
 const TicketChip = ({reportTicketRemoval, actionFeedback, ticketName, assignee}) => {
@@ -25,9 +35,13 @@ const TicketChip = ({reportTicketRemoval, actionFeedback, ticketName, assignee})
             className={classes.spacing}
             avatar={
                 assignee
-                    ? <Avatar alt={`${assignee.firstName} ${assignee.lastName}`}
-                              src={`/static/images/avatars/${assignee.avatarName}`}/>
-                    : <Avatar><BuildIcon/></Avatar>
+                    ? <Avatar
+                        className={classes.chipUserAvatar}
+                        alt={`${assignee.firstName} ${assignee.lastName}`}
+                        src={`/static/images/avatars/${assignee.avatarName}`}
+                    />
+                    :
+                    <Avatar className={classes.chipIcon}><BuildIcon/></Avatar>
             }
             label={ticketName}
             deleteIcon={actionFeedback.isPending && actionFeedback.key === ticketName
