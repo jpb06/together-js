@@ -1,6 +1,6 @@
 import React from "react";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import {MuiThemeProvider} from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Login from "./UI/highlevel/Login";
 import {BrowserRouter, Route} from "react-router-dom";
