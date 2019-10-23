@@ -112,8 +112,9 @@ const Daily = ({reportLoading, showSnackbar}) => {
                         <Grid item md={6} xs={12}>
                             <ContentBox title="Subjects to not forget for next retrospective"
                                         ContentComponent={DailySubjects}
-                                        data={daily.doneTickets}
+                                        data={daily.subjects}
                                         showSnackbar={showSnackbar}
+                                        currentTeam={currentTeam}
                             />
                         </Grid>
                         <Grid item md={6} xs={12}>
