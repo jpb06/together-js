@@ -2,7 +2,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import React, {useEffect} from "react";
 import {makeStyles} from "@material-ui/core";
-import {durationRanges} from './../../../logic/static.data';
+import staticDurations from "../../../logic/static/static.durations";
 import {reportDuration} from "../../../logic/api/daily.api";
 
 const useStyles = makeStyles(theme => ({
@@ -19,7 +19,7 @@ const DailyDuration = ({sendToParent, data, showSnackbar, currentTeam}) => {
     // This will trigger at component first render (once)
     useEffect(() => {
         if (data === '') {
-            setDuration(durationRanges[0].value);
+            setDuration(staticDurations[0].value);
         } else {
             sendToParent({isValidated: true, isPending: false});
         }
@@ -50,7 +50,7 @@ const DailyDuration = ({sendToParent, data, showSnackbar, currentTeam}) => {
                 onChange={handleChange()}
                 fullWidth
             >
-                {durationRanges.map(option => (
+                {staticDurations.map(option => (
                     <MenuItem key={option.value} value={option.value}>
                         {option.label}
                     </MenuItem>

@@ -2,8 +2,8 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
-import FeedbackButton from "./FeedbackButton";
-import {ticketKeys} from './../../../logic/static.data';
+import FeedbackButton from "../../generic/buttons/FeedbackButton";
+import staticTicketKeys from "../../../../logic/static/static.ticket.keys";
 
 const NewTicket = ({reportSubmit, actionFeedback, users}) => {
     const [ticket, setTicket] = React.useState({
@@ -47,7 +47,7 @@ const NewTicket = ({reportSubmit, actionFeedback, users}) => {
                         value={ticket.key}
                         onChange={handleChange}
                     >
-                        {ticketKeys.map(option => (
+                        {staticTicketKeys.map(option => (
                             <MenuItem key={option.value} value={option.value}>
                                 {option.label}
                             </MenuItem>

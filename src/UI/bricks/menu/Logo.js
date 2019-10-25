@@ -3,7 +3,7 @@ import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import React from "react";
 import {makeStyles, Typography} from "@material-ui/core";
 import clsx from "clsx";
-import ForwardNavLink from "../generic/ForwardNavLink";
+import ForwardNavLink from "./ForwardNavLink";
 
 const useStyles = makeStyles(theme => ({
     container: {

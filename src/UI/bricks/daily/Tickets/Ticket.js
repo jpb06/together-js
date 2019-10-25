@@ -8,8 +8,9 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ListItem from "@material-ui/core/ListItem";
 import {green} from "@material-ui/core/colors";
-import PendingButton from "./PendingButton";
+import PendingButton from "../../generic/buttons/PendingButton";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(theme => ({
     wrapper: {
@@ -23,9 +24,13 @@ const useStyles = makeStyles(theme => ({
         zIndex: 1,
         color: green[500],
     },
+    user: {
+        color: theme.palette.primary.main,
+        paddingLeft: theme.spacing(1)
+    }
 }));
 
-const Ticket = ({reportTicketRemoval, actionFeedback, ticketName, user, showDivider}) => {
+const Ticket = ({reportTicketRemoval, actionFeedback, ticketName, user, userType, showDivider}) => {
     const classes = useStyles();
     const getKey = () => ticketName;
     const handleRemoval = () => reportTicketRemoval(getKey());
@@ -39,7 +44,21 @@ const Ticket = ({reportTicketRemoval, actionFeedback, ticketName, user, showDivi
                 />
             </ListItemAvatar>
             <ListItemText
-                primary={ticketName}
+                primary={
+                    <React.Fragment>
+                        {userType === 'creator' ? 'Created by' : 'Assigned to'}
+                        <Typography
+                            component="span"
+                            variant="body2"
+                            className={classes.user}
+                            color="textPrimary"
+                        >
+                            {`${user.firstName} ${user.lastName}`}
+                        </Typography>
+                        {/*<TicketUserType type={userType}/>*/}
+                    </React.Fragment>
+                }
+                secondary={ticketName}
             />
             <ListItemSecondaryAction>
                 <Grid container>

@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from "react";
-import NewSubject from "../generic/NewSubject";
-import SubjectsList from "../generic/SubjectsList";
+import NewSubject from "./Subjects/NewSubject";
+import SubjectsList from "./Subjects/SubjectsList";
 import ForumIcon from '@material-ui/icons/Forum';
 import {addSubject, removeSubject} from "../../../logic/api/daily.api";
 import Grid from "@material-ui/core/Grid";
@@ -65,7 +65,7 @@ const DailySubjects = ({sendToParent, data, showSnackbar, currentTeam}) => {
                 setRemoveActionFeedback({isPending: false, id: ''});
                 // no need to call actionFeedback because it will be handled by useEffect
             } else if (result.status !== 401) {
-                showSnackbar('error', `Unable to remove the ticket ${id}`);
+                showSnackbar('error', `Unable to remove the subject ${id}`);
                 sendToParent({isValidated: true, isPending: false});
                 setRemoveActionFeedback({isPending: false, id: ''});
             }

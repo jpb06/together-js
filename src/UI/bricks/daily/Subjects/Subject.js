@@ -4,7 +4,7 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Grid from "@material-ui/core/Grid";
-import PendingButton from "./PendingButton";
+import PendingButton from "../../generic/buttons/PendingButton";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
@@ -54,7 +54,7 @@ const Subject = ({subject, reportSubjectRemoval, actionFeedback, showDivider}) =
                         >
                             {`${subject.creator.firstName} ${subject.creator.lastName}`}
                         </Typography>
-                        <SubjectType type={subject.type} label={subject.type}/>
+                        <SubjectType typeId={subject.type}/>
                     </React.Fragment>
                 }
                 secondary={subject.description}

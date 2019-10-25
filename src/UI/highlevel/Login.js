@@ -12,7 +12,7 @@ import {setInLocalStorage} from "../../logic/local.store";
 import {login} from "../../logic/api/security.api";
 import {useHistory} from "react-router";
 import {fade} from "@material-ui/core/styles";
-import FeedbackButton from "../bricks/generic/FeedbackButton";
+import FeedbackButton from "../bricks/generic/buttons/FeedbackButton";
 
 const useStyles = makeStyles(theme => ({
     root: {

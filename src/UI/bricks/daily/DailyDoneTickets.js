@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect} from "react";
 import Grid from "@material-ui/core/Grid";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
-import NewTicket from "../generic/NewTicket";
+import NewTicket from "./Tickets/NewTicket";
 import {addDoneTicket, removeDoneTicket} from "../../../logic/api/daily.api";
-import TicketList from "../generic/TicketsList";
+import TicketList from "./Tickets/TicketsList";
 
 const DailyDoneTickets = ({sendToParent, data, showSnackbar, currentTeam}) => {
 

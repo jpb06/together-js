@@ -10,7 +10,7 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import Divider from "@material-ui/core/Divider";
 import clsx from "clsx";
 import Logo from './Logo';
-import SideMenuItem from "../generic/SideMenuItem";
+import SideMenuItem from "./SideMenuItem";
 
 const useStyles = makeStyles(theme => ({
     fullList: {

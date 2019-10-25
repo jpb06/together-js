@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect} from "react";
-import NewTicket from "../generic/NewTicket";
+import NewTicket from "./Tickets/NewTicket";
 import Grid from "@material-ui/core/Grid";
 import AssignmentLateRoundedIcon from '@material-ui/icons/AssignmentLateRounded';
 import {addUnforeseenTicket, removeUnforeseenTicket} from "../../../logic/api/daily.api";
-import TicketList from "../generic/TicketsList";
+import TicketList from "./Tickets/TicketsList";
 import {getFromLocalStorage} from "../../../logic/local.store";
 
 const DailyUnforeseenTickets = ({sendToParent, data, showSnackbar, currentTeam}) => {

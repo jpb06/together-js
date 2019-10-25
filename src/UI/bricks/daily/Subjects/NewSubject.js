@@ -1,9 +1,9 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import FeedbackButton from "./FeedbackButton";
+import FeedbackButton from "../../generic/buttons/FeedbackButton";
 import MenuItem from "@material-ui/core/MenuItem";
-import {subjectTypes} from "./../../../logic/static.data";
+import staticSubjectTypes from "../../../../logic/static/static.subject.types";
 import SubjectType from "./SubjectType";
 
 const NewSubject = ({reportSubmit, actionFeedback}) => {
@@ -46,9 +46,9 @@ const NewSubject = ({reportSubmit, actionFeedback}) => {
                         value={subject.type}
                         onChange={handleChange}
                     >
-                        {subjectTypes.map(type => (
+                        {staticSubjectTypes.map(type => (
                             <MenuItem key={type.value} divider={type.showDivider} value={type.value}>
-                                <SubjectType type={type.value} label={type.label}/>
+                                <SubjectType typeId={type.value} label={type.label}/>
                             </MenuItem>
                         ))}
                     </TextField>

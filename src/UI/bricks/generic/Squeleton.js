@@ -5,7 +5,7 @@ import {clearLocalStorage, getFromLocalStorage} from "../../../logic/local.store
 import {useHistory} from "react-router";
 import TogetherApi from "../../../logic/api/setup/together.api";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import FeedbackSnackbar from "./FeedbackSnackbar";
+import FeedbackSnackbar from "./errors/FeedbackSnackbar";
 
 const useStyles = makeStyles(theme => ({
     root: {

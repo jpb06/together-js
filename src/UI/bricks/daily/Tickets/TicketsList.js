@@ -28,6 +28,7 @@ const TicketList = ({ticketsList, reportTicketRemoval, actionFeedback, NoDataIco
                             reportTicketRemoval={reportTicketRemoval}
                             ticketName={ticket.name}
                             user={avatarAsAssignee ? ticket.assignee : ticket.creator}
+                            userType={avatarAsAssignee ? 'assignee' : 'creator'}
                             actionFeedback={actionFeedback}
                             showDivider={index !== ticketsList.length - 1}
                             {...rest}

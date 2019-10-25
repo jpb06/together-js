@@ -4,7 +4,7 @@ import React from "react";
 
 const FeedbackSnackbar = ({isOpen, closeFeedbackSnackbar, exitFeedbackSnackbar, feedbackSnackbarInfo}) => {
 
-    // Manually closing the snackbar
+    // Manually closing the errors
     const handleFeedbackSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
