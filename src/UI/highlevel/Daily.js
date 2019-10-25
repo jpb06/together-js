@@ -10,7 +10,7 @@ import {getFromLocalStorage} from "../../logic/local.store";
 import Waiting from "../bricks/generic/Waiting";
 import DailyFeelings from "../bricks/daily/DailyFeelings";
 import DailySubjects from "../bricks/daily/DailySubjects";
-import ApiError from "../bricks/generic/ApiError";
+import ApiError from "../bricks/generic/errors/ApiError";
 import {getTeamMembers} from "../../logic/api/team.api";
 
 const useStyles = makeStyles(theme => ({
@@ -118,7 +118,12 @@ const Daily = ({reportLoading, showSnackbar}) => {
                             />
                         </Grid>
                         <Grid item md={6} xs={12}>
-                            <ContentBox title="Feelings" ContentComponent={DailyFeelings}/>
+                            <ContentBox title="Feelings"
+                                        ContentComponent={DailyFeelings}
+                                        data={daily.feelings}
+                                        showSnackbar={showSnackbar}
+                                        currentTeam={currentTeam}
+                            />
                         </Grid>
                     </Grid>
                 </div>
