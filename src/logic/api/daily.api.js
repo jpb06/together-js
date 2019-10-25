@@ -57,10 +57,26 @@ const removeSubject = async (teamId, date, id) =>
         subjectId: id
     }));
 
+const addFeeling = async (teamId, date, feeling) =>
+    ensureStatus(await TogetherApi.Instance.post('daily/feelings/add', {
+        teamId: teamId,
+        date: date,
+        type: feeling.type,
+        comment: feeling.comment
+    }));
+
+const removeFeeling = async (teamId, date, id) =>
+    ensureStatus(await TogetherApi.Instance.post('daily/feelings/remove', {
+        teamId: teamId,
+        date: date,
+        feelingId: id
+    }));
+
 export {
     getDaily,
     reportDuration,
     addUnforeseenTicket, removeUnforeseenTicket,
     addDoneTicket, removeDoneTicket,
-    addSubject, removeSubject
+    addSubject, removeSubject,
+    addFeeling, removeFeeling
 };
