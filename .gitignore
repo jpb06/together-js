@@ -23,6 +23,3 @@ yarn-debug.log*
 yarn-error.log*
 /.vs/together
 /.idea/
-together.njsproj
-together.njsproj.user
-together.sln
