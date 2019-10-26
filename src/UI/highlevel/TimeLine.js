@@ -1,6 +1,6 @@
 import React from "react";
 //import {makeStyles} from "@material-ui/core";
-import ContentBox from "../bricks/generic/ContentBox";
+import ContentBox from "../bricks/generic/containers/ContentBox";
 
 //const useStyles = makeStyles(theme => ({}));
 
