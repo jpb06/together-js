@@ -1,14 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-
-import ImageAvatar from '../user/ImageAvatar';
-
+import UserAvatar from '../user/UserAvatar';
 import Logo from './Logo';
 import SideMenu from './SideMenu';
+import {getFromLocalStorage} from "../../../logic/local.store";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,10 +23,17 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const MenuAppBar = () => {
+const TopMenu = () => {
     const classes = useStyles();
 
     const [isSiderOpen, setIsSiderOpen] = React.useState(false);
+    const [user, setUser] = React.useState({});
+
+    // This will trigger when the component is mounted
+    useEffect(() => {
+        const storedUser = getFromLocalStorage('user');
+        setUser(storedUser);
+    }, []);
 
     const toggleDrawer = (open) => event => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -50,7 +57,9 @@ const MenuAppBar = () => {
 
                     <Logo shouldBeCentered={false} color="primary"/>
 
-                    <ImageAvatar/>
+                    <Link to="/account">
+                        <UserAvatar data={user}/>
+                    </Link>
                 </Toolbar>
             </AppBar>
 
@@ -59,4 +68,4 @@ const MenuAppBar = () => {
     );
 };
 
-export default MenuAppBar;
+export default TopMenu;
