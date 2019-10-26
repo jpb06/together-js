@@ -1,11 +1,12 @@
-import MenuAppBar from "../menu/MenuAppBar";
+import TopMenu from "../../menu/TopMenu";
 import React, {useCallback, useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core";
-import {clearLocalStorage, getFromLocalStorage} from "../../../logic/local.store";
+import {clearLocalStorage, getFromLocalStorage} from "../../../../logic/local.store";
 import {useHistory} from "react-router";
-import TogetherApi from "../../../logic/api/setup/together.api";
+import TogetherApi from "../../../../logic/api/setup/together.api";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import FeedbackSnackbar from "./errors/FeedbackSnackbar";
+import FeedbackSnackbar from "../errors/FeedbackSnackbar";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -83,11 +84,27 @@ const Squeleton = ({Component, ...rest}) => {
 
     return (
         <div>
-            <MenuAppBar/>
+            <TopMenu/>
             {isLoading && <LinearProgress/>}
             <section className={classes.root}>
                 {isReady &&
-                <Component reportLoading={reportLoading} showSnackbar={messageRequestedFromChild} {...rest} />}
+                <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="flex-start"
+                >
+                    <Grid
+                        container
+                        direction="column"
+                        justify="flex-start"
+                        alignItems="center"
+                        style={{maxWidth: '1000px'}}
+                    >
+                        <Component reportLoading={reportLoading} showSnackbar={messageRequestedFromChild} {...rest} />
+                    </Grid>
+                </Grid>
+                }
             </section>
             <FeedbackSnackbar
                 closeFeedbackSnackbar={closeFeedbackSnackbar}
