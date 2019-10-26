@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core";
-import ContentBox from "../bricks/generic/ContentBox";
+import ContentBox from "../bricks/generic/containers/ContentBox";
 import DailyDuration from "../bricks/daily/DailyDuration";
 import DailyUnforeseenTickets from "../bricks/daily/DailyUnforeseenTickets";
 import DailyDoneTickets from "../bricks/daily/DailyDoneTickets";
@@ -66,67 +66,63 @@ const Daily = ({reportLoading, showSnackbar}) => {
     } else {
         if (isReady) {
             return (
-                <div>
-                    <ContentBox
-                        title="Daily duration"
-                        ContentComponent={DailyDuration}
-                        data={daily.durationIndicator}
-                        showSnackbar={showSnackbar}
-                        currentTeam={currentTeam}
-                    />
-                    <h1>What happened since the last daily ?</h1>
-                    <Grid
-                        container
-                        spacing={1}
-                        direction="row"
-                        className={classes.ticketsBoxes}
-                    >
-                        <Grid item md={6} xs={12}>
-                            <ContentBox
-                                title="Unforeseen tickets"
-                                ContentComponent={DailyUnforeseenTickets}
-                                data={daily.unforeseenTickets}
-                                showSnackbar={showSnackbar}
-                                currentTeam={currentTeam}
-                            />
-                        </Grid>
-                        <Grid item md={6} xs={12}>
-                            <ContentBox
-                                title="Done tickets"
-                                ContentComponent={DailyDoneTickets}
-                                teamMembers={teamMembers}
-                                data={{doneTickets: daily.doneTickets, teamMembers}}
-                                showSnackbar={showSnackbar}
-                                currentTeam={currentTeam}
-                            />
-                        </Grid>
-
+                <Grid
+                    container
+                    spacing={1}
+                    direction="row"
+                    className={classes.ticketsBoxes}
+                >
+                    <Grid item md={12} xs={12}>
+                        <ContentBox
+                            title="Daily duration"
+                            ContentComponent={DailyDuration}
+                            data={daily.durationIndicator}
+                            showSnackbar={showSnackbar}
+                            currentTeam={currentTeam}
+                        />
                     </Grid>
-                    <h1>Is there something else worth noting?</h1>
-                    <Grid
-                        container
-                        spacing={1}
-                        direction="row"
-                        className={classes.ticketsBoxes}
-                    >
-                        <Grid item md={6} xs={12}>
-                            <ContentBox title="Subjects to not forget for next retrospective"
-                                        ContentComponent={DailySubjects}
-                                        data={daily.subjects}
-                                        showSnackbar={showSnackbar}
-                                        currentTeam={currentTeam}
-                            />
-                        </Grid>
-                        <Grid item md={6} xs={12}>
-                            <ContentBox title="Feelings"
-                                        ContentComponent={DailyFeelings}
-                                        data={daily.feelings}
-                                        showSnackbar={showSnackbar}
-                                        currentTeam={currentTeam}
-                            />
-                        </Grid>
+                    <Grid md={12} xs={12}>
+                        <h1>What happened since the last daily ?</h1>
                     </Grid>
-                </div>
+                    <Grid item md={6} xs={12}>
+                        <ContentBox
+                            title="Unforeseen tickets"
+                            ContentComponent={DailyUnforeseenTickets}
+                            data={daily.unforeseenTickets}
+                            showSnackbar={showSnackbar}
+                            currentTeam={currentTeam}
+                        />
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                        <ContentBox
+                            title="Done tickets"
+                            ContentComponent={DailyDoneTickets}
+                            teamMembers={teamMembers}
+                            data={{doneTickets: daily.doneTickets, teamMembers}}
+                            showSnackbar={showSnackbar}
+                            currentTeam={currentTeam}
+                        />
+                    </Grid>
+                    <Grid md={12} xs={12}>
+                        <h1>Is there something else worth noting?</h1>
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                        <ContentBox title="Subjects to not forget for next retrospective"
+                                    ContentComponent={DailySubjects}
+                                    data={daily.subjects}
+                                    showSnackbar={showSnackbar}
+                                    currentTeam={currentTeam}
+                        />
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                        <ContentBox title="Feelings"
+                                    ContentComponent={DailyFeelings}
+                                    data={daily.feelings}
+                                    showSnackbar={showSnackbar}
+                                    currentTeam={currentTeam}
+                        />
+                    </Grid>
+                </Grid>
             );
         } else {
             return <Waiting/>;
