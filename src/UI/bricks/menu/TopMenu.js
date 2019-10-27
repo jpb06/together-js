@@ -58,7 +58,7 @@ const TopMenu = () => {
                     <Logo shouldBeCentered={false} color="primary"/>
 
                     <Link to="/account">
-                        <UserAvatar data={user}/>
+                        <UserAvatar user={user}/>
                     </Link>
                 </Toolbar>
             </AppBar>

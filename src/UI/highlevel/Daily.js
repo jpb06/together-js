@@ -14,7 +14,7 @@ import ApiError from "../bricks/generic/errors/ApiError";
 import {getTeamMembers} from "../../logic/api/team.api";
 
 const useStyles = makeStyles(theme => ({
-    ticketsBoxes: {
+    withMargin: {
         marginBottom: theme.spacing(1)
     },
     progressIcon: {
@@ -70,7 +70,7 @@ const Daily = ({reportLoading, showSnackbar}) => {
                     container
                     spacing={1}
                     direction="row"
-                    className={classes.ticketsBoxes}
+                    className={classes.withMargin}
                 >
                     <Grid item md={12} xs={12}>
                         <ContentBox
@@ -107,7 +107,7 @@ const Daily = ({reportLoading, showSnackbar}) => {
                         <h1>Is there something else worth noting?</h1>
                     </Grid>
                     <Grid item md={6} xs={12}>
-                        <ContentBox title="Subjects to not forget for next retrospective"
+                        <ContentBox title="Retrospective subjects"
                                     ContentComponent={DailySubjects}
                                     data={daily.subjects}
                                     showSnackbar={showSnackbar}

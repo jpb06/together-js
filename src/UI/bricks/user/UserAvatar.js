@@ -13,13 +13,13 @@ const useStyles = makeStyles({
     }
 });
 
-const UserAvatar = ({data, isBigAvatar}) => {
+const UserAvatar = ({user, isBigAvatar}) => {
     const classes = useStyles();
 
     return (
         <Avatar
-            alt={`${data.firstName} ${data.lastName}`}
-            src={`/static/images/avatars/${data.avatar}`}
+            alt={`${user.firstName} ${user.lastName}`}
+            src={`/static/images/avatars/${user.avatarName}`}
             className={clsx(classes.avatar, {
                 [classes.big]: isBigAvatar,
             })}

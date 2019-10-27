@@ -40,9 +40,9 @@ const DailyUnforeseenTickets = ({sendToParent, data, showSnackbar, currentTeam})
                     setUnforeseenTickets(state => state.concat({
                         name: name,
                         creator: {
-                            firstName: user.firstname,
-                            lastName: user.lastname,
-                            avatarName: user.avatar
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                            avatarName: user.avatarName
                         }
                     }));
                     setAddActionFeedback({isPending: false, isErrored: false, text: 'Add'});
