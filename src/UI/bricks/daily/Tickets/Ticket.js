@@ -55,7 +55,6 @@ const Ticket = ({reportTicketRemoval, actionFeedback, ticketName, user, userType
                         >
                             {`${user.firstName} ${user.lastName}`}
                         </Typography>
-                        {/*<TicketUserType type={userType}/>*/}
                     </React.Fragment>
                 }
                 secondary={ticketName}
