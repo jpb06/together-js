@@ -14,6 +14,9 @@ const useStyles = makeStyles(theme => ({
     },
     media: {
         height: '15px'
+    },
+    fixedWidth: {
+        maxWidth: '1000px'
     }
 }));
 
@@ -99,7 +102,7 @@ const Squeleton = ({Component, ...rest}) => {
                         direction="column"
                         justify="flex-start"
                         alignItems="center"
-                        style={{maxWidth: '1000px'}}
+                        className={classes.fixedWidth}
                     >
                         <Component reportLoading={reportLoading} showSnackbar={messageRequestedFromChild} {...rest} />
                     </Grid>
