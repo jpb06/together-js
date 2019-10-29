@@ -81,7 +81,7 @@ const Daily = ({reportLoading, showSnackbar}) => {
                             currentTeam={currentTeam}
                         />
                     </Grid>
-                    <Grid md={12} xs={12}>
+                    <Grid item md={12} xs={12}>
                         <h1>What happened since the last daily ?</h1>
                     </Grid>
                     <Grid item md={6} xs={12}>
@@ -103,7 +103,7 @@ const Daily = ({reportLoading, showSnackbar}) => {
                             currentTeam={currentTeam}
                         />
                     </Grid>
-                    <Grid md={12} xs={12}>
+                    <Grid item md={12} xs={12}>
                         <h1>Is there something else worth noting?</h1>
                     </Grid>
                     <Grid item md={6} xs={12}>
