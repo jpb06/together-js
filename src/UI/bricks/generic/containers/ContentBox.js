@@ -30,6 +30,9 @@ const useStyles = makeStyles(theme => ({
     },
     validationSet: {
         backgroundColor: 'green'
+    },
+    cardHeader: {
+        paddingBottom: '0'
     }
 
 }));
@@ -62,7 +65,7 @@ const ContentBox = ({title, content, ContentComponent, data, showSnackbar, ...re
                 title="Agile"
                 src="/"
             />
-            <CardHeader title={title}/>
+            <CardHeader title={title} className={classes.cardHeader}/>
             <CardContent className={classes.content}>
                 {
                     (ContentComponent) && <ContentComponent
