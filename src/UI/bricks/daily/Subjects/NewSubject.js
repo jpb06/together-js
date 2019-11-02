@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import FeedbackButton from "../../generic/buttons/FeedbackButton";
 import MenuItem from "@material-ui/core/MenuItem";
-import staticSubjectTypes from "../../../../logic/static/static.subject.types";
+import {staticSubjectTypes} from "../../../../logic/static/static.subject.types";
 import SubjectType from "./SubjectType";
 
 const NewSubject = ({reportSubmit, actionFeedback}) => {

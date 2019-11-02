@@ -1,11 +1,6 @@
 import {makeStyles, Typography} from "@material-ui/core";
 import React from "react";
-import GroupIcon from '@material-ui/icons/Group';
-import ForwardIcon from '@material-ui/icons/Forward';
-import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
-import RowingIcon from '@material-ui/icons/Rowing';
-import ErrorIcon from '@material-ui/icons/Error';
-import staticSubjectTypes from "../../../../logic/static/static.subject.types";
+import {staticSubjectTypes, SubjectTypeIcon} from "../../../../logic/static/static.subject.types";
 
 const useStyles = makeStyles(theme => ({
     middleVerticalAlign: {
@@ -19,20 +14,11 @@ const useStyles = makeStyles(theme => ({
 const SubjectType = ({typeId, label}) => {
     const classes = useStyles();
 
+    const IconComponent = SubjectTypeIcon(typeId);
+
     return (
         <span>
-            {typeId === 1
-                ? <ForwardIcon className={classes.middleVerticalAlign}/>
-                : typeId === 2
-                    ? <RowingIcon className={classes.middleVerticalAlign}/>
-                    : typeId === 3
-                        ? <ErrorIcon className={classes.middleVerticalAlign}/>
-                        : typeId === 4
-                            ? <GroupIcon className={classes.middleVerticalAlign}/>
-                            : typeId === 5
-                                ? <DoneOutlineIcon className={classes.middleVerticalAlign}/>
-                                : undefined
-            }
+            <IconComponent className={classes.middleVerticalAlign}/>
             <Typography variant={'caption'} className={classes.text}>
                 {label ?
                     label :

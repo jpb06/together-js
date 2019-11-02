@@ -1,9 +1,5 @@
-import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
-import SentimentVeryDissatisfiedOutlinedIcon from '@material-ui/icons/SentimentVeryDissatisfiedOutlined';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import {makeStyles, Typography} from "@material-ui/core";
-import staticFeelingTypes from "../../../../logic/static/static.feelings.types";
+import {FeelingTypeIcon, staticFeelingTypes} from "../../../../logic/static/static.feelings.types";
 import React from "react";
 
 const useStyles = makeStyles(theme => ({
@@ -18,18 +14,11 @@ const useStyles = makeStyles(theme => ({
 const FeelingType = ({typeId, label}) => {
     const classes = useStyles();
 
+    const IconComponent = FeelingTypeIcon(typeId);
+
     return (
         <span>
-            {typeId === 1
-                ? <ThumbUpIcon className={classes.middleVerticalAlign}/>
-                : typeId === 2
-                    ? <ThumbDownIcon className={classes.middleVerticalAlign}/>
-                    : typeId === 3
-                        ? <SentimentSatisfiedIcon className={classes.middleVerticalAlign}/>
-                        : typeId === 4
-                            ? <SentimentVeryDissatisfiedOutlinedIcon className={classes.middleVerticalAlign}/>
-                            : null
-            }
+            <IconComponent className={classes.middleVerticalAlign}/>
             <Typography variant={'caption'} className={classes.text}>
                 {label
                     ? label
