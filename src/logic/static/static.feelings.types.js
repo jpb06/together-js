@@ -1,3 +1,8 @@
+import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
+import SentimentVeryDissatisfiedOutlinedIcon from '@material-ui/icons/SentimentVeryDissatisfiedOutlined';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+
 const staticFeelingTypes = [
     {
         value: 1,
@@ -21,4 +26,22 @@ const staticFeelingTypes = [
     },
 ];
 
-export default staticFeelingTypes;
+const FeelingTypeIcon = (typeId) => {
+    switch (typeId) {
+        case 1:
+            return ThumbUpIcon;
+        case 2:
+            return ThumbDownIcon;
+        case 3:
+            return SentimentSatisfiedIcon;
+        case 4:
+            return SentimentVeryDissatisfiedOutlinedIcon;
+        default:
+            return undefined;
+    }
+};
+
+export {
+    staticFeelingTypes,
+    FeelingTypeIcon
+};
