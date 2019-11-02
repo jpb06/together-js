@@ -2,7 +2,7 @@ import TopMenu from "../../menu/TopMenu";
 import React, {useCallback, useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core";
 import {clearLocalStorage, getFromLocalStorage, LocalStorageKeys} from "../../../../logic/local.store";
-import {useHistory} from "react-router";
+import {useHistory} from "react-router-dom";
 import TogetherApi from "../../../../logic/api/setup/together.api";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import FeedbackSnackbar from "../errors/FeedbackSnackbar";

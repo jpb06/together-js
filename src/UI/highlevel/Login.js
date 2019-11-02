@@ -10,7 +10,7 @@ import Logo from "../bricks/menu/Logo";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {LocalStorageKeys, setInLocalStorage} from "../../logic/local.store";
 import {login} from "../../logic/api/security.api";
-import {useHistory} from "react-router";
+import {useHistory} from "react-router-dom";
 import {fade} from "@material-ui/core/styles";
 import FeedbackButton from "../bricks/generic/buttons/FeedbackButton";
 
