@@ -1,18 +1,66 @@
-import React from "react";
-//import {makeStyles} from "@material-ui/core";
-import ContentBox from "../bricks/generic/containers/ContentBox";
+import React, {useEffect, useState} from "react";
+import {makeStyles} from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import {getFromLocalStorage, LocalStorageKeys} from "../../logic/local.store";
+import {getTimeline} from "../../logic/api/user.api";
+import ApiError from "../bricks/generic/errors/ApiError";
+import Waiting from "../bricks/generic/Waiting";
+import TimelineShard from "../bricks/Timeline/TimelineShard";
 
-//const useStyles = makeStyles(theme => ({}));
+const useStyles = makeStyles(theme => ({
+    withMargin: {
+        marginBottom: theme.spacing(1)
+    },
+}));
 
-const TimeLine = (props) => {
-    //const classes = useStyles();
+const TimeLine = ({reportLoading, showSnackbar}) => {
+    const classes = useStyles();
 
-    return (
-        <div>
-            <h1>Timeline</h1>
-            <ContentBox content={<p>Timeline</p>}/>
-        </div>
-    );
+    const [isReady, setIsready] = useState(false);
+    const [isErrored, setIsErrored] = useState(false);
+    const [timeline, setTimeline] = useState({});
+
+    // This will trigger at component first render (only once)
+    useEffect(() => {
+        reportLoading(true);
+
+        async function fetch() {
+            console.log('fetching timeline');
+            const currentUser = getFromLocalStorage(LocalStorageKeys.user);
+            const timelineRequestResult = await getTimeline(currentUser.id);
+            if (timelineRequestResult.status === 200) {
+                setTimeline(timelineRequestResult.data);
+            } else {
+                setIsErrored(true);
+            }
+            setIsready(true);
+            reportLoading(false);
+        }
+
+        fetch();
+    }, [reportLoading]);
+
+    if (isErrored) {
+        return <ApiError actionDescription={'the daily'}/>;
+    } else {
+        if (isReady) {
+            return (
+                <Grid
+                    container
+                    spacing={1}
+                    direction="row"
+                    className={classes.withMargin}
+                >
+                    <Grid item md={12} xs={12}>
+                        <h1>Timeline</h1>
+                        <TimelineShard data={timeline}/>
+                    </Grid>
+                </Grid>
+            );
+        } else {
+            return <Waiting/>;
+        }
+    }
 };
 
 export default TimeLine;

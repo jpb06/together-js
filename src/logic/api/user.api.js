@@ -5,6 +5,12 @@ const getUserTeams = async (userId) =>
         userId: userId
     }));
 
+const getTimeline = async (userId) =>
+    ensureStatus(await TogetherApi.Instance.post('user/timeline', {
+        userId: userId
+    }));
+
 export {
-    getUserTeams
+    getUserTeams,
+    getTimeline
 };
