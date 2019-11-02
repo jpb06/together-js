@@ -1,7 +1,7 @@
 import TopMenu from "../../menu/TopMenu";
 import React, {useCallback, useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core";
-import {clearLocalStorage, getFromLocalStorage} from "../../../../logic/local.store";
+import {clearLocalStorage, getFromLocalStorage, LocalStorageKeys} from "../../../../logic/local.store";
 import {useHistory} from "react-router";
 import TogetherApi from "../../../../logic/api/setup/together.api";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -39,8 +39,8 @@ const Squeleton = ({Component, ...rest}) => {
         setIsLoading(true);
         TogetherApi.setup(history);
 
-        let token = getFromLocalStorage('token');
-        let expirationDate = getFromLocalStorage('expiration');
+        let token = getFromLocalStorage(LocalStorageKeys.token);
+        let expirationDate = getFromLocalStorage(LocalStorageKeys.expiration);
         if (!token || !expirationDate || Date.parse(expirationDate) < new Date()) {
             clearLocalStorage();
             history.push({
@@ -104,7 +104,11 @@ const Squeleton = ({Component, ...rest}) => {
                         alignItems="center"
                         className={classes.fixedWidth}
                     >
-                        <Component reportLoading={reportLoading} showSnackbar={messageRequestedFromChild} {...rest} />
+                        <Component
+                            reportLoading={reportLoading}
+                            showSnackbar={messageRequestedFromChild}
+                            {...rest}
+                        />
                     </Grid>
                 </Grid>
                 }

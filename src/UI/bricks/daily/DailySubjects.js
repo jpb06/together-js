@@ -4,7 +4,7 @@ import SubjectsList from "./Subjects/SubjectsList";
 import ForumIcon from '@material-ui/icons/Forum';
 import {addSubject, removeSubject} from "../../../logic/api/daily.api";
 import Grid from "@material-ui/core/Grid";
-import {getFromLocalStorage} from "../../../logic/local.store";
+import {getFromLocalStorage, LocalStorageKeys} from "../../../logic/local.store";
 
 const DailySubjects = ({sendToParent, data, showSnackbar, currentTeam}) => {
     const [subjects, setSubjects] = React.useState(data);
@@ -31,7 +31,7 @@ const DailySubjects = ({sendToParent, data, showSnackbar, currentTeam}) => {
             const result = await addSubject(currentTeam._id, new Date().toUTCString(), subject);
 
             if (result.status === 201) {
-                const user = getFromLocalStorage('user');
+                const user = getFromLocalStorage(LocalStorageKeys.user);
                 setSubjects(state => state.concat({
                     id: result.message,
                     type: subject.type,

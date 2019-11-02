@@ -8,7 +8,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Grid from "@material-ui/core/Grid";
 import Logo from "../bricks/menu/Logo";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import {setInLocalStorage} from "../../logic/local.store";
+import {LocalStorageKeys, setInLocalStorage} from "../../logic/local.store";
 import {login} from "../../logic/api/security.api";
 import {useHistory} from "react-router";
 import {fade} from "@material-ui/core/styles";
@@ -85,11 +85,11 @@ const Login = () => {
         } else {
             const authResult = await login(loginState.email, loginState.password);
             if (authResult) {
-                setInLocalStorage('token', authResult.token);
-                setInLocalStorage('expiration', authResult.expirationDate);
-                setInLocalStorage('user', authResult.user);
+                setInLocalStorage(LocalStorageKeys.token, authResult.token);
+                setInLocalStorage(LocalStorageKeys.expiration, authResult.expirationDate);
+                setInLocalStorage(LocalStorageKeys.user, authResult.user);
                 if (authResult.user.teams.length > 0) {
-                    setInLocalStorage('currentTeam', authResult.user.teams[0]);
+                    setInLocalStorage(LocalStorageKeys.currentTeam, authResult.user.teams[0]);
                 } else {
                     console.log('no team!');
                 }

@@ -6,7 +6,7 @@ import DailyUnforeseenTickets from "../bricks/daily/DailyUnforeseenTickets";
 import DailyDoneTickets from "../bricks/daily/DailyDoneTickets";
 import Grid from "@material-ui/core/Grid";
 import {getDaily} from "../../logic/api/daily.api";
-import {getFromLocalStorage} from "../../logic/local.store";
+import {getFromLocalStorage, LocalStorageKeys} from "../../logic/local.store";
 import Waiting from "../bricks/generic/Waiting";
 import DailyFeelings from "../bricks/daily/DailyFeelings";
 import DailySubjects from "../bricks/daily/DailySubjects";
@@ -39,7 +39,7 @@ const Daily = ({reportLoading, showSnackbar}) => {
 
         async function fetch() {
             console.log('fetching daily & team members');
-            const currentTeam = getFromLocalStorage('currentTeam');
+            const currentTeam = getFromLocalStorage(LocalStorageKeys.currentTeam);
             const dailyRequestResult = await getDaily(currentTeam._id, new Date().toUTCString());
             if (dailyRequestResult.status === 200) {
                 setDaily(dailyRequestResult.data);

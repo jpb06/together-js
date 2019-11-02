@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import FeelingsList from "./Feelings/FeelingsList";
 import NewFeeling from "./Feelings/NewFeeling";
 import {addFeeling, removeFeeling} from "../../../logic/api/daily.api";
-import {getFromLocalStorage} from "../../../logic/local.store";
+import {getFromLocalStorage, LocalStorageKeys} from "../../../logic/local.store";
 
 const DailyFeelings = ({sendToParent, data, showSnackbar, currentTeam}) => {
 
@@ -32,7 +32,7 @@ const DailyFeelings = ({sendToParent, data, showSnackbar, currentTeam}) => {
             const result = await addFeeling(currentTeam._id, new Date().toUTCString(), feeling);
 
             if (result.status === 201) {
-                const user = getFromLocalStorage('user');
+                const user = getFromLocalStorage(LocalStorageKeys.user);
                 setFeelings(state => state.concat({
                     id: result.message,
                     type: feeling.type,

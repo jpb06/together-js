@@ -1,11 +1,11 @@
-import {clearLocalStorage, getFromLocalStorage} from "../../local.store";
+import {clearLocalStorage, getFromLocalStorage, LocalStorageKeys} from "../../local.store";
 
 const setInterceptors = (instance, history) => {
 
     instance.interceptors.request.use(function (config) {
 
-        const token = getFromLocalStorage('token');
-        const expiration = getFromLocalStorage('expiration');
+        const token = getFromLocalStorage(LocalStorageKeys.token);
+        const expiration = getFromLocalStorage(LocalStorageKeys.expiration);
         if (!token || !expiration) {
             clearLocalStorage();
             history.push({

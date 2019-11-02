@@ -7,7 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import UserAvatar from '../user/UserAvatar';
 import Logo from './Logo';
 import SideMenu from './SideMenu';
-import {getFromLocalStorage} from "../../../logic/local.store";
+import {getFromLocalStorage, LocalStorageKeys} from "../../../logic/local.store";
 import {Link} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
@@ -31,7 +31,7 @@ const TopMenu = () => {
 
     // This will trigger when the component is mounted
     useEffect(() => {
-        const storedUser = getFromLocalStorage('user');
+        const storedUser = getFromLocalStorage(LocalStorageKeys.user);
         setUser(storedUser);
     }, []);
 

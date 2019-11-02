@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import UserAvatar from "../bricks/user/UserAvatar";
-import {getFromLocalStorage} from "../../logic/local.store";
+import {getFromLocalStorage, LocalStorageKeys} from "../../logic/local.store";
 import {makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TeamsList from "../bricks/user/team/TeamsList";
@@ -46,7 +46,7 @@ const MyAccount = ({reportLoading, showSnackbar}) => {
         async function fetch() {
             console.log('fetching user data');
 
-            const storedUser = getFromLocalStorage('user');
+            const storedUser = getFromLocalStorage(LocalStorageKeys.user);
             setUser(storedUser);
 
             const teamsRequest = await getUserTeams(storedUser.id);

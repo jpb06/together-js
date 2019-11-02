@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import Team from "./Team";
 import Grid from "@material-ui/core/Grid";
-import {getFromLocalStorage} from "../../../../logic/local.store";
+import {getFromLocalStorage, LocalStorageKeys} from "../../../../logic/local.store";
 
 const TeamsList = ({teams}) => {
 
@@ -9,7 +9,7 @@ const TeamsList = ({teams}) => {
 
     // This will trigger at component first render (only once)
     useEffect(() => {
-        const currentTeam = getFromLocalStorage('currentTeam');
+        const currentTeam = getFromLocalStorage(LocalStorageKeys.currentTeam);
         setCurrentPanel(currentTeam.name);
     }, []);
 

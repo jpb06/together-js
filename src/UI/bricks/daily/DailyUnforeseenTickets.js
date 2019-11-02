@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import AssignmentLateRoundedIcon from '@material-ui/icons/AssignmentLateRounded';
 import {addUnforeseenTicket, removeUnforeseenTicket} from "../../../logic/api/daily.api";
 import TicketList from "./Tickets/TicketsList";
-import {getFromLocalStorage} from "../../../logic/local.store";
+import {getFromLocalStorage, LocalStorageKeys} from "../../../logic/local.store";
 
 const DailyUnforeseenTickets = ({sendToParent, data, showSnackbar, currentTeam}) => {
 
@@ -36,7 +36,7 @@ const DailyUnforeseenTickets = ({sendToParent, data, showSnackbar, currentTeam})
                 const result = await addUnforeseenTicket(currentTeam._id, new Date().toUTCString(), name);
 
                 if (result.status === 201) {
-                    const user = getFromLocalStorage('user');
+                    const user = getFromLocalStorage(LocalStorageKeys.user);
                     setUnforeseenTickets(state => state.concat({
                         name: name,
                         creator: {
