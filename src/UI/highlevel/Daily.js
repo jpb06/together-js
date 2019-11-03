@@ -26,6 +26,8 @@ const useStyles = makeStyles(theme => ({
 const Daily = ({reportLoading, showSnackbar}) => {
     const classes = useStyles();
 
+    const isMounted = React.useRef(false);
+
     const [daily, setDaily] = useState({});
     const [isReady, setIsready] = useState(false);
     const [isErrored, setIsErrored] = useState(false);
@@ -34,31 +36,37 @@ const Daily = ({reportLoading, showSnackbar}) => {
 
     // This will trigger at component first render (only once)
     useEffect(() => {
-
+        isMounted.current = true;
         reportLoading(true);
 
         async function fetch() {
             console.log('fetching daily & team members');
             const currentTeam = getFromLocalStorage(LocalStorageKeys.currentTeam);
             const dailyRequestResult = await getDaily(currentTeam._id, new Date().toUTCString());
-            if (dailyRequestResult.status === 200) {
-                setDaily(dailyRequestResult.data);
-            } else {
-                setIsErrored(true);
-            }
-            const teamMembersRequestResult = await getTeamMembers(currentTeam._id);
-            if (teamMembersRequestResult.status === 200) {
-                setTeamMembers(teamMembersRequestResult.data);
-            } else {
-                setIsErrored(true);
-            }
+            if (isMounted.current) {
+                if (dailyRequestResult.status === 200) {
+                    setDaily(dailyRequestResult.data);
+                } else {
+                    setIsErrored(true);
+                }
+                const teamMembersRequestResult = await getTeamMembers(currentTeam._id);
+                if (teamMembersRequestResult.status === 200) {
+                    setTeamMembers(teamMembersRequestResult.data);
+                } else {
+                    setIsErrored(true);
+                }
 
-            setCurrentTeam(currentTeam);
-            setIsready(true);
-            reportLoading(false);
+                setCurrentTeam(currentTeam);
+                setIsready(true);
+                reportLoading(false);
+            }
         }
 
         fetch();
+
+        return function cleanup() {
+            isMounted.current = false;
+        };
     }, [reportLoading]);
 
     if (isErrored) {

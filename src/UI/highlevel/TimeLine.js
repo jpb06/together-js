@@ -16,32 +16,41 @@ const useStyles = makeStyles(theme => ({
 const TimeLine = ({reportLoading, showSnackbar}) => {
     const classes = useStyles();
 
+    const isMounted = React.useRef(false);
+
     const [isReady, setIsready] = useState(false);
     const [isErrored, setIsErrored] = useState(false);
     const [timeline, setTimeline] = useState({});
 
     // This will trigger at component first render (only once)
     useEffect(() => {
+        isMounted.current = true;
         reportLoading(true);
 
         async function fetch() {
             console.log('fetching timeline');
             const currentUser = getFromLocalStorage(LocalStorageKeys.user);
             const timelineRequestResult = await getTimeline(currentUser.id);
-            if (timelineRequestResult.status === 200) {
-                setTimeline(timelineRequestResult.data);
-            } else {
-                setIsErrored(true);
+            if (isMounted.current) {
+                if (timelineRequestResult.status === 200) {
+                    setTimeline(timelineRequestResult.data);
+                } else {
+                    setIsErrored(true);
+                }
+                setIsready(true);
+                reportLoading(false);
             }
-            setIsready(true);
-            reportLoading(false);
         }
 
         fetch();
+
+        return function cleanup() {
+            isMounted.current = false;
+        };
     }, [reportLoading]);
 
     if (isErrored) {
-        return <ApiError actionDescription={'the daily'}/>;
+        return <ApiError actionDescription={'the user timeline'}/>;
     } else {
         if (isReady) {
             return (
