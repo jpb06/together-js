@@ -7,25 +7,28 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Grid from "@material-ui/core/Grid";
+import blueGrey from '@material-ui/core/colors/blueGrey';
 
 const useStyles = makeStyles(theme => ({
-    teamName: {
-        fontSize: '2em'
+    container: {
+        width: '100%',
+        backgroundColor: blueGrey[900]
     },
-    centered: {
-        textAlign: 'center'
-    }
 }));
 
 const Team = ({handlePanelChange, currentPanel, name, members}) => {
     const classes = useStyles();
 
     return (
-        <ExpansionPanel expanded={currentPanel === name} onChange={handlePanelChange(name)} style={{width: '100%'}}>
+        <ExpansionPanel
+            expanded={currentPanel === name}
+            onChange={handlePanelChange(name)}
+            className={classes.container}
+        >
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon/>}
             >
-                <Typography className={classes.heading}>{name}</Typography>
+                <Typography>{name}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
                 <Grid

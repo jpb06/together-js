@@ -7,13 +7,12 @@ import TeamsList from "../bricks/user/team/TeamsList";
 import {getUserTeams} from "../../logic/api/user.api";
 import ApiError from "../bricks/generic/errors/ApiError";
 import Waiting from "../bricks/generic/Waiting";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles(theme => ({
-    top: {
-        marginTop: theme.spacing(3)
-    },
-    withMargin: {
-        marginBottom: theme.spacing(1)
+    paper: {
+        padding: theme.spacing(3),
+        height: '100%'
     },
     centered: {
         textAlign: 'center'
@@ -23,16 +22,14 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(1)
     },
     userMail: {
-        marginBottom: theme.spacing(2),
         color: theme.palette.primary.main
     },
-    separator: {
-        width: '40%'
-    }
 }));
 
 const MyAccount = ({reportLoading, showSnackbar}) => {
     const classes = useStyles();
+
+    const isMounted = React.useRef(false);
 
     const [user, setUser] = React.useState({});
     const [userTeams, setUserTeams] = React.useState([]);
@@ -41,6 +38,7 @@ const MyAccount = ({reportLoading, showSnackbar}) => {
 
     // This will trigger at component first render (only once)
     useEffect(() => {
+        isMounted.current = true;
         reportLoading(true);
 
         async function fetch() {
@@ -50,41 +48,78 @@ const MyAccount = ({reportLoading, showSnackbar}) => {
             setUser(storedUser);
 
             const teamsRequest = await getUserTeams(storedUser.id);
-            if (teamsRequest.status === 200) {
-                setUserTeams(teamsRequest.data);
-            } else {
-                setIsErrored(true);
-            }
+            if (isMounted.current) {
+                if (teamsRequest.status === 200) {
+                    setUserTeams(teamsRequest.data);
+                } else {
+                    setIsErrored(true);
+                }
 
-            setIsready(true);
-            reportLoading(false);
+                setIsready(true);
+                reportLoading(false);
+            }
         }
 
         fetch();
+
+        return function cleanup() {
+            isMounted.current = false;
+        };
     }, [reportLoading]);
 
     if (isErrored) {
-        return <ApiError actionDescription={'the daily'}/>;
+        return <ApiError actionDescription={'the user profile'}/>;
     } else {
         if (isReady) {
             return (
                 <Grid
                     container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                    className={classes.top}
+                    spacing={1}
+                    direction="row"
                 >
-                    <UserAvatar
-                        user={user}
-                        isBigAvatar={true}
-                    />
-                    <Grid className={classes.centered}>
-                        <div className={classes.userName}>{`${user.firstName} ${user.lastName}`}</div>
-                        <div className={classes.userMail}>{user.email}</div>
+                    <Grid item md={12} xs={12}>
+                        <h1>My account</h1>
                     </Grid>
-                    <hr size="1" className={classes.separator}/>
-                    <h1>Teams</h1>
+                    <Grid item md={6} xs={12}>
+                        <Paper className={classes.paper}>
+                            <Grid
+                                container
+                                direction="column"
+                                justify="center"
+                                alignItems="center"
+                            >
+                                <UserAvatar
+                                    user={user}
+                                    isBigAvatar={true}
+                                />
+                                <Grid className={classes.centered}>
+                                    <div className={classes.userName}>{`${user.firstName} ${user.lastName}`}</div>
+                                    <div className={classes.userMail}>{user.email}</div>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                        <Paper className={classes.paper}>
+                            Actions
+                        </Paper>
+                    </Grid>
+                    <Grid item md={12} xs={12}>
+                        <h1>My teams</h1>
+                    </Grid>
+                    <Grid item md={12} xs={12}>
+                        <Paper className={classes.paper}>
+                            <TeamsList teams={userTeams}/>
+                        </Paper>
+                    </Grid>
+                </Grid>
+            );
+        } else {
+            return <Waiting/>;
+        }
+    }
+
+    /* <h1>Teams</h1>
                     <Grid
                         container
                         spacing={1}
@@ -95,12 +130,7 @@ const MyAccount = ({reportLoading, showSnackbar}) => {
                             <TeamsList teams={userTeams}/>
                         </Grid>
                     </Grid>
-                </Grid>
-            );
-        } else {
-            return <Waiting/>;
-        }
-    }
+                </Grid>*/
 };
 
 export default MyAccount;
