@@ -8,6 +8,9 @@ import {getUserTeams} from "../../logic/api/user.api";
 import ApiError from "../bricks/generic/errors/ApiError";
 import Waiting from "../bricks/generic/Waiting";
 import Paper from "@material-ui/core/Paper";
+import Fab from "@material-ui/core/Fab";
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -24,6 +27,15 @@ const useStyles = makeStyles(theme => ({
     userMail: {
         color: theme.palette.primary.main
     },
+    action: {
+        width: '100% !important',
+        color: theme.palette.primary.main,
+        marginBottom: theme.spacing(1),
+        justifyContent: 'start'
+    },
+    actionIcon: {
+        marginRight: theme.spacing(1)
+    }
 }));
 
 const MyAccount = ({reportLoading, showSnackbar}) => {
@@ -101,7 +113,28 @@ const MyAccount = ({reportLoading, showSnackbar}) => {
                     </Grid>
                     <Grid item md={6} xs={12}>
                         <Paper className={classes.paper}>
-                            Actions
+
+                            <Fab
+                                variant="extended"
+                                size="medium"
+                                color="secondary"
+                                aria-label="logoff"
+                                className={classes.action}
+                            >
+                                <AssignmentIndIcon className={classes.actionIcon}/>
+                                Edit my profile
+                            </Fab>
+
+                            <Fab
+                                variant="extended"
+                                size="medium"
+                                color="secondary"
+                                aria-label="logoff"
+                                className={classes.action}
+                            >
+                                <PowerSettingsNewIcon className={classes.actionIcon}/>
+                                Logoff
+                            </Fab>
                         </Paper>
                     </Grid>
                     <Grid item md={12} xs={12}>
@@ -118,19 +151,6 @@ const MyAccount = ({reportLoading, showSnackbar}) => {
             return <Waiting/>;
         }
     }
-
-    /* <h1>Teams</h1>
-                    <Grid
-                        container
-                        spacing={1}
-                        direction="row"
-                        className={classes.withMargin}
-                    >
-                        <Grid item md={12} xs={12}>
-                            <TeamsList teams={userTeams}/>
-                        </Grid>
-                    </Grid>
-                </Grid>*/
 };
 
 export default MyAccount;

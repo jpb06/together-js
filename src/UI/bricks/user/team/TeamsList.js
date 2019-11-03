@@ -22,12 +22,9 @@ const TeamsList = ({teams}) => {
 
     // This will trigger at component first render (only once)
     useEffect(() => {
-        console.log('use effect');
-        const currentTeam = getFromLocalStorage(LocalStorageKeys.currentTeam);
-        const ct = teams.filter(team => team._id === currentTeam._id)[0];
-        setCurrentTeam(ct);
-        console.log(ct.members);
-        console.log('teams', teams);
+        const localStoredCurrentTeam = getFromLocalStorage(LocalStorageKeys.currentTeam);
+        const currentTeam = teams.filter(team => team._id === localStoredCurrentTeam._id)[0];
+        setCurrentTeam(currentTeam);
     }, [teams]);
 
     const handlePanelChange = panel => (event, isExpanded) => {
