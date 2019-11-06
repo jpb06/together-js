@@ -27,20 +27,21 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Logo = ({color, shouldBeCentered, shouldBeLargeFont, showDescriptionText}) => {
+const Logo = ({color, shouldBeCentered, shouldBeLargeFont, showDescriptionText, disableLink}) => {
     const classes = useStyles();
     return (
         <h2 className={classes.container}>
-            <Grid container
-                  justify={shouldBeCentered ? 'center' : 'flex-start'}
-                  direction="row"
-                  className={clsx(classes.logo, {
-                      [classes.logoColorPrimary]: color === 'primary',
-                      [classes.logoColorSecondary]: color === 'secondary',
-                      [classes.logoColorWhite]: color === 'white'
-                  })}
-                  component={ForwardNavLink}
-                  to="/main"
+            <Grid
+                container
+                justify={shouldBeCentered ? 'center' : 'flex-start'}
+                direction="row"
+                className={clsx(classes.logo, {
+                    [classes.logoColorPrimary]: color === 'primary',
+                    [classes.logoColorSecondary]: color === 'secondary',
+                    [classes.logoColorWhite]: color === 'white'
+                })}
+                component={ForwardNavLink}
+                to={disableLink ? '' : '/main'}
             >
                 <Grid item className={clsx({
                     [classes.largeFont]: shouldBeLargeFont
@@ -53,8 +54,9 @@ const Logo = ({color, shouldBeCentered, shouldBeLargeFont, showDescriptionText})
             </Grid>
             {
                 showDescriptionText &&
-                <Typography style={{fontSize: 'x-small', textAlign: 'center'}}> Un outil pour les équipes
-                    SCRUM</Typography>
+                <Typography style={{fontSize: 'x-small', textAlign: 'center'}}>
+                    A tool for SCRUM teams
+                </Typography>
             }
         </h2>
     );
