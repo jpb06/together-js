@@ -1,7 +1,6 @@
 import axios from "axios";
 import setInterceptors from "./axios.interceptors";
-
-const apiUrl = 'http://192.168.0.20:3001/api';
+import apiUrl from "./../private/current.config.js";
 
 class TogetherApi {
 }
