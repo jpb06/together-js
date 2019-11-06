@@ -15,10 +15,11 @@
     "react-scripts": "3.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "gulp useDevConfig && react-scripts start",
+    "build": "gulp useProdConfig &&react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gulp useProdConfig && react-scripts build && gulp deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,5 +35,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "archiver": "^3.1.1",
+    "fs-extra": "^8.1.0",
+    "gulp": "^4.0.2",
+    "gulp-ssh": "^0.7.0"
   }
 }
