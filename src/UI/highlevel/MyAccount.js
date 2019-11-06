@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import UserAvatar from "../bricks/user/UserAvatar";
-import {getFromLocalStorage, LocalStorageKeys} from "../../logic/local.store";
+import {clearLocalStorage, getFromLocalStorage, LocalStorageKeys} from "../../logic/local.store";
 import {makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TeamsList from "../bricks/user/team/TeamsList";
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const MyAccount = ({reportLoading, showSnackbar}) => {
+const MyAccount = ({reportLoading, showSnackbar, history}) => {
     const classes = useStyles();
 
     const isMounted = React.useRef(false);
@@ -78,6 +78,13 @@ const MyAccount = ({reportLoading, showSnackbar}) => {
             isMounted.current = false;
         };
     }, [reportLoading]);
+
+    const handleLogoff = () => {
+        clearLocalStorage();
+        history.push({
+            pathname: '/'
+        });
+    };
 
     if (isErrored) {
         return <ApiError actionDescription={'the user profile'}/>;
@@ -131,6 +138,7 @@ const MyAccount = ({reportLoading, showSnackbar}) => {
                                 color="secondary"
                                 aria-label="logoff"
                                 className={classes.action}
+                                onClick={handleLogoff}
                             >
                                 <PowerSettingsNewIcon className={classes.actionIcon}/>
                                 Logoff
