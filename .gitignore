@@ -23,3 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 /.vs/together
 /.idea/
+/project-apparatus/private/private.config.js
+/release
+/src/logic/api/private/private.config.prod.js
+/src/logic/api/private/private.config.dev.js
+/src/logic/api/private/current.config.js
