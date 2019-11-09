@@ -1,12 +1,13 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const archiver = require('archiver');
 
-const consoleUtil = require('./console.util.js');
+const consoleUtil = require('./../util/console.util');
 
-var main = {};
+const main = {};
 
 main.zipDirectory = function (source, out) {
-    consoleUtil.printHeader('Zipping dist folder ...');
+
+    consoleUtil.printHeader('Zipping build folder ...');
 
     const archive = archiver('zip', {zlib: {level: 9}});
     const stream = fs.createWriteStream(out);
@@ -18,7 +19,6 @@ main.zipDirectory = function (source, out) {
             .pipe(stream);
 
         stream.on('close', () => {
-            console.log('Done.');
             resolve();
         });
         archive.finalize();

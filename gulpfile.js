@@ -1,23 +1,23 @@
 const gulp = require('gulp');
-const fs = require('fs-extra');
 
-const zipUtil = require('./project-apparatus/util/zip.util.js');
-const deployCommands = require('./project-apparatus/deploy.commands.js');
+const fileSystemTasks = require('./project-apparatus/tasks/file.system.tasks.js');
+const zippingTasks = require('./project-apparatus/tasks/zipping.tasks.js');
+const deployTasks = require('./project-apparatus/tasks/deploy.tasks.js');
 
 const pckg = require('./package.json');
 
 gulp.task('useDevConfig', async () => {
-    await fs.copyFile('./src/logic/api/private/private.config.dev.js', './src/logic/api/private/current.config.js');
+    await fileSystemTasks.useDevConfig();
 });
 
 gulp.task('useProdConfig', async () => {
-    await fs.copyFile('./src/logic/api/private/private.config.prod.js', './src/logic/api/private/current.config.js');
+    await fileSystemTasks.useProdConfig();
 });
 
 gulp.task('deploy', async () => {
-    await zipUtil.zipDirectory('./build', `./release/togetherfront_${pckg.version}.zip`);
+    await zippingTasks.zipDirectory('./build', `./release/togetherfront_${pckg.version}.zip`);
 
-    await deployCommands.sendFileToDeployServer();
+    await deployTasks.sendFileToDeployServer();
 
-    return deployCommands.deploy();
+    return deployTasks.deploy();
 });
