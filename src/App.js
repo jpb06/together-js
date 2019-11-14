@@ -8,6 +8,7 @@ import TimeLine from "./UI/highlevel/TimeLine";
 import Daily from "./UI/highlevel/Daily";
 import Squeleton from "./UI/bricks/generic/containers/Squeleton";
 import MyAccount from "./UI/highlevel/MyAccount";
+import NewAccount from "./UI/highlevel/NewAccount";
 
 const theme = createMuiTheme({
     palette: {
@@ -30,6 +31,7 @@ const App = () => {
                 <Route path="/main" render={(props) => <Squeleton {...props} Component={TimeLine}/>}/>
                 <Route path="/daily" render={(props) => <Squeleton {...props} Component={Daily}/>}/>
                 <Route path="/account" render={(props) => <Squeleton {...props} Component={MyAccount}/>}/>
+                <Route path="/newaccount" component={NewAccount}/>
             </BrowserRouter>
         </MuiThemeProvider>
     );
