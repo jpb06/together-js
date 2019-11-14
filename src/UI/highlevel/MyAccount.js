@@ -11,6 +11,7 @@ import Paper from "@material-ui/core/Paper";
 import Fab from "@material-ui/core/Fab";
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import LoopIcon from "@material-ui/icons/Loop";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -156,7 +157,12 @@ const MyAccount = ({reportLoading, showSnackbar, history}) => {
                 </Grid>
             );
         } else {
-            return <Waiting/>;
+            return <Waiting
+                addTopPadding={true}
+                IconComponent={LoopIcon}
+                text="Sinister Dexter Has a Broken Spirometer"
+                color="white"
+            />;
         }
     }
 };

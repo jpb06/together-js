@@ -12,6 +12,7 @@ import DailyFeelings from "../bricks/daily/DailyFeelings";
 import DailySubjects from "../bricks/daily/DailySubjects";
 import ApiError from "../bricks/generic/errors/ApiError";
 import {getTeamMembers} from "../../logic/api/team.api";
+import LoopIcon from "@material-ui/icons/Loop";
 
 const useStyles = makeStyles(theme => ({
     withMargin: {
@@ -133,7 +134,12 @@ const Daily = ({reportLoading, showSnackbar}) => {
                 </Grid>
             );
         } else {
-            return <Waiting/>;
+            return <Waiting
+                addTopPadding={true}
+                IconComponent={LoopIcon}
+                text="Sinister Dexter Has a Broken Spirometer"
+                color="white"
+            />;
         }
     }
 };

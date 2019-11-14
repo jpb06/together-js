@@ -1,14 +1,21 @@
-import LoopIcon from "@material-ui/icons/Loop";
 import React from "react";
 import {fade} from "@material-ui/core/styles";
 import clsx from "clsx";
 import withStyles from "@material-ui/core/styles/withStyles";
+import {amber} from "@material-ui/core/colors";
 
 const styles = theme => ({
-    root: {
+    topPadding: {
         paddingTop: theme.spacing(8),
+    },
+    root: {
         textAlign: 'center',
-        color: fade('#fff', 0.25),
+    },
+    whiteColored: {
+        color: fade('#fff', 0.35)
+    },
+    amberColored: {
+        color: amber[500]
     },
     progressIcon: {
         height: '70px',
@@ -26,12 +33,17 @@ const styles = theme => ({
     },
 });
 
-const Waiting = ({classes}) => {
+const Waiting = ({classes, addTopPadding, IconComponent, text, color}) => {
+
     return (
-        <div className={classes.root}>
-            <LoopIcon className={clsx(classes.progressIcon, classes.spinner)}/>
+        <div className={clsx(classes.root, {
+            [classes.topPadding]: addTopPadding === true,
+            [classes.amberColored]: color === 'amber',
+            [classes.whiteColored]: color === 'white'
+        })}>
+            <IconComponent className={clsx(classes.progressIcon, classes.spinner)}/>
             <br/>
-            Sinister Dexter Has a Broken Spirometer
+            {text}
         </div>
     );
 };

@@ -6,6 +6,7 @@ import {getTimeline} from "../../logic/api/user.api";
 import ApiError from "../bricks/generic/errors/ApiError";
 import Waiting from "../bricks/generic/Waiting";
 import TimelineShard from "../bricks/Timeline/TimelineShard";
+import LoopIcon from "@material-ui/icons/Loop";
 
 const useStyles = makeStyles(theme => ({
     withMargin: {
@@ -67,7 +68,12 @@ const TimeLine = ({reportLoading, showSnackbar}) => {
                 </Grid>
             );
         } else {
-            return <Waiting/>;
+            return <Waiting
+                addTopPadding={true}
+                IconComponent={LoopIcon}
+                text="Sinister Dexter Has a Broken Spirometer"
+                color="white"
+            />;
         }
     }
 };
