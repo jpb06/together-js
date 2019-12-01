@@ -16,8 +16,7 @@ const createNewUser = async (firstName, lastName, email, password) => {
         return undefined;
 
     } catch (error) {
-        console.log(error.response);
-        if (error.response.status === 400) {
+        if (error.response && error.response.status && error.response.status === 400) {
             return {status: 400};
         }
 
