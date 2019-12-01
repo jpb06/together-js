@@ -5,4 +5,12 @@ const getTeamMembers = async (teamId) =>
         teamId: teamId
     }));
 
-export {getTeamMembers};
+const createTeam = async (teamName) =>
+    ensureStatus(await TogetherApi.Instance.post('team/create', {
+        teamName: teamName
+    }));
+
+export {
+    createTeam,
+    getTeamMembers
+};
