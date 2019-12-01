@@ -1,6 +1,7 @@
-import {makeStyles} from "@material-ui/core";
+import {makeStyles, Typography} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import {Link as RouterLink, useHistory} from 'react-router-dom';
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
@@ -10,9 +11,11 @@ import Logo from "../bricks/menu/Logo";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {LocalStorageKeys, setInLocalStorage} from "../../logic/local.store";
 import {login} from "../../logic/api/security.api";
-import {useHistory} from "react-router-dom";
 import {fade} from "@material-ui/core/styles";
 import FeedbackButton from "../bricks/generic/buttons/FeedbackButton";
+import Link from "@material-ui/core/Link";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import {initializeLoggedUserContext} from "../../logic/user.util";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -20,20 +23,31 @@ const useStyles = makeStyles(theme => ({
         backgroundImage: 'url("/static/images/background/background14.jpg")',
         backgroundSize: 'cover'
     },
+    form: {
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1)
+    },
     card: {
-        width: 350,
+        width: '100%',
+        maxWidth: 350,
         paddingBottom: theme.spacing(2),
         backgroundColor: fade(theme.palette.background.default, 0.83)
     },
     media: {
         height: 160,
     },
-    extendedIcon: {
-        marginRight: theme.spacing(1),
-    },
     actions: {
         paddingTop: 0,
         justifyContent: 'center'
+    },
+    newAccount: {
+        paddingTop: '10px',
+        textAlign: 'center',
+        color: theme.palette.primary.main
     }
 }));
 
@@ -85,9 +99,7 @@ const Login = () => {
         } else {
             const authResult = await login(loginState.email, loginState.password);
             if (authResult) {
-                setInLocalStorage(LocalStorageKeys.token, authResult.token);
-                setInLocalStorage(LocalStorageKeys.expiration, authResult.expirationDate);
-                setInLocalStorage(LocalStorageKeys.user, authResult.user);
+                initializeLoggedUserContext(authResult);
                 if (authResult.user.teams.length > 0) {
                     setInLocalStorage(LocalStorageKeys.currentTeam, authResult.user.teams[0]);
                 } else {
@@ -117,7 +129,7 @@ const Login = () => {
             justify="center"
             className={classes.root}
         >
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={classes.form}>
                 <Card className={classes.card}>
                     <CardMedia
                         className={classes.media}
@@ -130,8 +142,8 @@ const Login = () => {
                               shouldBeCentered
                               shouldBeLargeFont
                               showDescriptionText
+                              disableLink
                         />
-
                         <TextField
                             value={loginState.email}
                             onChange={updateField}
@@ -164,10 +176,16 @@ const Login = () => {
                     </CardContent>
                     <CardActions className={classes.actions}>
                         <FeedbackButton
+                            IconComponent={AddCircleIcon}
                             handleSubmit={handleSubmit}
                             actionFeedback={loginState}
                         />
                     </CardActions>
+                    <div className={classes.newAccount}>
+                        <Link component={RouterLink} to="/newaccount" color="primary">
+                            <Typography>I don't have an account</Typography>
+                        </Link>
+                    </div>
                 </Card>
             </form>
         </Grid>
