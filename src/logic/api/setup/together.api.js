@@ -6,7 +6,7 @@ class TogetherApi {
 }
 TogetherApi.Instance = axios.create({
     baseURL: apiUrl,
-    timeout: 10000,
+    timeout: 15000,
     validateStatus: function (status) {
     },
     params: {} // do not remove this, its added to add params later in the config
