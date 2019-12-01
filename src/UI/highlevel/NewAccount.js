@@ -19,6 +19,7 @@ import clsx from 'clsx';
 import {amber} from "@material-ui/core/colors";
 import ColoredFatProgress from "../bricks/generic/ColoredFatProgress";
 import FeedbackSnackbar from "../bricks/generic/errors/FeedbackSnackbar";
+import NewAccountAddTeamMembers from "../bricks/newaccount/steps/NewAccountAddTeamMembers";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -64,6 +65,8 @@ const NewAccount = () => {
     });
 
     const [step, setStep] = useState(0);
+    const [userHasTeam, setUserHasTeam] = React.useState(false);
+
     const [isLoading, setIsLoading] = useState(false);
 
     const feedbackQueue = React.useRef([]);
@@ -106,12 +109,13 @@ const NewAccount = () => {
         setStep(1);
     };
 
-    const reportMyAvatarStepComplete = (user) => {
+    const reportMyAvatarStepComplete = () => {
         setIsLoading(false);
         setStep(2);
     };
 
-    const reportMyTeamsStepComplete = (user) => {
+    const reportMyTeamsStepComplete = () => {
+        setUserHasTeam(true);
     };
 
     return (
@@ -220,8 +224,12 @@ const NewAccount = () => {
                             reportLoading={reportLoading}
                             showSnackbar={messageRequestedFromChild}
                         />}
-                        {step === 2 && <NewAccountMyTeams
+                        {step === 2 && !userHasTeam && <NewAccountMyTeams
+                            reportLoading={reportLoading}
+                            showSnackbar={messageRequestedFromChild}
                             reportStepComplete={reportMyTeamsStepComplete}
+                        />}
+                        {step === 2 && userHasTeam && <NewAccountAddTeamMembers
                             reportLoading={reportLoading}
                             showSnackbar={messageRequestedFromChild}
                         />}
