@@ -1,6 +1,5 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ErrorIcon from "@material-ui/icons/Error";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
 import Typography from "@material-ui/core/Typography";
 import Fab from "@material-ui/core/Fab";
 import React from "react";
@@ -25,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const FeedbackButton = ({handleSubmit, actionFeedback}) => {
+const FeedbackButton = ({IconComponent, handleSubmit, actionFeedback}) => {
     const classes = useStyles();
 
     return (
@@ -42,7 +41,7 @@ const FeedbackButton = ({handleSubmit, actionFeedback}) => {
                     ? <CircularProgress color="secondary" size={25}/>
                     : (actionFeedback.isErrored)
                         ? <ErrorIcon/>
-                        : <AddCircleIcon/>
+                        : <IconComponent/>
                 }
             </div>
             <div className={classes.buttonText}>

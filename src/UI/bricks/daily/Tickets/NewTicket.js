@@ -4,6 +4,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 import FeedbackButton from "../../generic/buttons/FeedbackButton";
 import staticTicketKeys from "../../../../logic/static/static.ticket.keys";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 const NewTicket = ({reportSubmit, actionFeedback, users}) => {
     const [ticket, setTicket] = React.useState({
@@ -25,11 +26,11 @@ const NewTicket = ({reportSubmit, actionFeedback, users}) => {
         if (ticket.number !== ''
             && ((users && ticket.userId !== '') || !users)) {
             reportSubmit(ticket);
-            setTicket(state => ({
+            setTicket({
                 key: 'WEB',
                 number: '',
                 userId: ''
-            }));
+            });
         }
     };
 
@@ -89,6 +90,7 @@ const NewTicket = ({reportSubmit, actionFeedback, users}) => {
                 }
                 <Grid item xs={12} sm={12}>
                     <FeedbackButton
+                        IconComponent={AddCircleIcon}
                         handleSubmit={handleSubmit}
                         actionFeedback={actionFeedback}
                     />

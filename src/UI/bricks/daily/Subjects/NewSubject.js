@@ -5,6 +5,7 @@ import FeedbackButton from "../../generic/buttons/FeedbackButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import {staticSubjectTypes} from "../../../../logic/static/static.subject.types";
 import SubjectType from "./SubjectType";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 const NewSubject = ({reportSubmit, actionFeedback}) => {
 
@@ -25,10 +26,10 @@ const NewSubject = ({reportSubmit, actionFeedback}) => {
     const handleSubmit = () => {
         if (subject.description !== '') {
             reportSubmit(subject);
-            setSubject(state => ({
+            setSubject({
                 type: '',
                 description: ''
-            }));
+            });
         }
     };
 
@@ -68,6 +69,7 @@ const NewSubject = ({reportSubmit, actionFeedback}) => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                     <FeedbackButton
+                        IconComponent={AddCircleIcon}
                         handleSubmit={handleSubmit}
                         actionFeedback={actionFeedback}
                     />

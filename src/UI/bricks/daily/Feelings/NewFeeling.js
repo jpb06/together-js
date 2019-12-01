@@ -5,6 +5,7 @@ import {staticFeelingTypes} from "../../../../logic/static/static.feelings.types
 import MenuItem from "@material-ui/core/MenuItem";
 import FeedbackButton from "../../generic/buttons/FeedbackButton";
 import FeelingType from "./FeelingType";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 const NewFeeling = ({reportSubmit, actionFeedback}) => {
     const [feeling, setFeeling] = React.useState({
@@ -24,10 +25,10 @@ const NewFeeling = ({reportSubmit, actionFeedback}) => {
     const handleSubmit = () => {
         if (feeling.comment !== '') {
             reportSubmit(feeling);
-            setFeeling(state => ({
+            setFeeling({
                 type: '',
                 comment: ''
-            }));
+            });
         }
     };
 
@@ -67,6 +68,7 @@ const NewFeeling = ({reportSubmit, actionFeedback}) => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                     <FeedbackButton
+                        IconComponent={AddCircleIcon}
                         handleSubmit={handleSubmit}
                         actionFeedback={actionFeedback}
                     />
