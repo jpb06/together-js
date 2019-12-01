@@ -16,8 +16,8 @@ const FeedbackSnackbar = ({isOpen, closeFeedbackSnackbar, exitFeedbackSnackbar, 
         <Snackbar
             key={feedbackSnackbarInfo.key}
             anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: 'top',
+                horizontal: 'center',
             }}
             open={isOpen}
             autoHideDuration={5000}
