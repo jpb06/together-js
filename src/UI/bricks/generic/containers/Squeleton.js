@@ -52,6 +52,11 @@ const Squeleton = ({Component, ...rest}) => {
         setIsLoading(false);
     }, [history]);
 
+    // keep function reference (otherwise the function reference would change with each render...)
+    const reportLoading = useCallback((isLoading) => {
+        setIsLoading(isLoading);
+    }, []);
+
     // unstacking one message to display and displaying the taskbar
     const processFeedbackQueue = () => {
         if (feedbackQueue.current.length > 0) {
@@ -59,11 +64,6 @@ const Squeleton = ({Component, ...rest}) => {
             setIsFeedbackSnackbarOpen(true);
         }
     };
-
-    // keep function reference (otherwise the function reference would change with each render...)
-    const reportLoading = useCallback((isLoading) => {
-        setIsLoading(isLoading);
-    }, []);
 
     // Dispatch from a child stating there is a message to display
     const messageRequestedFromChild = (variant, message) => {
