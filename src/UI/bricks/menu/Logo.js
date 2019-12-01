@@ -22,6 +22,9 @@ const useStyles = makeStyles(theme => ({
     logoColorWhite: {
         color: 'white'
     },
+    normalFont: {
+        fontSize: 'x-large'
+    },
     largeFont: {
         fontSize: 'xx-large'
     }
@@ -30,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 const Logo = ({color, shouldBeCentered, shouldBeLargeFont, showDescriptionText, disableLink}) => {
     const classes = useStyles();
     return (
-        <h2 className={classes.container}>
+        <div className={classes.container}>
             <Grid
                 container
                 justify={shouldBeCentered ? 'center' : 'flex-start'}
@@ -38,14 +41,15 @@ const Logo = ({color, shouldBeCentered, shouldBeLargeFont, showDescriptionText, 
                 className={clsx(classes.logo, {
                     [classes.logoColorPrimary]: color === 'primary',
                     [classes.logoColorSecondary]: color === 'secondary',
-                    [classes.logoColorWhite]: color === 'white'
+                    [classes.logoColorWhite]: !color || color === 'white'
                 })}
                 component={ForwardNavLink}
                 to={disableLink ? '' : '/main'}
             >
                 <Grid item className={clsx({
-                    [classes.largeFont]: shouldBeLargeFont
-                })}>
+                    [classes.largeFont]: shouldBeLargeFont,
+                    [classes.normalFont]: !shouldBeLargeFont || shouldBeLargeFont === false
+                })} style={{alignSelf: 'center'}}>
                     Together
                 </Grid>
                 <Grid item>
@@ -58,7 +62,7 @@ const Logo = ({color, shouldBeCentered, shouldBeLargeFont, showDescriptionText, 
                     A tool for SCRUM teams
                 </Typography>
             }
-        </h2>
+        </div>
     );
 };
 
