@@ -15,6 +15,7 @@ import SideMenuItem from "./SideMenuItem";
 const useStyles = makeStyles(theme => ({
     fullList: {
         width: 'auto',
+        paddingTop: theme.spacing(2)
     },
     sideMenu: {
         minWidth: '170px'
