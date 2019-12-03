@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -27,13 +27,7 @@ const TopMenu = () => {
     const classes = useStyles();
 
     const [isSiderOpen, setIsSiderOpen] = React.useState(false);
-    const [user, setUser] = React.useState({});
-
-    // This will trigger when the component is mounted
-    useEffect(() => {
-        const storedUser = getFromLocalStorage(LocalStorageKeys.user);
-        setUser(storedUser);
-    }, []);
+    const [user] = React.useState(getFromLocalStorage(LocalStorageKeys.user));
 
     const toggleDrawer = (open) => event => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -57,7 +51,7 @@ const TopMenu = () => {
 
                     <Logo shouldBeCentered={false} color="primary"/>
 
-                    <Link to="/account">
+                    <Link to="/account" style={{textDecoration: 'none'}}>
                         <UserAvatar user={user}/>
                     </Link>
                 </Toolbar>

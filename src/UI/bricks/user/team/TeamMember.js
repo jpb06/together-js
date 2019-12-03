@@ -1,11 +1,8 @@
-import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
-import React, {useState} from "react";
+import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import {stringToColor} from "../../../../logic/colors.util";
-import {useTheme} from "@material-ui/core";
-import {getInitials} from "../../../../logic/user.util";
 import {amber} from "@material-ui/core/colors";
+import UserAvatar from "../UserAvatar";
 
 const useStyles = makeStyles(theme => ({
     padding: {
@@ -23,13 +20,6 @@ const useStyles = makeStyles(theme => ({
 
 const TeamMember = ({user}) => {
     const classes = useStyles();
-    const theme = useTheme();
-
-    const fullName = user.fullName ? user.fullName : `${user.firstName} ${user.lastName}`;
-    const initials = user.initials ? user.initials : getInitials(fullName);
-
-    const [avatarColor] = useState(stringToColor(fullName));
-    const [avatarTextColor] = useState(theme.palette.getContrastText(stringToColor(fullName)));
 
     return (
         <Grid
@@ -42,9 +32,7 @@ const TeamMember = ({user}) => {
                 container
                 justify="center"
             >
-                {user.avatarName.length === 0 &&
-                <Avatar style={{backgroundColor: avatarColor, color: avatarTextColor}}>{initials}</Avatar>}
-                {user.avatarName.length > 0 && <Avatar src={`/static/images/avatars/${user.avatarName}`}/>}
+                <UserAvatar user={user} isBigAvatar={false}/>
             </Grid>
             <div className={classes.userName}>
                 {`${user.firstName} ${user.lastName}`}
