@@ -6,9 +6,16 @@ import {stringToColor} from "../../../logic/colors.util";
 import {getInitials} from "../../../logic/user.util";
 
 const useStyles = makeStyles({
+    small: {
+        width: 35,
+        height: 35,
+    },
     big: {
         width: 130,
         height: 130,
+    },
+    smallFont: {
+        fontSize: '15px'
     }
 });
 
@@ -29,14 +36,16 @@ const UserAvatar = ({user, isBigAvatar}) => {
                 src={`/static/images/avatars/${user.avatarName}`}
                 className={clsx({
                     [classes.big]: isBigAvatar,
+                    [classes.small]: !isBigAvatar,
                 })}
             />);
     } else {
         return (
             <Avatar
                 style={{backgroundColor: avatarColor, color: avatarTextColor}}
-                className={clsx({
+                className={clsx(classes.smallFont, {
                     [classes.big]: isBigAvatar,
+                    [classes.small]: !isBigAvatar,
                 })}
             >
                 {initials}
