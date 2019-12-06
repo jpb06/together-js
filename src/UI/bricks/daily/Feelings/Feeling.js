@@ -13,12 +13,15 @@ import FeelingType from "./FeelingType";
 import UserAvatar from "../../user/UserAvatar";
 
 const useStyles = makeStyles(theme => ({
-    action: {
-        marginRight: '6px',
-    },
     user: {
         color: theme.palette.primary.main,
         paddingRight: theme.spacing(1)
+    },
+    breakWord: {
+        wordBreak: 'break-word'
+    },
+    avatarContainer: {
+        minWidth: 45
     }
 }));
 
@@ -28,10 +31,11 @@ const Feeling = ({feeling, reportFeelingRemoval, actionFeedback, showDivider}) =
 
     return (
         <ListItem divider={showDivider}>
-            <ListItemAvatar>
+            <ListItemAvatar className={classes.avatarContainer}>
                 <UserAvatar isBigAvatar={false} user={feeling.creator}/>
             </ListItemAvatar>
             <ListItemText
+                className={classes.breakWord}
                 primary={
                     <React.Fragment>
                         <Typography
@@ -57,7 +61,6 @@ const Feeling = ({feeling, reportFeelingRemoval, actionFeedback, showDivider}) =
                                     edge="end"
                                     aria-label="delete"
                                     onClick={handleRemoval}
-                                    className={classes.action}
                                 >
                                     <DeleteIcon/>
                                 </IconButton>

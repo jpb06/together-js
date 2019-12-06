@@ -12,12 +12,12 @@ import Typography from "@material-ui/core/Typography";
 import UserAvatar from "../../user/UserAvatar";
 
 const useStyles = makeStyles(theme => ({
-    action: {
-        marginRight: '6px',
-    },
     user: {
         color: theme.palette.primary.main,
         paddingLeft: theme.spacing(1)
+    },
+    avatarContainer: {
+        minWidth: 45
     }
 }));
 
@@ -28,7 +28,7 @@ const Ticket = ({reportTicketRemoval, actionFeedback, ticketName, user, userType
 
     return (
         <ListItem divider={showDivider}>
-            <ListItemAvatar>
+            <ListItemAvatar className={classes.avatarContainer}>
                 <UserAvatar isBigAvatar={false} user={user}/>
             </ListItemAvatar>
             <ListItemText
@@ -57,7 +57,6 @@ const Ticket = ({reportTicketRemoval, actionFeedback, ticketName, user, userType
                                     edge="end"
                                     aria-label="delete"
                                     onClick={handleRemoval}
-                                    className={classes.action}
                                 >
                                     <DeleteIcon/>
                                 </IconButton>
