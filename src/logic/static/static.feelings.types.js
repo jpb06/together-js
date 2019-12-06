@@ -41,7 +41,17 @@ const FeelingTypeIcon = (typeId) => {
     }
 };
 
+const getFeelingTypeDescription = (value) => {
+    const matches = staticFeelingTypes.filter(el => el.value === value);
+    if (matches.length === 1) {
+        return matches[0].label;
+    } else {
+        return '';
+    }
+};
+
 export {
     staticFeelingTypes,
-    FeelingTypeIcon
+    FeelingTypeIcon,
+    getFeelingTypeDescription
 };

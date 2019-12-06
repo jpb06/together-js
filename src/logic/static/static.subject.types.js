@@ -49,7 +49,17 @@ const SubjectTypeIcon = (typeId) => {
     }
 };
 
+const getSubjectTypeDescription = (value) => {
+    const matches = staticSubjectTypes.filter(el => el.value === value);
+    if (matches.length === 1) {
+        return matches[0].label;
+    } else {
+        return '';
+    }
+};
+
 export {
     SubjectTypeIcon,
-    staticSubjectTypes
+    staticSubjectTypes,
+    getSubjectTypeDescription
 };
