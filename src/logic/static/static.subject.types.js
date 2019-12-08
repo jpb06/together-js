@@ -1,6 +1,6 @@
 import GroupIcon from '@material-ui/icons/Group';
 import ForwardIcon from '@material-ui/icons/Forward';
-import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import CheckIcon from '@material-ui/icons/Check';
 import RowingIcon from '@material-ui/icons/Rowing';
 import ErrorIcon from '@material-ui/icons/Error';
 
@@ -43,7 +43,7 @@ const SubjectTypeIcon = (typeId) => {
         case 4:
             return GroupIcon;
         case 5:
-            return DoneOutlineIcon;
+            return CheckIcon;
         default:
             return undefined;
     }
