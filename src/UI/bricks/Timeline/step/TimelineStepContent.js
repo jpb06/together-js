@@ -2,6 +2,8 @@ import React from "react";
 import TimeLineStepDivider from "./TimeLineStepDivider";
 import {makeStyles} from "@material-ui/core";
 import TimelineDaily from "./daily/TimelineDaily";
+import TimelineMembershipRequest from "./membershiprequest/TimelineMembershipRequest";
+import TimeLineTeamInvite from "./teaminvite/TimeLineTeamInvite";
 
 const useStyles = makeStyles(theme => ({
     content: {
@@ -17,9 +19,13 @@ const TimelineStepContent = ({type, data}) => {
     return (
         <div>
             <div className={classes.content}>
-                {type === 1
-                    ? <TimelineDaily daily={data}/>
-                    : null}
+                {{
+                    1: <TimelineDaily daily={data}/>,
+                    2: <TimeLineTeamInvite {...data} />,
+                    3: <TimelineMembershipRequest {...data} />,
+                    4: <TimeLineTeamInvite {...data} />,
+                    5: <TimelineMembershipRequest {...data} />
+                }[type]}
             </div>
             <TimeLineStepDivider/>
         </div>
