@@ -3,10 +3,12 @@ import {makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import {getFromLocalStorage, LocalStorageKeys} from "../../logic/local.store";
 import {getTimeline} from "../../logic/api/user.api";
-import ApiError from "../bricks/generic/errors/ApiError";
 import Waiting from "../bricks/generic/Waiting";
 import TimelineShard from "../bricks/Timeline/TimelineShard";
 import LoopIcon from "@material-ui/icons/Loop";
+import TopLevelFeedback from "../bricks/generic/TopLevelFeedback";
+import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
+import TimerIcon from '@material-ui/icons/Timer';
 
 const useStyles = makeStyles(theme => ({
     withMargin: {
@@ -51,7 +53,13 @@ const TimeLine = ({reportLoading, showSnackbar}) => {
     }, [reportLoading]);
 
     if (isErrored) {
-        return <ApiError actionDescription={'the user timeline'}/>;
+        return (
+            <TopLevelFeedback
+                Icon={SentimentDissatisfiedIcon}
+                title="Oh no!"
+                text="Turns out we couldn't fetch the user timeline"
+            />
+        );
     } else {
         if (isReady) {
             return (
@@ -62,8 +70,15 @@ const TimeLine = ({reportLoading, showSnackbar}) => {
                     className={classes.withMargin}
                 >
                     <Grid item md={12} xs={12}>
-                        <h1>Timeline</h1>
-                        <TimelineShard data={timeline}/>
+
+                        {timeline.length > 0 && <h1>Timeline</h1>}
+                        {timeline.events.length > 0 && <TimelineShard data={timeline.events}/>}
+                        {timeline.teams.map(team => <TimelineShard key={team._id} data={team.events}/>)}
+                        {timeline.length === 0 && <TopLevelFeedback
+                            Icon={TimerIcon}
+                            title="Well well..."
+                            text={<div>Looks like there is nothing to show yet...<br/>Time for a daily?</div>}
+                        />}
                     </Grid>
                 </Grid>
             );

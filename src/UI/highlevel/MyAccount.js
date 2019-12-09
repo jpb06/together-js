@@ -5,13 +5,14 @@ import {makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TeamsList from "../bricks/user/team/TeamsList";
 import {getUserTeams} from "../../logic/api/user.api";
-import ApiError from "../bricks/generic/errors/ApiError";
 import Waiting from "../bricks/generic/Waiting";
 import Paper from "@material-ui/core/Paper";
 import Fab from "@material-ui/core/Fab";
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import LoopIcon from "@material-ui/icons/Loop";
+import TopLevelFeedback from "../bricks/generic/TopLevelFeedback";
+import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -88,7 +89,13 @@ const MyAccount = ({reportLoading, showSnackbar, history}) => {
     };
 
     if (isErrored) {
-        return <ApiError actionDescription={'the user profile'}/>;
+        return (
+            <TopLevelFeedback
+                Icon={SentimentDissatisfiedIcon}
+                title="Oh no!"
+                text="Turns out we couldn't fetch your profile"
+            />
+        );
     } else {
         if (isReady) {
             return (

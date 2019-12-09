@@ -10,9 +10,10 @@ import {getFromLocalStorage, LocalStorageKeys} from "../../logic/local.store";
 import Waiting from "../bricks/generic/Waiting";
 import DailyFeelings from "../bricks/daily/DailyFeelings";
 import DailySubjects from "../bricks/daily/DailySubjects";
-import ApiError from "../bricks/generic/errors/ApiError";
 import {getTeamMembers} from "../../logic/api/team.api";
 import LoopIcon from "@material-ui/icons/Loop";
+import TopLevelFeedback from "../bricks/generic/TopLevelFeedback";
+import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
 
 const useStyles = makeStyles(theme => ({
     withMargin: {
@@ -71,7 +72,13 @@ const Daily = ({reportLoading, showSnackbar}) => {
     }, [reportLoading]);
 
     if (isErrored) {
-        return <ApiError actionDescription={'the daily'}/>;
+        return (
+            <TopLevelFeedback
+                Icon={SentimentDissatisfiedIcon}
+                title="Oh no!"
+                text="Turns out we couldn't fetch the daily"
+            />
+        );
     } else {
         if (isReady) {
             return (
