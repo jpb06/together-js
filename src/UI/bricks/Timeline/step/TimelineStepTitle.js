@@ -1,5 +1,6 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core";
+import {amber} from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -13,7 +14,8 @@ const useStyles = makeStyles(theme => ({
     },
     contentContainer: {
         width: '100%',
-        fontSize: 'large'
+        fontSize: 'large',
+        color: amber[300]
     }
 }));
 
