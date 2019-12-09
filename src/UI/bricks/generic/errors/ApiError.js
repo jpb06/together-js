@@ -14,12 +14,6 @@ const styles = theme => ({
         fontSize: 'xx-large',
         fontweight: '600'
     },
-    ohnoimage: {
-        backgroundImage: 'url("/static/images/ohno.png")',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        height: '201px'
-    },
     errorIcon: {
         height: '100px',
         width: '100px'
