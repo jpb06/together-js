@@ -2,19 +2,19 @@ import {makeStyles} from "@material-ui/core";
 import {getSubjectTypeDescription, SubjectTypeIcon} from "../../../../../logic/static/static.subject.types";
 import {FeelingTypeIcon, getFeelingTypeDescription} from "../../../../../logic/static/static.feelings.types";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import ListItem from "@material-ui/core/ListItem";
 import React from "react";
+import UserAvatar from "../../../user/UserAvatar";
+import Avatar from "@material-ui/core/Avatar";
+import Badge from "@material-ui/core/Badge";
+import {amber} from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
     avatarContainer: {
         minWidth: '30px',
-        marginTop: '0px'
-    },
-    userAvatar: {
-        width: '25px',
-        height: '25px',
+        marginTop: '0px',
+        paddingRight: '3px'
     },
     userName: {
         paddingLeft: '3px'
@@ -28,6 +28,19 @@ const useStyles = makeStyles(theme => ({
     feedbackText: {
         wordBreak: 'break-word'
     },
+
+    badge: {
+        border: `2px solid ${theme.palette.background.paper}`,
+        height: 22,
+        width: 22,
+        backgroundColor: amber[600]
+    },
+    badgeIcon: {
+        width: 18,
+        height: 18,
+        backgroundColor: amber[600]
+    }
+
 }));
 
 const TimelineDailyFeedbackItem = ({type, data}) => {
@@ -47,18 +60,31 @@ const TimelineDailyFeedbackItem = ({type, data}) => {
     return (
         <ListItem disableGutters alignItems="flex-start">
             <ListItemAvatar className={classes.avatarContainer}>
-                <Avatar className={classes.userAvatar} src={`/static/images/avatars/${data.creator.avatarName}`}/>
+                <Badge
+                    children={null}
+                    overlap="circle"
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                    }}
+                    badgeContent={
+                        <Avatar className={classes.badge}>
+                            <Icon className={classes.badgeIcon}/>
+                        </Avatar>
+                    }
+                >
+                    <UserAvatar isBigAvatar={false} user={data.creator}/>
+                </Badge>
             </ListItemAvatar>
             <div>
                 <div className={classes.feedbackTitle}>
-                    <Icon color="primary"/>
                     <Typography
                         component="span"
                         variant="body2"
                         color="primary"
                         className={classes.feedbackType}
                     >
-                        {description}
+                        {description} by
                     </Typography>
                     <Typography
                         component="span"
