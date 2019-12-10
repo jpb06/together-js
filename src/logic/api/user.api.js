@@ -16,8 +16,8 @@ const inviteUser = async (teamId, email) =>
         userEmail: email
     }));
 
-const requestMembership = async (teamName) =>
-    ensureStatus(await TogetherApi.Instance.post('user/requestMembership', {
+const requestToJoinTeam = async (teamName) =>
+    ensureStatus(await TogetherApi.Instance.post('user/requestToJoinTeam', {
         teamName: teamName
     }));
 
@@ -25,5 +25,5 @@ export {
     getUserTeams,
     getTimeline,
     inviteUser,
-    requestMembership
+    requestToJoinTeam
 };
