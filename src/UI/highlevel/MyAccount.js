@@ -17,7 +17,8 @@ import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied'
 const useStyles = makeStyles(theme => ({
     paper: {
         padding: theme.spacing(3),
-        height: '100%'
+        height: '100%',
+        opacity: 0.87
     },
     centered: {
         textAlign: 'center'

@@ -33,7 +33,8 @@ const TimeLine = ({reportLoading, showSnackbar}) => {
         async function fetch() {
             console.log('fetching timeline');
             const currentUser = getFromLocalStorage(LocalStorageKeys.user);
-            const timelineRequestResult = await getTimeline(currentUser.id);
+            const currentTeam = getFromLocalStorage(LocalStorageKeys.currentTeam);
+            const timelineRequestResult = await getTimeline(currentUser.id, currentTeam._id);
             if (isMounted.current) {
                 if (timelineRequestResult.status === 200) {
                     setTimeline(timelineRequestResult.data);
@@ -70,10 +71,12 @@ const TimeLine = ({reportLoading, showSnackbar}) => {
                     className={classes.withMargin}
                 >
                     <Grid item md={12} xs={12}>
-
                         {timeline.length > 0 && <h1>Timeline</h1>}
-                        {timeline.events.length > 0 && <TimelineShard data={timeline.events}/>}
-                        {timeline.teams.map(team => <TimelineShard key={team._id} data={team.events}/>)}
+                        {timeline.userEvents.length > 0 &&
+                        <TimelineShard title={'Your events'} data={timeline.userEvents}/>}
+                        {timeline.currentTeam &&
+                        <TimelineShard key={timeline.currentTeam._id} title={`Team ${timeline.currentTeam.name}`}
+                                       data={timeline.currentTeam.events}/>}
                         {timeline.length === 0 && <TopLevelFeedback
                             Icon={TimerIcon}
                             title="Well well..."

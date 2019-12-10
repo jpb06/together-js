@@ -11,15 +11,20 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         padding: '24px',
         flexDirection: 'column',
-        marginBottom: '15px'
+        marginBottom: '15px',
+        opacity: 0.87
     },
+    title: {
+        marginTop: 0
+    }
 }));
 
-const TimelineShard = ({data}) => {
+const TimelineShard = ({title, data}) => {
     const classes = useStyles();
 
     return (
         <Paper className={classes.container}>
+            <h3 className={classes.title}>{title}</h3>
             {data.map(el => (
                 <TimeLineStep
                     key={el.entry._id}
