@@ -5,9 +5,10 @@ const getUserTeams = async (userId) =>
         userId: userId
     }));
 
-const getTimeline = async (userId) =>
+const getTimeline = async (userId, teamId) =>
     ensureStatus(await TogetherApi.Instance.post('user/timeline', {
-        userId: userId
+        userId: userId,
+        teamId: teamId
     }));
 
 const inviteUser = async (teamId, email) =>
