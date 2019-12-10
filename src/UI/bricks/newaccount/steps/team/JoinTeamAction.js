@@ -7,10 +7,10 @@ import TextField from "@material-ui/core/TextField";
 import FeedbackButton from "../../../generic/buttons/FeedbackButton"
 import SimpleButton from "../../../generic/buttons/SimpleButton";
 import BlackCard from "../../../generic/containers/BlackCard";
-import {requestMembership} from "../../../../../logic/api/user.api";
+import {requestToJoinTeam} from "../../../../../logic/api/user.api";
 import NewAccountWaitingContainer from "../../NewAccountWaitingContainer";
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
-import MembershipRequestSent from "./MembershipRequestSent";
+import TeamJoinRequestSent from "./TeamJoinRequestSent";
 
 const useStyles = makeStyles(theme => ({
     centered: {
@@ -74,7 +74,7 @@ const JoinTeamAction = ({reportLoading, showSnackbar, choice, reset, reportMembe
                 isPending: true
             });
 
-            const result = await requestMembership(formData.teamName);
+            const result = await requestToJoinTeam(formData.teamName);
             if (isMounted.current) {
                 if (result.status === 200) {
                     reportMembershipRequestSent();
@@ -155,7 +155,7 @@ const JoinTeamAction = ({reportLoading, showSnackbar, choice, reset, reportMembe
             );
         }
     } else if (choice === 2) {
-        return (<MembershipRequestSent teamName={formData.teamName}/>);
+        return (<TeamJoinRequestSent teamName={formData.teamName}/>);
     } else return null;
 };
 export default JoinTeamAction;

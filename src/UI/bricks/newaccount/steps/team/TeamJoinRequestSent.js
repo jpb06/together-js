@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const MembershipRequestSent = ({teamName}) => {
+const TeamJoinRequestSent = ({teamName}) => {
     const classes = useStyles();
     const history = useHistory();
 
@@ -63,4 +63,4 @@ const MembershipRequestSent = ({teamName}) => {
     );
 };
 
-export default MembershipRequestSent;
+export default TeamJoinRequestSent;

@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const TimelineMembershipRequest = ({user, team}) => {
+const TimelineTeamJoinRequest = ({user, team}) => {
     const classes = useStyles();
 
     return (
@@ -22,4 +22,4 @@ const TimelineMembershipRequest = ({user, team}) => {
     );
 };
 
-export default TimelineMembershipRequest;
+export default TimelineTeamJoinRequest;

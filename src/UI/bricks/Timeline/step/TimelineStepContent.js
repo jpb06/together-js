@@ -2,7 +2,7 @@ import React from "react";
 import TimeLineStepDivider from "./TimeLineStepDivider";
 import {makeStyles} from "@material-ui/core";
 import TimelineDaily from "./daily/TimelineDaily";
-import TimelineMembershipRequest from "./membershiprequest/TimelineMembershipRequest";
+import TimelineTeamJoinRequest from "./joinrequest/TimelineTeamJoinRequest";
 import TimeLineTeamInvite from "./teaminvite/TimeLineTeamInvite";
 
 const useStyles = makeStyles(theme => ({
@@ -22,9 +22,9 @@ const TimelineStepContent = ({type, data}) => {
                 {{
                     1: <TimelineDaily daily={data}/>,
                     2: <TimeLineTeamInvite {...data} />,
-                    3: <TimelineMembershipRequest {...data} />,
+                    3: <TimelineTeamJoinRequest {...data} />,
                     4: <TimeLineTeamInvite {...data} />,
-                    5: <TimelineMembershipRequest {...data} />
+                    5: <TimelineTeamJoinRequest {...data} />
                 }[type]}
             </div>
             <TimeLineStepDivider/>
