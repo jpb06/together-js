@@ -15,7 +15,8 @@ const useStyles = makeStyles(theme => ({
         opacity: 0.87
     },
     title: {
-        marginTop: 0
+        marginTop: 0,
+        color: theme.palette.primary.main
     }
 }));
 
