@@ -39,7 +39,7 @@ const DailyDoneTickets = ({sendToParent, data, showSnackbar, currentTeam}) => {
             // Can't add twice the same ticket
             if (!doneTickets.find(el => el.name === name)) {
                 setAddActionFeedback({isPending: true, isErrored: false, text: 'Adding ticket...'});
-                const result = await addDoneTicket(currentTeam._id, assignee[0]._id, new Date().toUTCString(), name);
+                const result = await addDoneTicket(currentTeam._id, assignee[0].email, new Date().toUTCString(), name);
 
                 if (result.status === 201) {
                     setDoneTickets(state => state.concat({
