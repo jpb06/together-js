@@ -5,9 +5,8 @@ const getUserTeams = async (userId) =>
         userId: userId
     }));
 
-const getTimeline = async (userId, teamId) =>
+const getTimeline = async (teamId) =>
     ensureStatus(await TogetherApi.Instance.post('user/timeline', {
-        userId: userId,
         teamId: teamId
     }));
 
@@ -22,9 +21,15 @@ const requestToJoinTeam = async (teamName) =>
         teamName: teamName
     }));
 
+const acceptTeamInvite = async (inviteId) =>
+    ensureStatus(await TogetherApi.Instance.post('user/acceptTeamInvite', {
+        inviteId: inviteId
+    }));
+
 export {
     getUserTeams,
     getTimeline,
     inviteUser,
-    requestToJoinTeam
+    requestToJoinTeam,
+    acceptTeamInvite
 };

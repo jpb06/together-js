@@ -27,12 +27,12 @@ const removeUnforeseenTicket = async (teamId, date, ticket) =>
         ticket: ticket
     }));
 
-const addDoneTicket = async (teamId, assigneeId, date, ticket) =>
+const addDoneTicket = async (teamId, assigneeEmail, date, ticket) =>
     ensureStatus(await TogetherApi.Instance.post('daily/done/add', {
         teamId: teamId,
         date: date,
         ticket: ticket,
-        assigneeId: assigneeId
+        assigneeEmail: assigneeEmail
     }));
 
 const removeDoneTicket = async (teamId, date, ticket) =>
