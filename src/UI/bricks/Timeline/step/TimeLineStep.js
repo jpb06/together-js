@@ -5,7 +5,7 @@ import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import CallMergeIcon from '@material-ui/icons/CallMerge';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
-const TimeLineStep = ({type, title, data}) => {
+const TimeLineStep = ({type, title, data, showSnackbar}) => {
 
     const getTypeIcon = () => {
         switch (type) {
@@ -31,6 +31,7 @@ const TimeLineStep = ({type, title, data}) => {
             <TimelineStepContent
                 type={type}
                 data={data}
+                showSnackbar={showSnackbar}
             />
         </div>);
 };

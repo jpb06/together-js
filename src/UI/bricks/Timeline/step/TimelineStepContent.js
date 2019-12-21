@@ -3,8 +3,8 @@ import TimeLineStepDivider from "./TimeLineStepDivider";
 import {makeStyles} from "@material-ui/core";
 import TimelineDaily from "./daily/TimelineDaily";
 import TimelineTeamJoinRequest from "./joinrequest/TimelineTeamJoinRequest";
-import TimeLineTeamInvite from "./teaminvite/TimeLineTeamInvite";
 import TimeLineUserInvite from "./teaminvite/TimeLineUserInvite";
+import TimeLineTeamInvite from "./teaminvite/TimeLineTeamInvite";
 import TimeLineUserJoinRequest from "./joinrequest/TimeLineUserJoinRequest";
 
 const useStyles = makeStyles(theme => ({
@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const TimelineStepContent = ({type, data}) => {
+const TimelineStepContent = ({type, data, showSnackbar}) => {
     const classes = useStyles();
 
     return (
@@ -23,10 +23,10 @@ const TimelineStepContent = ({type, data}) => {
             <div className={classes.content}>
                 {{
                     1: <TimelineDaily daily={data}/>,
-                    2: <TimeLineUserInvite {...data} />, // = invites sent to current user
-                    3: <TimeLineUserJoinRequest {...data} />, // = join requests made by current user
-                    4: <TimeLineTeamInvite {...data} />, // = invites sent by team members
-                    5: <TimelineTeamJoinRequest {...data} /> // = join requests made to a team
+                    2: <TimeLineTeamInvite {...data} />, // = invites sent to current user
+                    3: <TimelineTeamJoinRequest {...data} />, // = join requests made by current user
+                    4: <TimeLineUserInvite showSnackbar={showSnackbar} {...data} />, // = invites sent by team members
+                    5: <TimeLineUserJoinRequest {...data} /> // = join requests made to a team
                 }[type]}
             </div>
             <TimeLineStepDivider/>

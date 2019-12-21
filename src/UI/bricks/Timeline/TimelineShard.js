@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const TimelineShard = ({title, data}) => {
+const TimelineShard = ({title, data, showSnackbar}) => {
     const classes = useStyles();
 
     return (
@@ -32,6 +32,7 @@ const TimelineShard = ({title, data}) => {
                     type={el.type}
                     title={el.shortTitle}
                     data={el.entry}
+                    showSnackbar={showSnackbar}
                 />
             ))}
             <TimelineStepTitle
