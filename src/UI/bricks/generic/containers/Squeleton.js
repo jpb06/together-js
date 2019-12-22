@@ -5,7 +5,6 @@ import {clearLocalStorage, getFromLocalStorage, LocalStorageKeys} from "../../..
 import {useHistory} from "react-router-dom";
 import TogetherApi from "../../../../logic/api/setup/together.api";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import FeedbackSnackbar from "../errors/FeedbackSnackbar";
 import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles(theme => ({
@@ -20,16 +19,12 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Squeleton = ({Component, ...rest}) => {
+const Squeleton = ({Component, showSnackbar, ...rest}) => {
     let history = useHistory();
     const classes = useStyles();
 
     const [isReady, setIsReady] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
-    const feedbackQueue = React.useRef([]);
-    const [feedbackSnackbarInfo, setFeedbackSnackbarInfo] = React.useState({key: '', variant: 'error', message: ''});
-    const [isFeedbackSnackbarOpen, setIsFeedbackSnackbarOpen] = React.useState(undefined);
 
     // This will trigger everytime a navigation occurs
     useEffect(() => {
@@ -57,34 +52,6 @@ const Squeleton = ({Component, ...rest}) => {
         setIsLoading(isLoading);
     }, []);
 
-    // unstacking one message to display and displaying the taskbar
-    const processFeedbackQueue = () => {
-        if (feedbackQueue.current.length > 0) {
-            setFeedbackSnackbarInfo(feedbackQueue.current.shift());
-            setIsFeedbackSnackbarOpen(true);
-        }
-    };
-
-    // Dispatch from a child stating there is a message to display
-    const messageRequestedFromChild = (variant, message) => {
-        feedbackQueue.current.push({
-            variant,
-            message,
-            key: new Date().getTime(),
-        });
-
-        if (isFeedbackSnackbarOpen) {
-            // immediately begin dismissing current message
-            // to start showing new one
-            setIsFeedbackSnackbarOpen(false);
-        } else {
-            processFeedbackQueue();
-        }
-    };
-
-    const closeFeedbackSnackbar = () => setIsFeedbackSnackbarOpen(false);
-    const exitFeedbackSnackbar = () => processFeedbackQueue();
-
     return (
         <div>
             <TopMenu/>
@@ -106,19 +73,13 @@ const Squeleton = ({Component, ...rest}) => {
                     >
                         <Component
                             reportLoading={reportLoading}
-                            showSnackbar={messageRequestedFromChild}
+                            showSnackbar={showSnackbar}
                             {...rest}
                         />
                     </Grid>
                 </Grid>
                 }
             </section>
-            <FeedbackSnackbar
-                closeFeedbackSnackbar={closeFeedbackSnackbar}
-                exitFeedbackSnackbar={exitFeedbackSnackbar}
-                isOpen={isFeedbackSnackbarOpen}
-                feedbackSnackbarInfo={feedbackSnackbarInfo}
-            />
         </div>
     );
 };

@@ -9,6 +9,7 @@ import Daily from "./UI/highlevel/Daily";
 import Squeleton from "./UI/bricks/generic/containers/Squeleton";
 import MyAccount from "./UI/highlevel/MyAccount";
 import NewAccount from "./UI/highlevel/NewAccount";
+import FeedbackSnackbar from "./UI/bricks/generic/errors/FeedbackSnackbar";
 
 const theme = createMuiTheme({
     palette: {
@@ -23,16 +24,59 @@ const theme = createMuiTheme({
 });
 
 const App = () => {
+
+    const feedbackQueue = React.useRef([]);
+    const [feedbackSnackbarInfo, setFeedbackSnackbarInfo] = React.useState({key: '', variant: 'error', message: ''});
+    const [isFeedbackSnackbarOpen, setIsFeedbackSnackbarOpen] = React.useState(undefined);
+
+    // unstacking one message to display and displaying the taskbar
+    const processFeedbackQueue = () => {
+        if (feedbackQueue.current.length > 0) {
+            setFeedbackSnackbarInfo(feedbackQueue.current.shift());
+            setIsFeedbackSnackbarOpen(true);
+        }
+    };
+
+    // Dispatch from a child stating there is a message to display
+    const messageRequestedFromChild = (variant, message) => {
+        feedbackQueue.current.push({
+            variant,
+            message,
+            key: new Date().getTime(),
+        });
+
+        if (isFeedbackSnackbarOpen) {
+            // immediately begin dismissing current message
+            // to start showing new one
+            setIsFeedbackSnackbarOpen(false);
+        } else {
+            processFeedbackQueue();
+        }
+    };
+
+    const closeFeedbackSnackbar = () => setIsFeedbackSnackbarOpen(false);
+    const exitFeedbackSnackbar = () => processFeedbackQueue();
+
     return (
         <MuiThemeProvider theme={theme}>
             <CssBaseline/>
             <BrowserRouter>
                 <Route exact path="/" component={Login}/>
-                <Route path="/main" render={(props) => <Squeleton {...props} Component={TimeLine}/>}/>
-                <Route path="/daily" render={(props) => <Squeleton {...props} Component={Daily}/>}/>
-                <Route path="/account" render={(props) => <Squeleton {...props} Component={MyAccount}/>}/>
-                <Route path="/newaccount" component={NewAccount}/>
+                <Route path="/main" render={(props) => <Squeleton {...props} showSnackbar={messageRequestedFromChild}
+                                                                  Component={TimeLine}/>}/>
+                <Route path="/daily" render={(props) => <Squeleton {...props} showSnackbar={messageRequestedFromChild}
+                                                                   Component={Daily}/>}/>
+                <Route path="/account" render={(props) => <Squeleton {...props} showSnackbar={messageRequestedFromChild}
+                                                                     Component={MyAccount}/>}/>
+                <Route path="/newaccount"
+                       render={(props) => <NewAccount {...props} showSnackbar={messageRequestedFromChild}/>}/>
             </BrowserRouter>
+            <FeedbackSnackbar
+                closeFeedbackSnackbar={closeFeedbackSnackbar}
+                exitFeedbackSnackbar={exitFeedbackSnackbar}
+                isOpen={isFeedbackSnackbarOpen}
+                feedbackSnackbarInfo={feedbackSnackbarInfo}
+            />
         </MuiThemeProvider>
     );
 };

@@ -18,7 +18,6 @@ import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import clsx from 'clsx';
 import {amber} from "@material-ui/core/colors";
 import ColoredFatProgress from "../bricks/generic/ColoredFatProgress";
-import FeedbackSnackbar from "../bricks/generic/errors/FeedbackSnackbar";
 import NewAccountAddTeamMembers from "../bricks/newaccount/steps/NewAccountAddTeamMembers";
 
 const useStyles = makeStyles(theme => ({
@@ -56,7 +55,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const FatLoader = ColoredFatProgress(amber[500])();
-const NewAccount = () => {
+const NewAccount = ({showSnackbar}) => {
     const classes = useStyles();
 
     const [newUser, setNewUser] = useState({
@@ -68,39 +67,6 @@ const NewAccount = () => {
     const [userHasTeam, setUserHasTeam] = React.useState(false);
 
     const [isLoading, setIsLoading] = useState(false);
-
-    const feedbackQueue = React.useRef([]);
-    const [feedbackSnackbarInfo, setFeedbackSnackbarInfo] = React.useState({key: '', variant: 'error', message: ''});
-    const [isFeedbackSnackbarOpen, setIsFeedbackSnackbarOpen] = React.useState(undefined);
-
-    // unstacking one message to display and displaying the taskbar
-    const processFeedbackQueue = () => {
-        if (feedbackQueue.current.length > 0) {
-            setFeedbackSnackbarInfo(feedbackQueue.current.shift());
-            setIsFeedbackSnackbarOpen(true);
-        }
-    };
-
-    // Dispatch from a child stating there is a message to display
-    const messageRequestedFromChild = (variant, message) => {
-        feedbackQueue.current.push({
-            variant,
-            message,
-            key: new Date().getTime(),
-        });
-
-        if (isFeedbackSnackbarOpen) {
-            // immediately begin dismissing current message
-            // to start showing new one
-            setIsFeedbackSnackbarOpen(false);
-        } else {
-            processFeedbackQueue();
-        }
-    };
-
-    const closeFeedbackSnackbar = () => setIsFeedbackSnackbarOpen(false);
-    const exitFeedbackSnackbar = () => processFeedbackQueue();
-
     const reportLoading = (value) => setIsLoading(value);
 
     const reportMyInfosStepComplete = (user) => {
@@ -215,30 +181,24 @@ const NewAccount = () => {
                         {step === 0 && <NewAccountMyInfos
                             reportStepComplete={reportMyInfosStepComplete}
                             reportLoading={reportLoading}
-                            showSnackbar={messageRequestedFromChild}
+                            showSnackbar={showSnackbar}
                         />}
                         {step === 1 && <NewAccountMyAvatar
                             fullName={newUser.fullName}
                             initials={newUser.initials}
                             reportStepComplete={reportMyAvatarStepComplete}
                             reportLoading={reportLoading}
-                            showSnackbar={messageRequestedFromChild}
+                            showSnackbar={showSnackbar}
                         />}
                         {step === 2 && !userHasTeam && <NewAccountMyTeams
                             reportLoading={reportLoading}
-                            showSnackbar={messageRequestedFromChild}
+                            showSnackbar={showSnackbar}
                             reportStepComplete={reportMyTeamsStepComplete}
                         />}
                         {step === 2 && userHasTeam && <NewAccountAddTeamMembers
                             reportLoading={reportLoading}
-                            showSnackbar={messageRequestedFromChild}
+                            showSnackbar={showSnackbar}
                         />}
-                        <FeedbackSnackbar
-                            closeFeedbackSnackbar={closeFeedbackSnackbar}
-                            exitFeedbackSnackbar={exitFeedbackSnackbar}
-                            isOpen={isFeedbackSnackbarOpen}
-                            feedbackSnackbarInfo={feedbackSnackbarInfo}
-                        />
                     </CardContent>
                 </Card>
             </Grid>
