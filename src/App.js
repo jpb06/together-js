@@ -62,14 +62,18 @@ const App = () => {
             <CssBaseline/>
             <BrowserRouter>
                 <Route exact path="/" component={Login}/>
-                <Route path="/main" render={(props) => <Squeleton {...props} showSnackbar={messageRequestedFromChild}
-                                                                  Component={TimeLine}/>}/>
-                <Route path="/daily" render={(props) => <Squeleton {...props} showSnackbar={messageRequestedFromChild}
-                                                                   Component={Daily}/>}/>
-                <Route path="/account" render={(props) => <Squeleton {...props} showSnackbar={messageRequestedFromChild}
-                                                                     Component={MyAccount}/>}/>
-                <Route path="/newaccount"
-                       render={(props) => <NewAccount {...props} showSnackbar={messageRequestedFromChild}/>}/>
+                <Route path="/main" render={(props) =>
+                    <Squeleton {...props} showSnackbar={messageRequestedFromChild} Component={TimeLine}/>}
+                />
+                <Route path="/daily" render={(props) =>
+                    <Squeleton {...props} showSnackbar={messageRequestedFromChild} Component={Daily}/>}
+                />
+                <Route path="/account" render={(props) =>
+                    <Squeleton {...props} showSnackbar={messageRequestedFromChild} Component={MyAccount}/>}
+                />
+                <Route path="/newaccount" render={(props) =>
+                    <NewAccount {...props} showSnackbar={messageRequestedFromChild}/>}
+                />
             </BrowserRouter>
             <FeedbackSnackbar
                 closeFeedbackSnackbar={closeFeedbackSnackbar}
