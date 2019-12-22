@@ -1,7 +1,7 @@
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import FeedbackButton from "../../generic/buttons/FeedbackButton";
 import {makeStyles} from "@material-ui/core";
 import PasswordStrength from "../PasswordStrength";
@@ -15,6 +15,7 @@ import {login} from "../../../../logic/api/security.api";
 import TogetherApi from "../../../../logic/api/setup/together.api";
 import {useHistory} from "react-router-dom";
 import NewAccountWaitingContainer from "../NewAccountWaitingContainer";
+import useLifecycleStatus from "../../../../logic/hooks/useLifecycleStatus";
 
 const useStyles = makeStyles(theme => ({
     noMargin: {
@@ -33,7 +34,7 @@ const NewAccountMyInfos = ({reportStepComplete, reportLoading, showSnackbar}) =>
     const classes = useStyles();
     const history = useHistory();
 
-    const isMounted = React.useRef(false);
+    const isMounted = useLifecycleStatus();
 
     const [formData, setFormData] = useState({
         isPending: false,
@@ -46,15 +47,6 @@ const NewAccountMyInfos = ({reportStepComplete, reportLoading, showSnackbar}) =>
         password: '',
         confirmPassword: ''
     });
-
-    // This will trigger at component first render (only once)
-    useEffect(() => {
-        isMounted.current = true;
-
-        return function cleanup() {
-            isMounted.current = false;
-        };
-    }, []);
 
     // Whenever form data changes...
     const updateField = e => setFormData({

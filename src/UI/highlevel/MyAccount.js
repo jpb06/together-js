@@ -13,6 +13,7 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import LoopIcon from "@material-ui/icons/Loop";
 import TopLevelFeedback from "../bricks/generic/TopLevelFeedback";
 import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
+import useLifecycleStatus from "../../logic/hooks/useLifecycleStatus";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -44,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 const MyAccount = ({reportLoading, showSnackbar, history}) => {
     const classes = useStyles();
 
-    const isMounted = React.useRef(false);
+    const isMounted = useLifecycleStatus();
 
     const [user, setUser] = React.useState({});
     const [userTeams, setUserTeams] = React.useState([]);
@@ -53,7 +54,6 @@ const MyAccount = ({reportLoading, showSnackbar, history}) => {
 
     // This will trigger at component first render (only once)
     useEffect(() => {
-        isMounted.current = true;
         reportLoading(true);
 
         async function fetch() {
@@ -76,11 +76,7 @@ const MyAccount = ({reportLoading, showSnackbar, history}) => {
         }
 
         fetch();
-
-        return function cleanup() {
-            isMounted.current = false;
-        };
-    }, [reportLoading]);
+    }, [isMounted, reportLoading]);
 
     const handleLogoff = () => {
         clearLocalStorage();

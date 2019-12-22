@@ -14,6 +14,7 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import {getFromLocalStorage, LocalStorageKeys} from "../../../../logic/local.store";
 import {inviteUser} from "../../../../logic/api/user.api";
 import Divider from "@material-ui/core/Divider";
+import useLifecycleStatus from "../../../../logic/hooks/useLifecycleStatus";
 
 const useStyles = makeStyles(theme => ({
     divider: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 const NewAccountAddTeamMembers = ({reportLoading, showSnackbar}) => {
     const classes = useStyles();
     const history = useHistory();
-    const isMounted = React.useRef(false);
+    const isMounted = useLifecycleStatus();
 
     const [teamMemberRequests, setTeamMemberRequests] = useState([]);
     const [goToTimelineText, setGoToTimelineText] = useState('No thanks, bring me to my timeline!');
@@ -38,8 +39,6 @@ const NewAccountAddTeamMembers = ({reportLoading, showSnackbar}) => {
 
     // This will trigger at component first render (only once)
     useEffect(() => {
-        isMounted.current = true;
-
         const currentUser = getFromLocalStorage(LocalStorageKeys.user);
         setTeamMemberRequests(requests => requests.concat({
             _id: currentUser.id,
@@ -48,10 +47,6 @@ const NewAccountAddTeamMembers = ({reportLoading, showSnackbar}) => {
             avatarName: currentUser.avatarName,
             status: 'Team creator'
         }));
-
-        return function cleanup() {
-            isMounted.current = false;
-        };
     }, []);
 
     // Whenever form data changes...

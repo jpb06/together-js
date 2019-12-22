@@ -2,7 +2,7 @@ import Grid from "@material-ui/core/Grid";
 import Slide from "@material-ui/core/Slide";
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import FeedbackButton from "../../../generic/buttons/FeedbackButton";
@@ -12,6 +12,7 @@ import {LocalStorageKeys, setInLocalStorage} from "../../../../../logic/local.st
 import SimpleButton from "../../../generic/buttons/SimpleButton";
 import BlackCard from "../../../generic/containers/BlackCard";
 import NewAccountWaitingContainer from "../../NewAccountWaitingContainer";
+import useLifecycleStatus from "../../../../../logic/hooks/useLifecycleStatus";
 
 const useStyles = makeStyles(theme => ({
     centered: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 const CreateTeamAction = ({reportTeamCreated, reportLoading, showSnackbar, choice, reset}) => {
     const classes = useStyles();
 
-    const isMounted = React.useRef(false);
+    const isMounted = useLifecycleStatus();
 
     const [formData, setFormData] = useState({
         isPending: false,
@@ -37,15 +38,6 @@ const CreateTeamAction = ({reportTeamCreated, reportLoading, showSnackbar, choic
         text: 'Create team',
         teamName: ''
     });
-
-    // This will trigger at component first render (only once)
-    useEffect(() => {
-        isMounted.current = true;
-
-        return function cleanup() {
-            isMounted.current = false;
-        };
-    }, []);
 
     // Whenever form data changes...
     const updateField = e => setFormData({

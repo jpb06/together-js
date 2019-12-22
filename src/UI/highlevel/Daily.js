@@ -14,6 +14,7 @@ import {getTeamMembers} from "../../logic/api/team.api";
 import LoopIcon from "@material-ui/icons/Loop";
 import TopLevelFeedback from "../bricks/generic/TopLevelFeedback";
 import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
+import useLifecycleStatus from "../../logic/hooks/useLifecycleStatus";
 
 const useStyles = makeStyles(theme => ({
     withMargin: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 const Daily = ({reportLoading, showSnackbar}) => {
     const classes = useStyles();
 
-    const isMounted = React.useRef(false);
+    const isMounted = useLifecycleStatus();
 
     const [daily, setDaily] = useState({});
     const [isReady, setIsready] = useState(false);
@@ -38,7 +39,6 @@ const Daily = ({reportLoading, showSnackbar}) => {
 
     // This will trigger at component first render (only once)
     useEffect(() => {
-        isMounted.current = true;
         reportLoading(true);
 
         async function fetch() {
@@ -65,11 +65,7 @@ const Daily = ({reportLoading, showSnackbar}) => {
         }
 
         fetch();
-
-        return function cleanup() {
-            isMounted.current = false;
-        };
-    }, [reportLoading]);
+    }, [isMounted, reportLoading]);
 
     if (isErrored) {
         return (
