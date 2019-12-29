@@ -62,7 +62,7 @@ const MyAccount = ({reportLoading, showSnackbar, history}) => {
             const storedUser = getFromLocalStorage(LocalStorageKeys.user);
             setUser(storedUser);
 
-            const teamsRequest = await getUserTeams(storedUser.id);
+            const teamsRequest = await getUserTeams(storedUser.id, false);
             if (isMounted.current) {
                 if (teamsRequest.status === 200) {
                     setUserTeams(teamsRequest.data);
