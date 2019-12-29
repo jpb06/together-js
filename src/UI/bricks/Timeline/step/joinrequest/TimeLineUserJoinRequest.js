@@ -1,4 +1,4 @@
-import TimeLineHighlightedText from "../TimeLineHighlightedText";
+import HighlightedText from "../../../generic/HighlightedText";
 import React from "react";
 import {makeStyles} from "@material-ui/core";
 
@@ -14,7 +14,7 @@ const TimeLineUserJoinRequest = ({team}) => {
 
     return (
         <div className={classes.root}>
-            You sent a request to join team <TimeLineHighlightedText text={team.name}/>.
+            You sent a request to join team <HighlightedText text={team.name}/>.
         </div>
     );
 };

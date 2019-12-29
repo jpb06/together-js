@@ -1,13 +1,13 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     white: {
         color: 'white'
     }
-}));
+});
 
-const TimeLineHighlightedText = ({text}) => {
+const HighlightedText = ({text}) => {
     const classes = useStyles();
 
     return (
@@ -15,4 +15,4 @@ const TimeLineHighlightedText = ({text}) => {
     );
 };
 
-export default TimeLineHighlightedText;
+export default HighlightedText;
