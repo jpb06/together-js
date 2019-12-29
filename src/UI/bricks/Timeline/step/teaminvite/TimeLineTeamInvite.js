@@ -1,6 +1,7 @@
-import React from "react";
 import {makeStyles} from "@material-ui/core";
-import TimeLineHighlightedText from "../TimeLineHighlightedText";
+import React, {useState} from "react";
+import {getFromLocalStorage, LocalStorageKeys} from "../../../../../logic/local.store";
+import HighlightedText from "../../../generic/HighlightedText";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -9,15 +10,25 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const TimeLineTeamInvite = ({referrer, team}) => {
+const TimeLineTeamInvite = ({referrer, invitee}) => {
     const classes = useStyles();
 
-    return (
-        <div className={classes.root}>
-            You have been invited to join team <TimeLineHighlightedText text={team.name}/> by <TimeLineHighlightedText
-            text={`${referrer.firstName} ${referrer.lastName}`}/>.
-        </div>
-    );
+    const [currentUser] = useState(getFromLocalStorage(LocalStorageKeys.user));
+
+    if (referrer._id === currentUser.id) {
+        return (
+            <div className={classes.root}>
+                You have invited <HighlightedText text={`${invitee.firstName} ${invitee.lastName}`}/> to join the team.
+            </div>
+        );
+    } else {
+        return (
+            <div className={classes.root}>
+                <HighlightedText text={`${referrer.firstName} ${referrer.lastName}`}/> has
+                invited <HighlightedText text={`${invitee.firstName} ${invitee.lastName}`}/> to join the team.
+            </div>
+        );
+    }
 };
 
 export default TimeLineTeamInvite;
