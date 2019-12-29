@@ -7,15 +7,15 @@ import TimeLineUserInvite from "./teaminvite/TimeLineUserInvite";
 import TimeLineTeamInvite from "./teaminvite/TimeLineTeamInvite";
 import TimeLineUserJoinRequest from "./joinrequest/TimeLineUserJoinRequest";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     content: {
         marginTop: '8px',
         borderLeft: '1px solid #757575',
         marginLeft: '12px',
     },
-}));
+});
 
-const TimelineStepContent = ({type, data, showSnackbar}) => {
+const TimelineStepContent = ({type, data, showSnackbar, reloadTimeline}) => {
     const classes = useStyles();
 
     return (
@@ -25,7 +25,7 @@ const TimelineStepContent = ({type, data, showSnackbar}) => {
                     1: <TimelineDaily daily={data}/>,
                     2: <TimeLineTeamInvite {...data} />, // = invites sent to current user
                     3: <TimelineTeamJoinRequest {...data} />, // = join requests made by current user
-                    4: <TimeLineUserInvite showSnackbar={showSnackbar} {...data} />, // = invites sent by team members
+                    4: <TimeLineUserInvite showSnackbar={showSnackbar} reloadTimeline={reloadTimeline} {...data} />, // = invites sent by team members
                     5: <TimeLineUserJoinRequest {...data} /> // = join requests made to a team
                 }[type]}
             </div>
