@@ -1,8 +1,9 @@
 import TogetherApi, {ensureStatus} from "./setup/together.api";
 
-const getUserTeams = async (userId) =>
+const getUserTeams = async (userId, fetchLastActivity) =>
     ensureStatus(await TogetherApi.Instance.post('user/teams', {
-        userId: userId
+        userId: userId,
+        fetchLastActivity: fetchLastActivity
     }));
 
 const getTimeline = async (teamId) =>
@@ -26,10 +27,16 @@ const acceptTeamInvite = async (inviteId) =>
         inviteId: inviteId
     }));
 
+const declineTeamInvite = async (inviteId) =>
+    ensureStatus(await TogetherApi.Instance.post('user/declineTeamInvite', {
+        inviteId: inviteId
+    }));
+
 export {
     getUserTeams,
     getTimeline,
     inviteUser,
     requestToJoinTeam,
-    acceptTeamInvite
+    acceptTeamInvite,
+    declineTeamInvite
 };
