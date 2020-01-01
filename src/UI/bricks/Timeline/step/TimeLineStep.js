@@ -4,6 +4,8 @@ import TimelineStepTitle from "./TimelineStepTitle";
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import CallMergeIcon from '@material-ui/icons/CallMerge';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 
 const TimeLineStep = ({type, title, data, showSnackbar, reloadTimeline}) => {
 
@@ -17,6 +19,8 @@ const TimeLineStep = ({type, title, data, showSnackbar, reloadTimeline}) => {
             case 3: // team join request
             case 5: // current user join request
                 return CallMergeIcon;
+            case 6: // team members join notice
+                return data.status === 'creator' ? SupervisedUserCircleIcon : EmojiPeopleIcon;
             default:
                 return undefined;
         }
@@ -25,7 +29,7 @@ const TimeLineStep = ({type, title, data, showSnackbar, reloadTimeline}) => {
     return (
         <div>
             <TimelineStepTitle
-                IconComponent={getTypeIcon(type)}
+                IconComponent={getTypeIcon()}
                 text={title}
             />
             <TimelineStepContent
