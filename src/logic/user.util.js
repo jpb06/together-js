@@ -1,7 +1,7 @@
 import {LocalStorageKeys, setInLocalStorage} from "./local.store";
 
 const getInitials = (string) => {
-    const initials = string.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g);
+    const initials = string.replace(/[^a-zA-Z- 0-9]/g, "").match(/\b\w/g);
     return initials.join('').toUpperCase();
 };
 

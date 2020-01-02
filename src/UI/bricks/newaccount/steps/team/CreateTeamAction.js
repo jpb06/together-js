@@ -14,7 +14,7 @@ import BlackCard from "../../../generic/containers/BlackCard";
 import NewAccountWaitingContainer from "../../NewAccountWaitingContainer";
 import useLifecycleStatus from "../../../../../logic/hooks/useLifecycleStatus";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     centered: {
         display: 'flex',
         justifyContent: 'center',
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
         width: 100,
         height: 100
     }
-}));
+});
 
 const CreateTeamAction = ({reportTeamCreated, reportLoading, showSnackbar, choice, reset}) => {
     const classes = useStyles();
@@ -42,7 +42,7 @@ const CreateTeamAction = ({reportTeamCreated, reportLoading, showSnackbar, choic
     // Whenever form data changes...
     const updateField = e => setFormData({
         ...formData,
-        [e.target.name]: e.target.value
+        [e.target.name]: e.target.name === 'teamName' ? e.target.value.replace(/[^a-z0-9 -]/gi, '') : e.target.value
     });
 
     const reportError = () => {
